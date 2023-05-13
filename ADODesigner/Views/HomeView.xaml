@@ -1,0 +1,51 @@
+﻿<Window x:Class="ADODesigner.Views.HomeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADODesigner.Views"
+        mc:Ignorable="d"
+        Title="HomeView" Height="600" Width="800" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu IsMainMenu="True" Background="{DynamicResource ForegroundColor}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">
+            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="File">
+                <MenuItem Header="Create project..."/>
+            </MenuItem>
+            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="Software"/>
+        </Menu>
+        <Border Grid.Row="1" Grid.Column="0" Background="#FF101013" Margin="5 5 5 5">
+            <StackPanel>
+                <Button Style="{DynamicResource ButtonStyle}" Height="80
+">
+                    <Button.Content>
+                        <Grid>
+                            <Image Source="../Assets/create-file.png" Margin="-85,1,85,-1" Opacity="0.9"/>
+                            <TextBlock Text="Create Project" Margin="46,2,-46,-2"/>
+                            <TextBlock Text="Start working with the program." Margin="46,27,-46,-27" FontSize="12" Opacity="0.8"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Style="{DynamicResource ButtonStyle}" Height="80">
+                    <Button.Content>
+                        <Grid>
+                            <Image Source="../Assets/settings.png" Margin="-85,1,85,-1" Opacity="0.9"/>
+                            <TextBlock Text="Settings" Margin="58,2,-57,-2"/>
+                            <TextBlock Text="Customize the program for yourself." Margin="58,27,-57,-27" FontSize="12" Opacity="0.8"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" Background="#FF101013" Margin="5 5 5 5">
+
+        </Border>
+    </Grid>
+</Window>

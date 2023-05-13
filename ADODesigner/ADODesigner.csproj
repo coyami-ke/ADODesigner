@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\close-window.png" />
+    <None Remove="Assets\create-file.png" />
+    <None Remove="Assets\folder.png" />
+    <None Remove="Assets\settings.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\close-window.png" />
+    <Resource Include="Assets\create-file.png" />
+    <Resource Include="Assets\folder.png" />
+    <Resource Include="Assets\settings.png" />
+  </ItemGroup>
+
+</Project>
