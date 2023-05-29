@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace ADODesigner.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for CreateProjectView.xaml
     /// </summary>
-    public partial class HomeView : Window
+    public partial class CreateProjectView : Window
     {
-        public HomeView()
+        public CreateProjectView()
         {
             InitializeComponent();
-        }
-
-        private void RowDefinition_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
     }
 }

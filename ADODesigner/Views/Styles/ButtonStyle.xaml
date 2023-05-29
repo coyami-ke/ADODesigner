@@ -2,14 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="ButtonStyle" TargetType="Button">
-        <Setter Property="BorderBrush" Value="#FF101114"/>
-        <Setter Property="Background" Value="#FF101113"/>
+        <Setter Property="BorderBrush" Value="#FF101013"/>
+        <Setter Property="Background" Value="#FF101013"/>
         <Setter Property="Foreground" Value="#E5FFFFFF"/>
         <Setter Property="FontSize" Value="17"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
                         <Grid>
                             <Label Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}"/>
                         </Grid>
@@ -22,7 +22,7 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF131416" AutoReverse="True" >
+                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF131316" AutoReverse="True" >
                                 <ColorAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </ColorAnimation.EasingFunction>
@@ -35,7 +35,7 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF121315" AutoReverse="False" >
+                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF121215" AutoReverse="False" >
                                 <ColorAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </ColorAnimation.EasingFunction>
@@ -48,7 +48,7 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF121315" AutoReverse="False" >
+                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF121215" AutoReverse="False" >
                                 <ColorAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </ColorAnimation.EasingFunction>
@@ -61,7 +61,7 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF101113" AutoReverse="False" >
+                            <ColorAnimation Storyboard.TargetProperty="Background.Color" Duration="0:0:0.22" To="#FF101013" AutoReverse="False" >
                                 <ColorAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseOut"/>
                                 </ColorAnimation.EasingFunction>

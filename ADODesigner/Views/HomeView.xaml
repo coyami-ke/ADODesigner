@@ -3,49 +3,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADODesigner.Views"
+        xmlns:vm="clr-namespace:ADODesigner.ViewModels"
         mc:Ignorable="d"
-        Title="HomeView" Height="600" Width="800" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize">
+        Title="ADODesigner | Home" Height="600" Width="800" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize" MouseDown="RowDefinition_MouseDown">
+    <Window.DataContext>
+        <vm:HomeVM/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="318"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu IsMainMenu="True" Background="{DynamicResource ForegroundColor}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">
-            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="File">
-                <MenuItem Header="Create project..."/>
-            </MenuItem>
-            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="Software"/>
-        </Menu>
-        <Border Grid.Row="1" Grid.Column="0" Background="#FF101013" Margin="5 5 5 5">
+
+        <Image Source="../Assets/close-window.png" Grid.Column="1" HorizontalAlignment="Right" Opacity="0.9"/>
+        <TextBlock Text="ADODesigner | Create Project" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+
+        <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource BackgroundColor}" Margin="5 5 5 5">
             <StackPanel>
-                <Button Style="{DynamicResource ButtonStyle}" Height="80
-">
+                <Button Style="{DynamicResource ButtonStyle}" Height="80" Command="{Binding CreateProjectCommand}">
                     <Button.Content>
                         <Grid>
-                            <Image Source="../Assets/create-file.png" Margin="-85,1,85,-1" Opacity="0.9"/>
-                            <TextBlock Text="Create Project" Margin="46,2,-46,-2"/>
-                            <TextBlock Text="Start working with the program." Margin="46,27,-46,-27" FontSize="12" Opacity="0.8"/>
+                            <Image Source="../Assets/create-file.png" Margin="-110,0,109,0" Opacity="0.9"/>
+                            <TextBlock Text="Create Project" Margin="29,13,-29,-13"/>
+                            <TextBlock Text="Start working with the program." Margin="29,33,-29,-33" FontSize="12" Opacity="0.8"/>
                         </Grid>
                     </Button.Content>
                 </Button>
                 <Button Style="{DynamicResource ButtonStyle}" Height="80">
                     <Button.Content>
                         <Grid>
-                            <Image Source="../Assets/settings.png" Margin="-85,1,85,-1" Opacity="0.9"/>
-                            <TextBlock Text="Settings" Margin="58,2,-57,-2"/>
-                            <TextBlock Text="Customize the program for yourself." Margin="58,27,-57,-27" FontSize="12" Opacity="0.8"/>
+                            <Image Source="../Assets/settings.png" Margin="-105,0,105,0" Opacity="0.9"/>
+                            <TextBlock Text="Settings" Margin="43,10,-42,-10"/>
+                            <TextBlock Text="Customize the program for yourself." Margin="43,30,-42,-30" FontSize="12" Opacity="0.8"/>
                         </Grid>
                     </Button.Content>
                 </Button>
             </StackPanel>
         </Border>
-        <Border Grid.Row="1" Grid.Column="1" Background="#FF101013" Margin="5 5 5 5">
-
+        <Border Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackgroundColor}" Margin="5,5,5,5">
+            <ListBox Style="{DynamicResource ListBoxStyle}" SelectedItem="{Binding SelectedProject}" ItemsSource="{Binding Projects}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Image Source="../Assets/folder.png" Margin="10 0" Height="48" Width="48" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0.9"/>
+                            <TextBlock Text="{Binding Path=Name}" Margin="78 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"/>
+                            <TextBlock Text="{Binding Path=Path}" Margin="128 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Opacity="0.8"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Border>
     </Grid>
 </Window>

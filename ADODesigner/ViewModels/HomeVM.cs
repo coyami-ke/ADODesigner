@@ -1,11 +1,14 @@
 ﻿using ADODesigner.Models;
+using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 #nullable disable
 
@@ -14,14 +17,21 @@ namespace ADODesigner.ViewModels
     public partial class HomeVM : ObservableObject
     {
         [ObservableProperty]
-        private Project selectedProject;
+        private Project selectedProject = new();
         [ObservableProperty]
-        private ObservableCollection<Project> projects;
+        private ObservableCollection<Project> projects = App.Config.Projects;
 
         [RelayCommand]
         private void CreateProject()
         {
+            CreateProjectView createProjectView = new();
+            createProjectView.Show();
+            //Project project = new();
+            //project.Name = "My Project";
+            //project.Path = "D:\\Projects\\ComposerTrack";
+            //Projects.Add(project);
 
+            //App.Config.Projects = Projects;
         }
         [RelayCommand]
         private void OpenProject()
