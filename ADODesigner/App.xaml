@@ -10,6 +10,10 @@
                 <ResourceDictionary Source="Views/Styles/MainTheme.xaml"/>
                 <ResourceDictionary Source="Views/Styles/ListBoxStyle.xaml"/>
                 <ResourceDictionary Source="Views/Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/TreeViewStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/TreeViewItemStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/ScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/TabControlStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,5 +1,6 @@
 ﻿using ADODesigner.Models;
 using ADODesigner.ViewModels.Messengers;
+using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -17,9 +18,11 @@ namespace ADODesigner.ViewModels
         private Project project;
 
         [RelayCommand]
-        private void CreateProjectCommand()
+        private void CreateProject()
         {
-            WeakReferenceMessenger.Default.Send<CreateProjectMessenger>(new CreateProjectMessenger(Project));
+            EditorView editor = new();
+            editor.Show();
+            //WeakReferenceMessenger.Default.Send<CreateProjectMessenger>(new CreateProjectMessenger(Project));
         }
     }
 }

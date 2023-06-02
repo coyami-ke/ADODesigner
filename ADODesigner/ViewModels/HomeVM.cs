@@ -2,6 +2,7 @@
 using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,7 +37,16 @@ namespace ADODesigner.ViewModels
         [RelayCommand]
         private void OpenProject()
         {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
 
+            dialog.IsFolderPicker = true;
+
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                Project project = new Project();
+                project.Path = dialog.FileName;
+                Projects.Add(project);
+            }
         }
     }
 }
