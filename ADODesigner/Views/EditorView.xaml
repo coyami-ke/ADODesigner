@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ADODesigner.ViewModels"
+        xmlns:controls="clr-namespace:ADODesigner.Views.Controls"
+        xmlns:local="clr-namespace:ADODesigner.Views"
         mc:Ignorable="d"
+        xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="EditorView" Height="640" Width="1000" Background="{DynamicResource ForegroundColor}" WindowStyle="None">
     <Window.DataContext>
         <vm:EditorVM/>
@@ -15,31 +18,48 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="{DynamicResource BackgroundColor}" Grid.Row="1">
-            <ListBox Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Decorations}">
-
+        <Border Grid.Row="1" Grid.ColumnSpan="3" Background="#FF101013"/>
+        <Menu Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Background="Transparent">
+            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="File">
+                <MenuItem Header="Create a project..."/>
+                <MenuItem Header="Open..."/>
+                <Separator/>
+                <MenuItem Header="Save"/>
+            </MenuItem>
+        </Menu>
+        <Border Background="{DynamicResource BackgroundColor}" Grid.Row="1" Margin="5 5 5 5">
+            <ListBox Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Decorations}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Foreground="{DynamicResource TextColor}" Text="{Binding Tag}" FontSize="15"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </Border>
-        <Border Grid.Column="1" Grid.Row="1" Background="#FF101013">
+        <Border Grid.Column="1" Grid.Row="1" Background="#FF101013" Margin="5">
             <TabControl Background="Transparent" BorderBrush="#FF101013" BorderThickness="5">
-                <TabItem Style="{DynamicResource TabItemStyle}" Header="Designer">
+                <TabItem Style="{DynamicResource TabItemStyle}" Header="Designer" Height="30">
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
                         <Grid Height="500" Width="500">
-
                             <Rectangle Fill="White" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 0 540"/>
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Style="{DynamicResource TabItemStyle}" Header="TimeLine">
+                <TabItem Style="{DynamicResource TabItemStyle}" Header="TimeLine" Height="30">
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
-                        
+                        <StackPanel x:Name="panelTimeLines">
+                        </StackPanel>
                     </ScrollViewer>
                 </TabItem>
             </TabControl>
         </Border>
+        <GridSplitter Grid.Column="0" ShowsPreview="True" Width="3" Grid.Row="1"
+        HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="#FF121215"/>
+        <GridSplitter Grid.Column="1" ShowsPreview="True" Width="3" Grid.Row="1"
+        HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="#FF121215"/>
     </Grid>
 </Window>

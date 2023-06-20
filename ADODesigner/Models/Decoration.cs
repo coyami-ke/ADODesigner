@@ -1,38 +1,42 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-#nullable disable
+
 namespace ADODesigner.Models
 {
     public partial class Decoration : ObservableObject
     {
         [ObservableProperty]
-        private string decorationImage;
+        private string image = String.Empty;
         [ObservableProperty]
-        private Vector2 position;
+        private Vector2 position = new Vector2(0,0);
         [ObservableProperty]
-        private Vector2 scale;
+        private Vector2 scale = new Vector2(0,0);
         [ObservableProperty]
-        private float rotation;
+        private float rotation = 0;
         [ObservableProperty]
-        private Vector2 pivotOffset;
+        private Vector2 pivotOffset = new Vector2(0, 0);
         [ObservableProperty]
-        private string color;
+        private string color = "FFFFFFFF";
         [ObservableProperty]
-        private float opacity;
+        private float opacity = 100;
         [ObservableProperty]
-        private float depth;
+        private float depth = -1;
         [ObservableProperty]
-        private Vector2 parallax;
+        private Vector2 parallax = new Vector2(0, 0);
         [ObservableProperty]
-        private string tag;
+        private string tag = String.Empty;
         [ObservableProperty]
-        private bool locked;
+        private bool locked = false;
         [ObservableProperty]
-        private RelativeTo relativeTo;
+        private int floor = 0;
+        [ObservableProperty]
+        private Vector2 tiling = new Vector2(0, 0);
+        
     }
 }

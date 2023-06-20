@@ -7,13 +7,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
-#nullable disable
+
 namespace ADODesigner.Models
 {
+    /// <summary>
+    /// Base class for holding decoration states. 
+    /// </summary>
     public partial class KeyFrame : ObservableObject
     {
         [ObservableProperty]
-        private string tag;
+        private string tag = String.Empty;
         [ObservableProperty]
         private Vector2 positionOffset;
         [ObservableProperty]
@@ -21,7 +24,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private float rotationOffset;
         [ObservableProperty]
-        private string color;
+        private string color = "FFFFFFFF";
         [ObservableProperty]
         private float opacity;
         [ObservableProperty]
@@ -31,12 +34,18 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private RelativeTo relativeTo;
         [ObservableProperty]
-        private string eventTag;
+        private string eventTag = String.Empty;
         [ObservableProperty]
-        private Ease ease;
+        private Ease ease = Ease.Leanear;
         [ObservableProperty]
         private float angleOffset;
         [ObservableProperty]
         private bool isSelected;
+        [ObservableProperty]
+        private int duration;
+        [ObservableProperty]
+        private int floor;
+        [ObservableProperty]
+        private string key = String.Empty;
     }
 }

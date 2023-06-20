@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="Views/Styles/TreeViewItemStyle.xaml"/>
                 <ResourceDictionary Source="Views/Styles/ScrollViewerStyle.xaml"/>
                 <ResourceDictionary Source="Views/Styles/TabControlStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/MenuStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

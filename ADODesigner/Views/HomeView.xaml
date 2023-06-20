@@ -9,6 +9,9 @@
     <Window.DataContext>
         <vm:HomeVM/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding CreateProjectCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -20,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <Image Source="../Assets/close-window.png" Grid.Column="1" HorizontalAlignment="Right" Opacity="0.9"/>
-        <TextBlock Text="ADODesigner | Create Project" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+        <TextBlock Text="ADODesigner | Home" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
 
         <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource BackgroundColor}" Margin="5 5 5 5">
             <StackPanel>

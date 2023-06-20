@@ -20,8 +20,29 @@ namespace ADODesigner.Views.Controls
     /// </summary>
     public partial class TimeLine : UserControl
     {
+        public List<KeyFrameControl> KeyFrameControls { get; set; } = new();
+        public int NumberTimeLine { get; set; } = 0;
         public TimeLine()
         {
+
+            for (int i = 0; EditorView.Editor.TimeLines[NumberTimeLine].Count < 0; i++)
+            {
+                KeyFrameControl keyFrameControl = new();
+                keyFrameControl.Key = EditorView.Editor.TimeLines[NumberTimeLine][i].Key;
+                KeyFrameControls.Add(keyFrameControl);
+
+                EditorView.Editor.TimeLines[NumberTimeLine].PropertyChanged += (sender, e) =>
+                {
+                    for (int s = 0; KeyFrameControls.Count < 0; s++)
+                    {
+                        if (EditorView.Editor.TimeLines[NumberTimeLine][i].Key == KeyFrameControls[s].Key)
+                        {
+
+                        }
+                    }
+                };
+            }
+
             InitializeComponent();
         }
     }

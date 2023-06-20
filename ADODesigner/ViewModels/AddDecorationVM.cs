@@ -1,4 +1,5 @@
 ﻿using ADODesigner.Models;
+using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -6,17 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-#nullable disable
+
 namespace ADODesigner.ViewModels
 {
-    public partial class KeyFrameControlVM : ObservableObject
+    public partial class AddDecorationVM : ObservableObject
     {
         [ObservableProperty]
-        private KeyFrame keyFrame;
+        private Decoration decoration = new();
         [RelayCommand]
-        private void ChangeSelection()
+        private void AddDecoration()
         {
-            KeyFrame.IsSelected = !KeyFrame.IsSelected;
+            EditorView.Editor.AddDecoration(decoration);
         }
     }
 }
