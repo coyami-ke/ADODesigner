@@ -8,12 +8,13 @@
         xmlns:local="clr-namespace:ADODesigner.Views"
         mc:Ignorable="d"
         xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="EditorView" Height="640" Width="1000" Background="{DynamicResource ForegroundColor}" WindowStyle="None">
+        Title="ADODesigner - Editor" Height="640" Width="1000" Background="{DynamicResource ForegroundColor}" WindowStyle="None">
     <Window.DataContext>
         <vm:EditorVM/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -22,44 +23,86 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="1" Grid.ColumnSpan="3" Background="#FF101013"/>
+        <Image Source="../Assets/close-window.png" HorizontalAlignment="Right" Grid.ColumnSpan="3" Opacity="0.9"/>
+        <Image Source="../Assets/copy.png" HorizontalAlignment="Right" Grid.ColumnSpan="3" Opacity="0.9" Height="28" Margin="48 0"/>
+        <Image Source="../Assets/min-window.png" Grid.Row="1" Opacity="0.9" />
+        <Border Grid.Row="2" Grid.ColumnSpan="3" Background="#FF101013"/>
+        <ToolBar Grid.Row="1">
+            <Image Source="../Assets/copy.png" Grid.Row="1" Opacity="0.9" Height="24"/>
+            <Image Source="../Assets/paste.png" Grid.Row="1" Opacity="0.9" />
+        </ToolBar>
         <Menu Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Background="Transparent">
-            <MenuItem Style="{DynamicResource MenuItemStyle}" Header="File">
+            <MenuItem Header="File">
                 <MenuItem Header="Create a project..."/>
                 <MenuItem Header="Open..."/>
-                <Separator/>
+                <Separator Background="#FF121215"/>
                 <MenuItem Header="Save"/>
             </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo"/>
+                <MenuItem Header="Redo"/>
+                <Separator Background="#FF121215"/>
+                <MenuItem Header="Cut"/>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+                <MenuItem Header="Duplicate"/>
+                <MenuItem Header="Delete"/>
+            </MenuItem>
         </Menu>
-        <Border Background="{DynamicResource BackgroundColor}" Grid.Row="1" Margin="5 5 5 5">
-            <ListBox Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Decorations}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}">
+        <Border Background="{DynamicResource BackgroundColor}" Grid.Row="2" Margin="5 5 5 5">
+            <ListBox Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Decorations}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Foreground="{DynamicResource TextColor}" Text="{Binding Tag}" FontSize="15"/>
+                        <TextBlock Foreground="{DynamicResource TextColor2}" Text="{Binding Tag}" FontSize="15"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </Border>
-        <Border Grid.Column="1" Grid.Row="1" Background="#FF101013" Margin="5">
+        <Border Grid.Column="1" Grid.Row="2" Background="#FF101013" Margin="5">
             <TabControl Background="Transparent" BorderBrush="#FF101013" BorderThickness="5">
-                <TabItem Style="{DynamicResource TabItemStyle}" Header="Designer" Height="30">
+                <TabItem Header="Designer" Height="30">
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
                         <Grid Height="500" Width="500">
                             <Rectangle Fill="White" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 0 540"/>
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Style="{DynamicResource TabItemStyle}" Header="TimeLine" Height="30">
+                <TabItem Header="TimeLine" Height="30">
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
                         <StackPanel x:Name="panelTimeLines">
+                            
                         </StackPanel>
+                        <ScrollViewer.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Presets">
+                                    <MenuItem Header="Animations">
+                                        <MenuItem Header="Balls Animation..."/>
+                                    </MenuItem>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ScrollViewer.ContextMenu>
                     </ScrollViewer>
                 </TabItem>
             </TabControl>
         </Border>
-        <GridSplitter Grid.Column="0" ShowsPreview="True" Width="3" Grid.Row="1"
+        <GridSplitter Grid.Column="0" ShowsPreview="True" Width="3" Grid.Row="2"
         HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="#FF121215"/>
-        <GridSplitter Grid.Column="1" ShowsPreview="True" Width="3" Grid.Row="1"
+        <GridSplitter Grid.Column="1" ShowsPreview="True" Width="3" Grid.Row="2"
         HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="#FF121215"/>
+        <Border Grid.Row="2" Grid.Column="3">
+            <Grid>
+                <TabControl Background="Transparent" BorderBrush="#FF101013" BorderThickness="5">
+                    <TabItem Header="KeyFrame">
+                        <Grid>
+                            <TextBlock Text="Position"/>
+                            <TextBox/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Decoration">
+
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ADODesigner.ViewModels"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="CreateProjectView" Height="245" Width="450" Background="{DynamicResource ForegroundColor}" WindowStyle="None" ResizeMode="NoResize">
+        Title="CreateProjectView" Height="250" Width="450" Background="{DynamicResource ForegroundColor}" WindowStyle="None" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:CreateProjectVM/>
     </Window.DataContext>
@@ -17,12 +17,13 @@
         <TextBlock Text="ADODesigner | Create Project" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
         <Border Grid.Row="1" Background="{DynamicResource BackgroundColor}">
             <Grid>
-                <TextBlock Text="Name" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,32,0,0"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" FontSize="15" Height="24" VerticalAlignment="Top" Margin="47,57,247,0"/>
-                <TextBlock Text="Path" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,86,0,0"/>
-                <TextBox Style="{DynamicResource TextBoxStyle}" FontSize="15" Height="24" VerticalAlignment="Top" Margin="47,111,247,0"/>
-                <Button Style="{DynamicResource ButtonStyle}" Content="..." Height="24" FontSize="10" Margin="208,111,198,62" BorderBrush="#FF121215"/>
-                <Button Style="{DynamicResource ButtonStyle}" Content="Create a new project" BorderBrush="#FF121215" Height="40" Width="200" FontSize="12" Margin="240,147,10,10" Command="{Binding CreateProjectCommand}"/>
+                <TextBlock Text="Name" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,8,0,0"/>
+                <TextBox FontSize="15" Height="24" VerticalAlignment="Top" Margin="13,33,44,0"/>
+                <TextBlock Text="Path" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,62,0,0"/>
+                <TextBox FontSize="15" Height="24" VerticalAlignment="Center" Margin="13,0,93,0"/>
+                <Button Content="..." Height="24" FontSize="10" Margin="362,86,44,87" BorderBrush="#FF121215"/>
+                <Button Content="Create a new project" BorderBrush="#FF121215" Height="40" Width="200" FontSize="12" Margin="206,123,44,34" Command="{Binding CreateProjectCommand}"/>
+                <Button Content="Cancel" BorderBrush="#FF121215" Height="40" FontSize="12" Margin="13,123,249,34" Click="cancelButton_Click" x:Name="cancelButton"/>
             </Grid>
         </Border>
     </Grid>

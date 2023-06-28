@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ADODesigner.ViewModels"
+        xmlns:res="clr-namespace:ADODesigner.Localization"
         mc:Ignorable="d"
-        Title="ADODesigner | Home" Height="600" Width="800" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize" MouseDown="RowDefinition_MouseDown">
+        Title="{x:Static res:Resources.TextBlockHomePageTitle}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize" MouseDown="RowDefinition_MouseDown">
     <Window.DataContext>
         <vm:HomeVM/>
     </Window.DataContext>
@@ -22,21 +23,21 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Image Source="../Assets/close-window.png" Grid.Column="1" HorizontalAlignment="Right" Opacity="0.9"/>
-        <TextBlock Text="ADODesigner | Home" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+        <Image Source="../Assets/close-window.png" Grid.Column="1" HorizontalAlignment="Right" Opacity="0.9" x:Name="closeWindow" MouseDown="closeWindow_MouseDown"/>
+        <TextBlock Text="{x:Static res:Resources.TextBlockHomePageTitle}" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
 
         <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource BackgroundColor}" Margin="5 5 5 5">
             <StackPanel>
-                <Button Style="{DynamicResource ButtonStyle}" Height="80" Command="{Binding CreateProjectCommand}">
+                <Button Height="80" Command="{Binding CreateProjectCommand}">
                     <Button.Content>
                         <Grid>
                             <Image Source="../Assets/create-file.png" Margin="-110,0,109,0" Opacity="0.9"/>
-                            <TextBlock Text="Create Project" Margin="29,13,-29,-13"/>
-                            <TextBlock Text="Start working with the program." Margin="29,33,-29,-33" FontSize="12" Opacity="0.8"/>
+                            <TextBlock Text="{x:Static res:Resources.TextBlockHomePageCreateProject}" Margin="29,13,-29,-13"/>
+                            <TextBlock Text="{x:Static res:Resources.TextBlockHomePageCreateProjectDescription}" Margin="29,33,-29,-33" FontSize="12" Opacity="0.8"/>
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Style="{DynamicResource ButtonStyle}" Height="80">
+                <Button Height="80">
                     <Button.Content>
                         <Grid>
                             <Image Source="../Assets/settings.png" Margin="-105,0,105,0" Opacity="0.9"/>
@@ -45,10 +46,10 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Style="{DynamicResource ButtonStyle}" Height="80" Command="{Binding OpenProjectCommand}">
+                <Button Height="80" Command="{Binding OpenProjectCommand}">
                     <Button.Content>
                         <Grid>
-                            <Image Source="../Assets/folder.png" Margin="-105,0,105,0" Opacity="0.6"/>
+                            <Image Source="../Assets/folder.png" Margin="-105,0,105,0" Opacity="0.7"/>
                             <TextBlock Text="Open Project" Margin="43,10,-42,-10"/>
                             <TextBlock Text="Start working with the started project." Margin="43,30,-42,-30" FontSize="12" Opacity="0.8"/>
                         </Grid>
@@ -57,7 +58,7 @@
             </StackPanel>
         </Border>
         <Border Grid.Row="1" Grid.Column="1" Background="{DynamicResource BackgroundColor}" Margin="5,5,5,5">
-            <ListBox Style="{DynamicResource ListBoxStyle}" SelectedItem="{Binding SelectedProject}" ItemsSource="{Binding Projects}" ItemContainerStyle="{DynamicResource ListBoxItemStyle}">
+            <ListBox Style="{DynamicResource ListBoxStyle}" SelectedItem="{Binding SelectedProject}" ItemsSource="{Binding Projects}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

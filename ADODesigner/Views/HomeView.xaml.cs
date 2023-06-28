@@ -21,12 +21,18 @@ namespace ADODesigner.Views
     {
         public HomeView()
         {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ko");
             InitializeComponent();
         }
 
         private void RowDefinition_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void closeWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
         }
     }
 }

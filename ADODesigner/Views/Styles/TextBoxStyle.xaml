@@ -4,7 +4,7 @@
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FF121215"/>
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF121215"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF121215"/>
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+    <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource TextBox.Static.Border}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Static.Border}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColor2}"/>

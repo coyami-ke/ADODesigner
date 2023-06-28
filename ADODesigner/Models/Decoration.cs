@@ -16,7 +16,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private Vector2 position = new Vector2(0,0);
         [ObservableProperty]
-        private Vector2 scale = new Vector2(0,0);
+        private Vector2 scale = new Vector2(100,100);
         [ObservableProperty]
         private float rotation = 0;
         [ObservableProperty]

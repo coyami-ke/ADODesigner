@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ADODesigner.Models;
+using Gstc.Collections.ObservableLists;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,30 +22,27 @@ namespace ADODesigner.Views.Controls
     /// </summary>
     public partial class TimeLine : UserControl
     {
-        public List<KeyFrameControl> KeyFrameControls { get; set; } = new();
         public int NumberTimeLine { get; set; } = 0;
         public TimeLine()
         {
+            InitializeComponent();
 
-            for (int i = 0; EditorView.Editor.TimeLines[NumberTimeLine].Count < 0; i++)
+            if ((NumberTimeLine % 2) == 0) canvas.Background = new SolidColorBrush(Color.FromRgb(16, 16, 19));
+            else canvas.Background = new SolidColorBrush(Color.FromRgb(18, 18, 21));
+
+            EditorView.Editor.TimeLines[NumberTimeLine].CollectionChanged += TimeLine_CollectionChanged;
+            EditorView.Editor.AddKeyFrame("AZAZA");
+        }
+
+        private void TimeLine_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            canvas.Children.Clear();
+            for (int i = 0; i < EditorView.Editor.TimeLines[NumberTimeLine].Count ; i++)
             {
                 KeyFrameControl keyFrameControl = new();
                 keyFrameControl.Key = EditorView.Editor.TimeLines[NumberTimeLine][i].Key;
-                KeyFrameControls.Add(keyFrameControl);
-
-                EditorView.Editor.TimeLines[NumberTimeLine].PropertyChanged += (sender, e) =>
-                {
-                    for (int s = 0; KeyFrameControls.Count < 0; s++)
-                    {
-                        if (EditorView.Editor.TimeLines[NumberTimeLine][i].Key == KeyFrameControls[s].Key)
-                        {
-
-                        }
-                    }
-                };
+                canvas.Children.Add(keyFrameControl);
             }
-
-            InitializeComponent();
         }
     }
 }

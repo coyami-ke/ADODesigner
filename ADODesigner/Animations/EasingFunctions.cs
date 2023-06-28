@@ -37,5 +37,28 @@ namespace ADODesigner.Animations
             else
                 return 1 - 2 * (1 - t) * (1 - t);
         }
+        public static double InCubic(float t)
+        {
+            return t * t * t;
+        }
+
+        public static double OutCubic(float t)
+        {
+            double t1 = t - 1;
+            return t1 * t1 * t1 + 1;
+        }
+
+        public static double InOutCubic(float t)
+        {
+            if (t < 0.5f)
+            {
+                return 4 * t * t * t;
+            }
+            else
+            {
+                double t1 = 2 * t - 2;
+                return 0.5f * t1 * t1 * t1 + 1;
+            }
+        }
     }
 }

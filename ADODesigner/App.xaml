@@ -16,6 +16,8 @@
                 <ResourceDictionary Source="Views/Styles/TabControlStyle.xaml"/>
                 <ResourceDictionary Source="Views/Styles/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="Views/Styles/MenuStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/ToolBarStyle.xaml"/>
+                <ResourceDictionary Source="Views/Styles/ContextMenuStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

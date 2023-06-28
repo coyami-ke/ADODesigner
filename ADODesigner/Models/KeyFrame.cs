@@ -42,7 +42,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private bool isSelected;
         [ObservableProperty]
-        private int duration;
+        private float duration;
         [ObservableProperty]
         private int floor;
         [ObservableProperty]

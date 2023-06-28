@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <SolidColorBrush x:Key="BackgroundColor" Color="#FF101013"/>
-    <SolidColorBrush x:Key="ForegroundColor" Color="#FF131315"/>
-    <SolidColorBrush x:Key="TextColor" Color="#E5FFFFFF"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#FF121215"/>
+    <SolidColorBrush x:Key="TextColor" Color="#CCFFFFFF"/>
     <SolidColorBrush x:Key="TextColor2" Color="#A0FFFFFF"/>
     <SolidColorBrush x:Key="Light1" Color="#FF4A6CBF"/>
 </ResourceDictionary>

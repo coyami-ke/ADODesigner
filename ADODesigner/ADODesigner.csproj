@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <None Remove="Assets\close-window.png" />
+    <None Remove="Assets\copy.png" />
     <None Remove="Assets\create-file.png" />
+    <None Remove="Assets\delete-file.png" />
     <None Remove="Assets\folder.png" />
+    <None Remove="Assets\paste.png" />
     <None Remove="Assets\settings.png" />
   </ItemGroup>
 
@@ -25,13 +28,27 @@
 
   <ItemGroup>
     <Resource Include="Assets\close-window.png" />
+    <Resource Include="Assets\copy.png" />
     <Resource Include="Assets\create-file.png" />
+    <Resource Include="Assets\delete-file.png" />
     <Resource Include="Assets\folder.png" />
+    <Resource Include="Assets\paste.png" />
     <Resource Include="Assets\settings.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Converters\" />
+    <Compile Update="Localization\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

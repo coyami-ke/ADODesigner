@@ -22,7 +22,7 @@ namespace ADODesigner.ViewModels
         {
             EditorView editor = new();
             editor.Show();
-            //WeakReferenceMessenger.Default.Send<CreateProjectMessenger>(new CreateProjectMessenger(Project));
+            EditorView.Editor.Project = this.Project;
         }
     }
 }

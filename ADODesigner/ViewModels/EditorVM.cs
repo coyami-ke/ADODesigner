@@ -1,7 +1,9 @@
 ﻿using ADODesigner.Models;
+using ADODesigner.ViewModels.Messengers;
 using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Gstc.Collections.ObservableLists;
 using System;
 using System.Collections.Generic;
@@ -20,8 +22,13 @@ namespace ADODesigner.ViewModels
         private ObservableList<Decoration> decorations = new();
         [ObservableProperty]
         private ObservableList<ObservableList<KeyFrame>> timeLines = new();
+        [ObservableProperty]
+        private KeyFrame selectedKeyFrame = new();
+        [ObservableProperty]
+        private Decoration selectedDecoration = new();
+        [ObservableProperty]
+        private Project project;
         #endregion
-
         #region Actions with KeyFrames
         public void AddKeyFrame(string key)
         {
@@ -35,16 +42,41 @@ namespace ADODesigner.ViewModels
         {
             for (int i = 0; TimeLines.Count < 0; i++)
             {
-                for (int s = 0; TimeLines[i].Count < 0; s++)
+                for (int s = 0; s < TimeLines[i].Count; s++)
                 {
                     if (TimeLines[i][s].Key == key) return TimeLines[i][s];
                 }
             }
             return null;
         }
-
-        [RelayCommand]
-        private void RemoveKeyFrame(string key)
+        /// <summary>
+        /// Find keyframe with key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>Index of TimeLines. Index of TimeLines[i]</returns>
+        public (int, int) GetKeyFrameIndex(string key)
+        {
+            for (int i = 0; TimeLines.Count < 0; i++)
+            {
+                for (int s = 0; TimeLines[i].Count < 0; s++)
+                {
+                    if (TimeLines[i][s].Key == key) return (i, s);
+                }
+            }
+            return (-1, -1);
+        }
+        public bool TryFindKeyFrame(string key)
+        {
+            for (int i = 0; TimeLines.Count < 0; i++)
+            {
+                for (int s = 0; TimeLines[i].Count > s; s++)
+                {
+                    if (TimeLines[i][s].Key == key) return true;
+                }
+            }
+            return false;
+        }
+        public void RemoveKeyFrame(string key)
         {
             for (int i = 0;  i < TimeLines.Count; i++)
             {
@@ -71,6 +103,7 @@ namespace ADODesigner.ViewModels
         #region Constructors
         public EditorVM()
         {
+            Project = new();
             TimeLines.Add(new());
         }
         #endregion

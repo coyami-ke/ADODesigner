@@ -1,8 +1,5 @@
-﻿using ADODesigner.Models;
-using ADODesigner.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ADODesigner.Views.Controls
+namespace ADODesigner.Views
 {
     /// <summary>
-    /// Interaction logic for KeyFrameControl.xaml
+    /// Interaction logic for CreateBallsAnimationView.xaml
     /// </summary>
-    public partial class KeyFrameControl : UserControl
+    public partial class CreateBallsAnimationView : Window
     {
-        public string Key { get; set; } = String.Empty;
-        public KeyFrameControl()
+        public CreateBallsAnimationView()
         {
             InitializeComponent();
         }

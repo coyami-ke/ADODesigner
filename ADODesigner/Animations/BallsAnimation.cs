@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.Intrinsics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +21,8 @@ namespace ADODesigner.Animations
         public Vector2 SecondPosition { get; set; } = Vector2.Zero;
         public bool IsSinusoid { get; set; } = true;
         public int FrameRate { get; set; } = 30;
-        public int Duration { get; set; } = 10;
+        public int Duration { get; set; } = 5;
+        public int Floor { get; set; } = 1;
     }
     /// <summary>
     /// Class for creating procedural animation of ADOFAI balls.
@@ -43,6 +45,8 @@ namespace ADODesigner.Animations
                 decoration.Position = Args.FirstPosition;
                 decoration.Tag = "Ball" + i;
                 decoration.Opacity -= i * 8 * Args.Intensivity;
+                decoration.Scale -= new Vector2(i * 10, i * 10);
+                
                 decorations.Add(decoration);
                 EditorView.Editor.AddDecoration(decoration);
             }
@@ -54,12 +58,16 @@ namespace ADODesigner.Animations
                     for (int s = 0; s < countFrames; s++)
                     {
                         KeyFrame keyFrame = new();
-                        keyFrame.Duration = Args.Duration / countFrames;
+                        keyFrame.Duration = Args.FrameRate / countFrames;
+                        keyFrame.AngleOffset = 180 / Args.FrameRate * (s + 1);
                         keyFrame.Tag = "Ball" + i;
-                        keyFrame.AngleOffset = keyFrame.Duration / 180;
                         keyFrame.Key = "BallsAnimation" + decorations[i].Tag + s.ToString();
-
-
+                        keyFrame.Floor = Args.Floor;
+                        keyFrame.Opacity = decorations[i].Opacity;
+                        keyFrame.Depth = decorations[i].Depth;
+                        keyFrame.RotationOffset = decorations[i].Rotation;
+                        keyFrame.Scale = decorations[i].Scale;
+                       
                         Vector2 position = new(0,0);
 
                         float positionX = (Args.FirstPosition.X - Args.SecondPosition.X) / countFrames * s;

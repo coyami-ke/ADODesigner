@@ -1,15 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <SolidColorBrush x:Key="Menu.Static.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="Menu.Static.Background" Color="#FF101013"/>
     <SolidColorBrush x:Key="Menu.Static.Border" Color="#FF101013"/>
     <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#E5FFFFFF"/>
-    <SolidColorBrush x:Key="Menu.Static.Separator" Color="#FFD7D7D7"/>
+    <SolidColorBrush x:Key="Menu.Static.Separator" Color="#FF101013"/>
     <SolidColorBrush x:Key="Menu.Disabled.Foreground" Color="#FF707070"/>
     <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#FF101013"/>
     <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF101013"/>
-    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#3D26A0DA"/>
-    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF101013"/>
+    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#FF121215"/>
+    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF121215"/>
     <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Background" Color="#0A000000"/>
     <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Border" Color="#21000000"/>
     <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter"/>
@@ -266,11 +266,11 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
+    <Style TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="#FF101013"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>

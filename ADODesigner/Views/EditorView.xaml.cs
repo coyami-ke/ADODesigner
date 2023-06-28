@@ -1,10 +1,13 @@
 ﻿using ADODesigner.Animations;
+using ADODesigner.Converters;
 using ADODesigner.Models;
 using ADODesigner.ViewModels;
 using ADODesigner.Views.Controls;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,18 +31,8 @@ namespace ADODesigner.Views
             Editor.PropertyChanged += Editor_PropertyChanged;
             DataContextChanged += EditorView_DataContextChanged;
 
-            
-
             InitializeComponent();
-
             panelTimeLines.Children.Add(new TimeLine());
-
-            BallsAnimation ballsAnimation = new(new BallsAnimationArgs() { FirstPosition = new(0, 0), SecondPosition = new(10, 10) });
-            ballsAnimation.CreateAnimation();
-
-            MessageBox.Show(Editor.TimeLines[0][10].PositionOffset.X.ToString());
-
-            //MessageBox.Show(Editor.FindKeyFrame("BallsAnimation" + "Balls1" + "1").PositionOffset.X.ToString());
         }
 
         private void EditorView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

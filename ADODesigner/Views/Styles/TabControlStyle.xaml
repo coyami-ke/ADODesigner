@@ -24,7 +24,7 @@
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#FF101013"/>
     <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#FF101013"/>
     <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="#D9D9D9"/>
-    <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
+    <Style TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextColor2}"/>
         <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>

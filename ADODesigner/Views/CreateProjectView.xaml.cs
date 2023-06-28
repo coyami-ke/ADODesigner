@@ -23,5 +23,10 @@ namespace ADODesigner.Views
         {
             InitializeComponent();
         }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

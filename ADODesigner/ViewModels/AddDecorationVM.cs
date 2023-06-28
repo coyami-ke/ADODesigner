@@ -17,7 +17,7 @@ namespace ADODesigner.ViewModels
         [RelayCommand]
         private void AddDecoration()
         {
-            EditorView.Editor.AddDecoration(decoration);
+            EditorView.Editor.AddDecoration(this.Decoration);
         }
     }
 }

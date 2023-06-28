@@ -23,36 +23,36 @@
         <TextBlock Text="ADODesigner - Add Decoration" Foreground="{DynamicResource TextColor2}" Opacity="0.9" VerticalAlignment="Center" Margin="10"/>
         <Border Grid.Row="1" Background="#FF101013">
             <Grid>
-                <TextBox Text="{Binding Decoration.Tag}" Style="{DynamicResource TextBoxStyle}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,48,0,0"/>
+                <TextBox Text="{Binding Decoration.Tag}"   Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,48,0,0"/>
                 <TextBlock Text="Tag*" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,52,0,0"/>
-                <TextBox Text="{Binding Decoration.Floor}" Style="{DynamicResource TextBoxStyle}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,77,0,0"/>
+                <TextBox Text="{Binding Decoration.Floor}"   Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,77,0,0"/>
                 <TextBlock Text="Floor*" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0"/>
-                <TextBox Text="{Binding Decoration.Image}" Style="{DynamicResource TextBoxStyle}" Width="136" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,19,0,0"/>
+                <TextBox Text="{Binding Decoration.Image}"   Width="136" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,19,0,0"/>
                 <TextBlock Text="Image*" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="9,22,0,0"/>
                 <Button Content="Select file" Style="{DynamicResource ButtonStyle}" Height="24" Margin="211,19,131,309" FontSize="8"/>
-                <TextBox Text="{Binding Decoration.Position.X}" Style="{DynamicResource TextBoxStyle}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,104,0,0"/>
+                <TextBox Text="{Binding Decoration.Position.X}"   Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,104,0,0"/>
                 <TextBlock Text="Position" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="9,107,0,0"/>
-                <TextBox Text="{Binding Decoration.Position.Y}" Style="{DynamicResource TextBoxStyle}" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,104,0,0"/>
-                <TextBox Text="{Binding Decoration.PivotOffset.X}" Style="{DynamicResource TextBoxStyle}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,133,0,0"/>
+                <TextBox Text="{Binding Decoration.Position.Y}"   Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,104,0,0"/>
+                <TextBox Text="{Binding Decoration.PivotOffset.X}"   Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,133,0,0"/>
                 <TextBlock Text="Offset" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="9,136,0,0"/>
-                <TextBox Text="{Binding Decoration.PivotOffset.Y}" Style="{DynamicResource TextBoxStyle}" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,133,0,0"/>
-                <TextBox Text="{Binding Decoration.Rotation}" Style="{DynamicResource TextBoxStyle}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,161,0,0"/>
+                <TextBox Text="{Binding Decoration.PivotOffset.Y}"   Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,133,0,0"/>
+                <TextBox Text="{Binding Decoration.Rotation}"   Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,161,0,0"/>
                 <TextBlock Text="Rotation" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,164,0,0"/>
-                <TextBox Text="{Binding Decoration.Scale.X}" Style="{DynamicResource TextBoxStyle}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,190,0,0"/>
+                <TextBox Text="{Binding Decoration.Scale.X}"   Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,190,0,0"/>
                 <TextBlock Text="Scale" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,193,0,0"/>
-                <TextBox Text="{Binding Decoration.Scale.Y}" Style="{DynamicResource TextBoxStyle}" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,190,0,0"/>
+                <TextBox Text="{Binding Decoration.Scale.Y}"   Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,190,0,0"/>
                 <TextBlock Text="Tiling" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,222,0,0"/>
-                <TextBox Text="{Binding Decoration.Tiling.X}" Style="{DynamicResource TextBoxStyle}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,217,0,0"/>
-                <TextBox Text="{Binding Decoration.Tiling.Y}" Style="{DynamicResource TextBoxStyle}" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,217,0,0"/>
+                <TextBox Text="{Binding Decoration.Tiling.X}"   Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,217,0,0"/>
+                <TextBox Text="{Binding Decoration.Tiling.Y}"   Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,217,0,0"/>
                 <TextBlock Text="Color" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,249,0,0"/>
-                <TextBox Text="{Binding Decoration.Color}" Style="{DynamicResource TextBoxStyle}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,246,0,0"/>
+                <TextBox Text="{Binding Decoration.Color}"   Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,246,0,0"/>
                 <TextBlock Text="Depth" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,278,0,0"/>
-                <TextBox Text="{Binding Decoration.Depth}" Style="{DynamicResource TextBoxStyle}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,275,0,0"/>
+                <TextBox Text="{Binding Decoration.Depth}"   Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,275,0,0"/>
                 <TextBlock Text="Parallax" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,307,0,0"/>
-                <TextBox Text="{Binding Decoration.Parallax.X}" Style="{DynamicResource TextBoxStyle}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,304,0,0"/>
-                <TextBox Text="{Binding Decoration.Parallax.Y}" Style="{DynamicResource TextBoxStyle}" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,304,0,0"/>
-                <Button Content="Add Decoration" Style="{DynamicResource ButtonStyle}" Height="24" Margin="12,343,11,5" FontSize="8"/>
-                <Button Content="Select file" Style="{DynamicResource ButtonStyle}" Height="24" Margin="205,19,11,329" FontSize="8"/>
+                <TextBox Text="{Binding Decoration.Parallax.X}"   Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,304,0,0"/>
+                <TextBox Text="{Binding Decoration.Parallax.Y}"   Width="95" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,304,0,0"/>
+                <Button Content="Add Decoration" Height="24" Margin="12,343,11,5" FontSize="8"/>
+                <Button Content="Select file" Height="24" Margin="205,19,11,329" FontSize="8"/>
 
             </Grid>
         </Border>
