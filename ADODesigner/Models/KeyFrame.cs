@@ -36,7 +36,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private string eventTag = String.Empty;
         [ObservableProperty]
-        private Ease ease = Ease.Leanear;
+        private Ease ease = Ease.Linear;
         [ObservableProperty]
         private float angleOffset;
         [ObservableProperty]

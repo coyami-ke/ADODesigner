@@ -16,7 +16,7 @@ namespace ADODesigner.Animations
     {
         public int Intensivity { get; set; } = 1;
         public int Count { get; set; } = 5;
-        public Ease Easing { get; set; } = Ease.Leanear;
+        public Ease Easing { get; set; } = Ease.Linear;
         public Vector2 FirstPosition { get; set; } = Vector2.Zero;
         public Vector2 SecondPosition { get; set; } = Vector2.Zero;
         public bool IsSinusoid { get; set; } = true;
@@ -67,7 +67,7 @@ namespace ADODesigner.Animations
                         keyFrame.Depth = decorations[i].Depth;
                         keyFrame.RotationOffset = decorations[i].Rotation;
                         keyFrame.Scale = decorations[i].Scale;
-                       
+                        
                         Vector2 position = new(0,0);
 
                         float positionX = (Args.FirstPosition.X - Args.SecondPosition.X) / countFrames * s;

@@ -8,7 +8,7 @@ namespace ADODesigner.Models
 {
     public enum Ease
     {
-        Leanear,
+        Linear,
         IsSine,
         OutSine,
         InOutSine,

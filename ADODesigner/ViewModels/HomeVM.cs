@@ -20,25 +20,18 @@ namespace ADODesigner.ViewModels
         [ObservableProperty]
         private Project selectedProject = new();
         [ObservableProperty]
-        private ObservableCollection<Project> projects = App.Config.Projects;
+        private ObservableCollection<Project> projects;
 
         [RelayCommand]
         private void CreateProject()
         {
             CreateProjectView createProjectView = new();
             createProjectView.Show();
-            //Project project = new();
-            //project.Name = "My Project";
-            //project.Path = "D:\\Projects\\ComposerTrack";
-            //Projects.Add(project);
-
-            //App.Config.Projects = Projects;
         }
         [RelayCommand]
         private void OpenProject()
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-
             dialog.IsFolderPicker = true;
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -47,6 +40,9 @@ namespace ADODesigner.ViewModels
                 project.Path = dialog.FileName;
                 Projects.Add(project);
             }
+        }
+        public HomeVM()
+        {
         }
     }
 }

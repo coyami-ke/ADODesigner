@@ -1,4 +1,7 @@
-﻿using ADODesigner.Models;
+﻿using ADODesigner.Converters;
+using ADODesigner.Core;
+using ADODesigner.Models;
+using ADODesigner.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,28 +20,9 @@ namespace ADODesigner
     /// </summary>
     public partial class App : Application
     {
-        public static ConfigurationModel Config { get; set; }
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            if (!File.Exists("config.json"))
-            {
-                File.Create("config.json").Dispose();
-
-                Config = new();
-                Config.Projects = new ObservableCollection<Project>();
-
-                return;
-            }
-
-            FileStream configStream = new("config.json", FileMode.Open);
-            StreamReader configReader = new(configStream);
-            JsonSerializer serializer = new JsonSerializer();
-            Config = (ConfigurationModel)serializer.Deserialize(configReader, typeof(ConfigurationModel));
-
-            base.OnStartup(e);
-        }
         protected override void OnExit(ExitEventArgs e)
         {
+
             File.Delete("config.json");
 
             File.Create("config.json").Dispose();
@@ -46,7 +30,7 @@ namespace ADODesigner
             FileStream configStream = new("config.json", FileMode.Append);
             StreamWriter configWriter = new(configStream);
             JsonSerializer serializer = new JsonSerializer();
-            serializer.Serialize(configWriter, Config);
+            serializer.Serialize(configWriter, LoadView.Config);
 
             configWriter.Dispose();
             configStream.Dispose();

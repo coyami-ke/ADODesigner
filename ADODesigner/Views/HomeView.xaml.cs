@@ -21,7 +21,6 @@ namespace ADODesigner.Views
     {
         public HomeView()
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ko");
             InitializeComponent();
         }
 
