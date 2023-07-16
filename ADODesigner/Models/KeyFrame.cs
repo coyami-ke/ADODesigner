@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
-
+#pragma warning disable 1591
 namespace ADODesigner.Models
 {
     /// <summary>
@@ -18,33 +18,33 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private string tag = String.Empty;
         [ObservableProperty]
-        private Vector2 positionOffset;
+        private Vector2 positionOffset = new(0, 0);
         [ObservableProperty]
-        private Vector2 scale;
+        private Vector2 scale = new(100,100);
         [ObservableProperty]
-        private float rotationOffset;
+        private float rotationOffset = 0;
         [ObservableProperty]
         private string color = "FFFFFFFF";
         [ObservableProperty]
-        private float opacity;
+        private float opacity = 100;
         [ObservableProperty]
-        private float depth;
+        private float depth = -1;
         [ObservableProperty]
-        private Vector2 parallax;
+        private Vector2 parallax = new(0,0);
         [ObservableProperty]
-        private RelativeTo relativeTo;
+        private RelativeTo relativeTo = RelativeTo.Tile;
         [ObservableProperty]
         private string eventTag = String.Empty;
         [ObservableProperty]
         private Ease ease = Ease.Linear;
         [ObservableProperty]
-        private float angleOffset;
+        private float angleOffset = 0;
         [ObservableProperty]
-        private bool isSelected;
+        private bool isSelected = false;
         [ObservableProperty]
-        private float duration;
+        private float duration = 1;
         [ObservableProperty]
-        private int floor;
+        private int floor = 0;
         [ObservableProperty]
         private string key = String.Empty;
     }

@@ -18,9 +18,9 @@
         <Border Grid.Row="1" Background="{DynamicResource BackgroundColor}">
             <Grid>
                 <TextBlock Text="Name" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,8,0,0"/>
-                <TextBox FontSize="15" Height="24" VerticalAlignment="Top" Margin="13,33,44,0"/>
+                <TextBox Height="24" VerticalAlignment="Top" Margin="13,33,44,0" Text="{Binding Project.Name}"/>
                 <TextBlock Text="Path" Foreground="{DynamicResource TextColor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,62,0,0"/>
-                <TextBox FontSize="15" Height="24" VerticalAlignment="Center" Margin="13,0,93,0"/>
+                <TextBox Height="24" VerticalAlignment="Center" Margin="13,0,93,0" Text="{Binding Project.Path}"/>
                 <Button Content="..." Height="24" FontSize="10" Margin="362,86,44,87" BorderBrush="#FF121215"/>
                 <Button Content="Create a new project" BorderBrush="#FF121215" Height="40" Width="200" FontSize="12" Margin="206,123,44,34" Command="{Binding CreateProjectCommand}"/>
                 <Button Content="Cancel" BorderBrush="#FF121215" Height="40" FontSize="12" Margin="13,123,249,34" Click="cancelButton_Click" x:Name="cancelButton"/>

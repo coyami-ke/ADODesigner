@@ -32,26 +32,9 @@
             <Image Source="../Assets/paste.png" Grid.Row="1" Opacity="0.9" />
         </ToolBar>
         <Menu Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Background="Transparent">
-            <MenuItem Header="File">
-                <MenuItem Header="Create a project..." InputGestureText="Ctrl + Shift + N"/>
-                <MenuItem Header="Open..." InputGestureText="Ctrl + O"/>
-                <Separator Background="#FF121215"/>
-                <MenuItem Header="Save" InputGestureText="Ctrl + S"/>
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Undo" InputGestureText="Ctrl + Z"/>
-                <MenuItem Header="Redo" InputGestureText="Ctrl + Y"/>
-                <Separator Background="#FF121215"/>
-                <MenuItem Header="Cut" InputGestureText="Ctrl + X"/>
-                <MenuItem Header="Copy" InputGestureText="Ctrl + C"/>
-                <MenuItem Header="Paste" InputGestureText="Ctrl + V"/>
-                <MenuItem Header="Duplicate" InputGestureText="Ctrl + D"/>
-                <MenuItem Header="Delete" InputGestureText="Delete"/>
-            </MenuItem>
-            <MenuItem Header="Project">
-                <MenuItem Header="Add keyframe..." InputGestureText="Shift + K"/>
-                <MenuItem Header="Add decoration..." InputGestureText="Shift + D"/>
-            </MenuItem>
+            <MenuItem x:FieldModifier="public" x:Name="PART_menuFile" Header="File"/>
+            <MenuItem x:FieldModifier="public" x:Name="PART_menuEdit" Header="Edit"/>
+            <MenuItem x:FieldModifier="public" x:Name="PART_menuProject" Header="Project"/>
         </Menu>
         <Border Background="{DynamicResource BackgroundColor}" Grid.Row="2" Margin="5 5 5 5">
             <ListBox Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Decorations}">
@@ -64,17 +47,19 @@
         </Border>
         <Border Grid.Column="1" Grid.Row="2" Background="#FF101013" Margin="5">
             <TabControl Background="Transparent" BorderBrush="#FF101013" BorderThickness="5">
-                <TabItem Header="Designer" Height="30">
+                <TabItem x:FieldModifier="public" x:Name="PART_designer" Header="Designer" Height="30">
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
                         <Grid Height="500" Width="500">
                             <Rectangle Fill="White" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 0 540"/>
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="TimeLine" Height="30">
+                <TabItem x:Name="PART_timeLine" x:FieldModifier="public" Header="TimeLine" Height="30">
+                    <TabItem.ContextMenu>
+                        <ContextMenu x:FieldModifier="public" x:Name="PART_timeLineContextMenu"/>
+                    </TabItem.ContextMenu>
                     <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
                         <Grid>
-                            <Slider Value="{Binding SelectedDurationAnimation}" Maximum="{Binding DurationAnimation}" VerticalAlignment="Bottom"/>
                             <StackPanel x:Name="panelTimeLines">
 
                             </StackPanel>
@@ -102,21 +87,24 @@
                     <TabItem Header="KeyFrame">
                         <Grid>
                             <TextBlock Text="Position" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"/>
-                            <TextBox VerticalAlignment="Top" Margin="17,26,0,0" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Width="64"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.PositionOffset.X}" VerticalAlignment="Top" Margin="17,26,0,0" HorizontalAlignment="Left" Width="64"/>
                             <TextBlock Text="X" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,30,0,0"/>
-                            <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="118,26,0,0" Width="74"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.PositionOffset.Y}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="118,26,0,0" Width="74"/>
                             <TextBlock Text="Y" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="107,30,0,0"/>
                             <TextBlock Text="Rotation" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,55,0,0"/>
-                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,76,0,0" Width="64"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.RotationOffset}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,76,0,0" Width="64"/>
                             <TextBlock Text="Scale" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,105,0,0"/>
-                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,126,0,0" Width="60"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.Scale.X}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,126,0,0" Width="60"/>
                             <TextBlock Text="X" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,131,0,0"/>
-                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="118,126,0,0" Width="75"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.Scale.Y}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="118,126,0,0" Width="75"/>
                             <TextBlock Text="Y" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="107,131,0,0"/>
                             <TextBlock Text="Opacity" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,161,0,0"/>
-                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,184,0,0" Width="54"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.Opacity}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,184,0,0" Width="54"/>
                             <TextBlock Text="Ease" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,213,0,0"/>
-                            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,234,0,0" SelectedValue="{Binding SelectedKeyFrame.Ease}" Width="52"/>
+                            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,234,0,0" Width="52">
+                                <ComboBoxItem Content="AZAZAZ"/>
+                                <ComboBoxItem Content="HUHUHUH"/>
+                            </ComboBox>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Decoration">

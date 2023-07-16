@@ -28,5 +28,29 @@ namespace ADODesigner.Views.Controls
         {
             InitializeComponent();
         }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                for (int i = 0; i < EditorView.Editor.TimeLines.Count; i++)
+                {
+                    for (int s = 0; s < EditorView.Editor.TimeLines[i].Count; s++)
+                    {
+                        if (EditorView.Editor.TimeLines[i][s].Key == Key)
+                        {
+                            if (EditorView.Editor.TimeLines[i][s].IsSelected)
+                            {
+                                EditorView.Editor.TimeLines[i][s].IsSelected = false;
+                            }
+                            else
+                            {
+                                EditorView.Editor.TimeLines[i][s].IsSelected = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

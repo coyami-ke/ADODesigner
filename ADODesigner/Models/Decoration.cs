@@ -6,9 +6,12 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+#pragma warning disable 1591
 namespace ADODesigner.Models
 {
+    /// <summary>
+    /// Decoration model
+    /// </summary>
     public partial class Decoration : ObservableObject
     {
         [ObservableProperty]
@@ -36,7 +39,10 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private int floor = 0;
         [ObservableProperty]
-        private Vector2 tiling = new Vector2(0, 0);
-        
+        private Vector2 tiling = Vector2.Zero;
+        [ObservableProperty]
+        private bool isSelected = false;
+        [ObservableProperty]
+        private string iD;
     }
 }

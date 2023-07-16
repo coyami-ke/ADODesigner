@@ -1,18 +1,37 @@
-﻿using Newtonsoft.Json;
+﻿using ADODesigner.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 #nullable disable
 namespace ADODesigner.Converters
 {
+    /// <summary>
+    /// Class of Level ADOFAI.
+    /// </summary>
     public class CustomLevel
     {
+        /// <summary>
+        /// Angles of tiles
+        /// </summary>
         public float[] angleData;
+        /// <summary>
+        /// Settings for level
+        /// </summary>
         public CustomLevelSettings settings;
-        public Array actions;
+        /// <summary>
+        /// Decorations
+        /// </summary>
+        public List<AddDecoration> decorations;
+        /// <summary>
+        /// Actions
+        /// </summary>
+        public JsonArray actions;
     }
     public class CustomLevelSettings
     {

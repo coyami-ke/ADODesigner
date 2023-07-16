@@ -31,7 +31,6 @@ namespace ADODesigner.Views.Controls
             else canvas.Background = new SolidColorBrush(Color.FromRgb(18, 18, 21));
 
             EditorView.Editor.TimeLines[NumberTimeLine].CollectionChanged += TimeLine_CollectionChanged;
-            EditorView.Editor.AddKeyFrame("AZAZA");
         }
 
         private void TimeLine_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -41,6 +40,9 @@ namespace ADODesigner.Views.Controls
             {
                 KeyFrameControl keyFrameControl = new();
                 keyFrameControl.Key = EditorView.Editor.TimeLines[NumberTimeLine][i].Key;
+                keyFrameControl.Margin = new(EditorView.Editor.TimeLines[NumberTimeLine][i].Floor * 50, 0, 0, 0);
+                if (EditorView.Editor.TimeLines[NumberTimeLine][i].IsSelected) keyFrameControl.Opacity = 0;
+                else keyFrameControl.Opacity = 1;
                 canvas.Children.Add(keyFrameControl);
             }
         }

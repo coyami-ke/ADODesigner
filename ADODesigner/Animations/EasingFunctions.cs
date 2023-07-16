@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+#pragma warning disable 1591
 namespace ADODesigner.Animations
 {
     public static class EasingFunctions

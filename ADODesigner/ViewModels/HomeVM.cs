@@ -31,18 +31,27 @@ namespace ADODesigner.ViewModels
         [RelayCommand]
         private void OpenProject()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            CommonOpenFileDialog dialog = new();
             dialog.IsFolderPicker = true;
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                Project project = new Project();
-                project.Path = dialog.FileName;
+                JsonSerializerOptions options = new()
+                {
+                    WriteIndented = true,
+                };
+                Project project = JsonSerializer.Deserialize<Project>(Path.Combine(dialog.FileName, "main.json"), options);
+
                 Projects.Add(project);
+
+                EditorView editor = new();
+                editor.Show();
+                EditorView.Editor.Project = project;
             }
         }
         public HomeVM()
         {
+            //Projects = App.Config.Projects;
         }
     }
 }

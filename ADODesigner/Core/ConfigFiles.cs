@@ -10,5 +10,6 @@ namespace ADODesigner.Core
     {
         public const string CONFIG_FOLDER = "config";
         public const string CONFIG = "config.json";
+        public const string EXTENSIONS_FOLDER = "extensions";
     }
 }

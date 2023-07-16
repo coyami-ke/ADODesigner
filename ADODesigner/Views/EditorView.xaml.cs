@@ -3,7 +3,6 @@ using ADODesigner.Converters;
 using ADODesigner.Models;
 using ADODesigner.ViewModels;
 using ADODesigner.Views.Controls;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,21 +18,36 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.VisualBasic;
+using ADODesigner.Core.API;
 #nullable disable
 namespace ADODesigner.Views
 {
+    /// <summary>
+    /// Main view editor in ADODesigner.
+    /// </summary>
     public partial class EditorView : Window
     {
-        public static EditorVM Editor { get; set; }
+        /// <summary>
+        /// The initialized ViewModel for the editor.
+        /// </summary>
+        public static EditorVM Editor
+        {
+            get { return (EditorVM)EditorAPI.Editor.DataContext; }
+            set { EditorAPI.Editor.DataContext = value; }
+        }
         public EditorView()
         {
-            Editor = new();
             Editor.PropertyChanged += Editor_PropertyChanged;
             DataContextChanged += EditorView_DataContextChanged;
-
             InitializeComponent();
-            panelTimeLines.Children.Add(new TimeLine());
+
+            for (int i = 0; i < Editor.TimeLines.Count; i++)
+            {
+                panelTimeLines.Children.Add(new TimeLine());
+            }
         }
+        #region Events
 
         private void EditorView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -44,5 +58,6 @@ namespace ADODesigner.Views
         {
             DataContext = Editor;
         }
+        #endregion
     }
 }
