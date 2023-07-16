@@ -11,6 +11,7 @@ namespace ADODesigner.Core.API
         public string Name { get; set; } = "";
         public string Description { get; set; } = "";
         public string Author { get; set; } = "";
+        public List<string> Files { get; set; } = new();
 
     }
 }

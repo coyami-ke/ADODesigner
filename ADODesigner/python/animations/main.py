@@ -1,6 +1,4 @@
-﻿import ballsanimation
-
-class main:
+﻿class main:
     def __init__(self):
         self.name = "ADODesigner Animations"
         self.description = "ADODesigner Animations"

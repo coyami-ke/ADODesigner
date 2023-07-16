@@ -61,6 +61,9 @@
     <None Update="python\animations\balls_animation.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="python\animations\following_decorations.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="python\animations\main.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

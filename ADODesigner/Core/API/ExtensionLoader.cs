@@ -27,7 +27,11 @@ namespace ADODesigner.Core.API
 
             dynamic mainClass = scriptScope.GetVariable("main");
             dynamic main = scriptEngine.Operations.CreateInstance(mainClass);
-            MessageBox.Show(main.author);
+            Extension extension = new();
+            extension.Name = main.author;
+            extension.Author = main.author;
+            extension.Description = main.description;
+            extension.Files = main.files;
         }
     }
 }
