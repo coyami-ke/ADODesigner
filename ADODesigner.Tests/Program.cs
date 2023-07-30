@@ -13,6 +13,7 @@ namespace ADODesigner.Cmd
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("ADODesigner Command Line by Coyami-Ke");
             BallsAnimationArgs animationArgs = new();
             if (!File.Exists("balls_animation.json"))
             {
