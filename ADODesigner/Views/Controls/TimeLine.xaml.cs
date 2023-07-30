@@ -27,8 +27,8 @@ namespace ADODesigner.Views.Controls
         {
             InitializeComponent();
 
-            if ((NumberTimeLine % 2) == 0) canvas.Background = new SolidColorBrush(Color.FromRgb(16, 16, 19));
-            else canvas.Background = new SolidColorBrush(Color.FromRgb(18, 18, 21));
+            if ((NumberTimeLine % 2) == 0) canvas.Background = new SolidColorBrush(Color.FromRgb(18, 19, 21));
+            else canvas.Background = new SolidColorBrush(Color.FromRgb(19, 20, 22));
 
             EditorView.Editor.TimeLines[NumberTimeLine].CollectionChanged += TimeLine_CollectionChanged;
         }
@@ -40,9 +40,10 @@ namespace ADODesigner.Views.Controls
             {
                 KeyFrameControl keyFrameControl = new();
                 keyFrameControl.Key = EditorView.Editor.TimeLines[NumberTimeLine][i].Key;
-                keyFrameControl.Margin = new(EditorView.Editor.TimeLines[NumberTimeLine][i].Floor * 50, 0, 0, 0);
-                if (EditorView.Editor.TimeLines[NumberTimeLine][i].IsSelected) keyFrameControl.Opacity = 0;
-                else keyFrameControl.Opacity = 1;
+                keyFrameControl.PART_textBlockTag.Text = EditorView.Editor.TimeLines[NumberTimeLine][i].Tag;
+                keyFrameControl.Margin = new((EditorView.Editor.TimeLines[NumberTimeLine][i].AngleOffset / 180) + EditorView.Editor.TimeLines[NumberTimeLine][i].Floor * 50, 0, 0, 0);
+                if (EditorView.Editor.TimeLines[NumberTimeLine][i].IsSelected) keyFrameControl.Opacity = 1;
+                else keyFrameControl.Opacity = 0.8;
                 canvas.Children.Add(keyFrameControl);
             }
         }

@@ -29,6 +29,6 @@ namespace ADODesigner.Animations
         /// <summary>
         /// Using the arguments, create an animation.
         /// </summary>
-        public abstract void CreateAnimation();
+        public abstract (KeyFrame[], Decoration[]) CreateAnimation();
     }
 }

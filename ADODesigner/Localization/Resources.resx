@@ -117,13 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TextBlockHomePageCreateProject" xml:space="preserve">
+  <data name="AddDecoration" xml:space="preserve">
+    <value>Add decoration...</value>
+  </data>
+  <data name="AddKeyFrame" xml:space="preserve">
+    <value>Add keyframe...</value>
+  </data>
+  <data name="ADODesignerHome" xml:space="preserve">
+    <value>ADODesigner | Home</value>
+  </data>
+  <data name="ConvertToADOFAILevel" xml:space="preserve">
+    <value>Convert to ADOFAI Level...</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
-  <data name="TextBlockHomePageCreateProjectDescription" xml:space="preserve">
+  <data name="CreateProjectDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Decoration" xml:space="preserve">
+    <value>Decoration</value>
+  </data>
+  <data name="Designer" xml:space="preserve">
+    <value>Designer</value>
+  </data>
+  <data name="Ease" xml:space="preserve">
+    <value>Ease</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="KeyFrame" xml:space="preserve">
+    <value>KeyFrame</value>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Scale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="StartWorkWithProgram" xml:space="preserve">
     <value>Start working with the program.</value>
   </data>
-  <data name="TextBlockHomePageTitle" xml:space="preserve">
-    <value>ADODesigner | Home</value>
+  <data name="TimeLine" xml:space="preserve">
+    <value>Timeline</value>
   </data>
 </root>

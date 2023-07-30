@@ -12,16 +12,16 @@ namespace ADODesigner.Converters
     /// </summary>
     public class MoveDecorations
     {
-        public int floor;
-        public string eventType;
-        public float duration;
-        public string tag;
-        public float[] positionOffset = new float[2];
-        public float[] scale = new float[2];
-        public float opacity;
-        public float depth;
-        public float angleOffset;
-        public string ease;
-        public string eventTag;
+        public int floor { get; set; } = 0;
+        public string eventType { get; set; } = "MoveDecorations";
+        public float duration { get; set; }
+        public string tag { get; set; }
+        public float[] positionOffset { get; set; } = new float[2];
+        public float[] scale { get; set; } = new float[2];
+        public float opacity { get; set; }
+        public float depth { get; set; }
+        public float angleOffset { get; set; }
+        public string ease { get; set; }
+        public string eventTag { get; set; }
     }
 }

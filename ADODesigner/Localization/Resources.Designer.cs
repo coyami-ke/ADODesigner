@@ -61,29 +61,173 @@ namespace ADODesigner.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Project.
+        ///   Looks up a localized string similar to Add decoration....
         /// </summary>
-        public static string TextBlockHomePageCreateProject {
+        public static string AddDecoration {
             get {
-                return ResourceManager.GetString("TextBlockHomePageCreateProject", resourceCulture);
+                return ResourceManager.GetString("AddDecoration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start working with the program..
+        ///   Looks up a localized string similar to Add keyframe....
         /// </summary>
-        public static string TextBlockHomePageCreateProjectDescription {
+        public static string AddKeyFrame {
             get {
-                return ResourceManager.GetString("TextBlockHomePageCreateProjectDescription", resourceCulture);
+                return ResourceManager.GetString("AddKeyFrame", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ADODesigner | Home.
         /// </summary>
-        public static string TextBlockHomePageTitle {
+        public static string ADODesignerHome {
             get {
-                return ResourceManager.GetString("TextBlockHomePageTitle", resourceCulture);
+                return ResourceManager.GetString("ADODesignerHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert to ADOFAI Level....
+        /// </summary>
+        public static string ConvertToADOFAILevel {
+            get {
+                return ResourceManager.GetString("ConvertToADOFAILevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateProject {
+            get {
+                return ResourceManager.GetString("CreateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CreateProjectDescription {
+            get {
+                return ResourceManager.GetString("CreateProjectDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decoration.
+        /// </summary>
+        public static string Decoration {
+            get {
+                return ResourceManager.GetString("Decoration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Designer.
+        /// </summary>
+        public static string Designer {
+            get {
+                return ResourceManager.GetString("Designer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ease.
+        /// </summary>
+        public static string Ease {
+            get {
+                return ResourceManager.GetString("Ease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KeyFrame.
+        /// </summary>
+        public static string KeyFrame {
+            get {
+                return ResourceManager.GetString("KeyFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity.
+        /// </summary>
+        public static string Opacity {
+            get {
+                return ResourceManager.GetString("Opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string Project {
+            get {
+                return ResourceManager.GetString("Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale.
+        /// </summary>
+        public static string Scale {
+            get {
+                return ResourceManager.GetString("Scale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start working with the program..
+        /// </summary>
+        public static string StartWorkWithProgram {
+            get {
+                return ResourceManager.GetString("StartWorkWithProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline.
+        /// </summary>
+        public static string TimeLine {
+            get {
+                return ResourceManager.GetString("TimeLine", resourceCulture);
             }
         }
     }

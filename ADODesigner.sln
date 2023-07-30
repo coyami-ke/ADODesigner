@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADODesigner", "ADODesigner\ADODesigner.csproj", "{77B83F16-7479-45C2-AB2F-FC31BA4822D8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADODesigner.Cmd", "ADODesigner.Tests\ADODesigner.Cmd.csproj", "{5C416DF0-DAC6-48AE-BC06-379EBD0E1850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{77B83F16-7479-45C2-AB2F-FC31BA4822D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77B83F16-7479-45C2-AB2F-FC31BA4822D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77B83F16-7479-45C2-AB2F-FC31BA4822D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C416DF0-DAC6-48AE-BC06-379EBD0E1850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C416DF0-DAC6-48AE-BC06-379EBD0E1850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C416DF0-DAC6-48AE-BC06-379EBD0E1850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C416DF0-DAC6-48AE-BC06-379EBD0E1850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

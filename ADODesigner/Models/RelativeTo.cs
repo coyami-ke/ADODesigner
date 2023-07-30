@@ -10,7 +10,7 @@ namespace ADODesigner.Models
     /// <summary>
     /// RelativeTo for decorations
     /// </summary>
-    public enum RelativeTo
+    public enum RelativeTo : byte
     {
         Tile,
         Global,

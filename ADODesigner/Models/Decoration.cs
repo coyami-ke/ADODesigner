@@ -43,6 +43,6 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private bool isSelected = false;
         [ObservableProperty]
-        private string iD;
+        private string iD = "";
     }
 }

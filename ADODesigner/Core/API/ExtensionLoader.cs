@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +32,11 @@ namespace ADODesigner.Core.API
             extension.Name = main.author;
             extension.Author = main.author;
             extension.Description = main.description;
-            extension.Files = main.files;
+            IronPython.Runtime.PythonList pythonListFiles = main.files;
+            foreach (string file in pythonListFiles)
+            {
+                extension.Files.Add(file);
+            }
         }
     }
 }

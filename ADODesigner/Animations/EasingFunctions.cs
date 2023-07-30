@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADODesigner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -9,6 +10,19 @@ namespace ADODesigner.Animations
 {
     public static class EasingFunctions
     {
+        public static double ApplyFunction(Ease ease, double t)
+        {
+            if (ease == Ease.Linear) return t;
+            if (ease == Ease.IsSine) return InSine(t);
+            if (ease == Ease.OutSine) return OutSine(t);
+            if (ease == Ease.InOutSine) return InOutSine(t);
+            if (ease == Ease.InQuad) return InQuad(t);
+            if (ease == Ease.OutQuad) return OutQuad(t);
+            if (ease == Ease.InCubic) return InCubic(t);
+            if (ease == Ease.OutCubic) return OutCubic(t);
+            if (ease == Ease.InOutCubic) return InOutCubic(t);
+            return 0;
+        }
         public static double InSine(double t)
         {
             return 1 - Math.Cos((t * Math.PI) / 2);
@@ -38,18 +52,18 @@ namespace ADODesigner.Animations
             else
                 return 1 - 2 * (1 - t) * (1 - t);
         }
-        public static double InCubic(float t)
+        public static double InCubic(double t)
         {
             return t * t * t;
         }
 
-        public static double OutCubic(float t)
+        public static double OutCubic(double t)
         {
             double t1 = t - 1;
             return t1 * t1 * t1 + 1;
         }
 
-        public static double InOutCubic(float t)
+        public static double InOutCubic(double t)
         {
             if (t < 0.5f)
             {

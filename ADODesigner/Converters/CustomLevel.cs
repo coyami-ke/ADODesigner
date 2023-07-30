@@ -19,90 +19,222 @@ namespace ADODesigner.Converters
         /// <summary>
         /// Angles of tiles
         /// </summary>
-        public float[] angleData;
+        [JsonPropertyName("angleData")]
+        public List<float> AngleData { get; set; } = new();
         /// <summary>
         /// Settings for level
         /// </summary>
-        public CustomLevelSettings settings;
+        [JsonPropertyName("settings")]
+        public CustomLevelSettings Settings { get; set; } = new();
         /// <summary>
         /// Decorations
         /// </summary>
-        public List<AddDecoration> decorations;
+        [JsonPropertyName("decorations")]
+        public List<AddDecoration> Decorations { get; set; } = new();
         /// <summary>
         /// Actions
         /// </summary>
-        public JsonArray actions;
+        [JsonPropertyName("actions")]
+        public List<MoveDecorations> Actions { get; set; } = new();
     }
     public class CustomLevelSettings
     {
-        public int version = 13;
-        public string artist = "Artist";
-        public string specialArtistType = "None";
-        public string song = "Song";
-        public string author = "Coyami-Ke";
-        public string separateCountdownTime = "";
-        public string previewImage = "";
-        public string previewIcon = "";
-        public string previewIconColor = "FFFFFF";
-        public int previewSongStart = 0;
-        public int previewSongDuration = 10;
-        public string seizureWarning = "Disabled";
-        public string levelDesc = "Please, add my nick - Coyami-Ke, if you're using my program :d";
-        public string levelTags = "";
-        public string artistLinks = "";
-        public int difficulty = 1;
-        public string requiredMods = "";
-        public string songFilename = "";
-        public float bpm = 100;
-        public int volume = 100;
-        public int offset = 0;
-        public int pitch = 100;
-        public string hitsound = "Kick";
-        public int hitsoundVolume = 100;
-        public int countdownTicks = 4;
-        public string trackColorType;
-        public string trackColor = "FFFFFFFF";
-        public string secondaryTrackColor = "FFFFFFFF";
-        public int trackColorAnimDuration = 2;
-        public string trackColorPulse = "FFFFFFFF";
-        public int trackPulseLength = 16;
-        public string trackStyle = "Neon";
-        public string trackTexture = "";
-        public int trackTextureScale = 1;
-        public int trackGlowIntensity = 100;
-        public string trackAnimation = "None";
-        public int beatsAhead;
-        public string trackDisappearAnimation;
-        public int beatsBehind;
-        public string backgroundColor;
-        public string showDefaultBGIfNoImage;
-        public string showDefaultBGTile;
-        public string defaultBGTileColor;
-        public string defaultBGShapeType;
-        public string defaultBGShapeColor;
-        public string bgImage;
-        public float[] parallax = new float[2]; 
-        public string bgDisplayMode;
-        public string imageSmoothing;
-        public string lockRot;
-        public string loopBG;
-        public int scalingRatio;
-        public string relativeTo;
-        public float[] position = new float[2];
-        public float rotation;
-        public float zoom;
-        public int vidOffset;
-        public string floorIconOutlines;
-        public string stickToFloors;
-        public string planetEase;
-        public int planetEaseParts;
-        public string planetEasePartBehavior;
-        public string defaultTextColor;
-        public string defaultTextShadowColor;
-        public string congratsText;
-        public string perfectText;
-        public bool legacyFlash;
-        public bool legacyCamRelativeTo;
-        public bool legacySpriteTiles;
+        [JsonPropertyName("version")]
+        public int Version { get; set; } = 13;
+
+        [JsonPropertyName("artist")]
+        public string Artist { get; set; } = "";
+
+        [JsonPropertyName("specialArtistType")]
+        public string SpecialArtistType { get; set; } = "None";
+
+        [JsonPropertyName("artistPermission")]
+        public string ArtistPermission { get; set; } = "";
+
+        [JsonPropertyName("song")]
+        public string Song { get; set; } = "";
+
+        [JsonPropertyName("author")]
+        public string Author { get; set; } = "";
+
+        [JsonPropertyName("separateCountdownTime")]
+        public string SeparateCountdownTime { get; set; } = "Enabled";
+
+        [JsonPropertyName("previewImage")]
+        public string PreviewImage { get; set; } = "";
+
+        [JsonPropertyName("previewIcon")]
+        public string PreviewIcon { get; set; } = "";
+
+        [JsonPropertyName("previewIconColor")]
+        public string PreviewIconColor { get; set; } = "ffffff";
+
+        [JsonPropertyName("previewSongStart")]
+        public int PreviewSongStart { get; set; } = 0;
+
+        [JsonPropertyName("previewSongDuration")]
+        public int PreviewSongDuration { get; set; } = 10;
+
+        [JsonPropertyName("seizureWarning")]
+        public string SeizureWarning { get; set; } = "Disabled";
+
+        [JsonPropertyName("levelDesc")]
+        public string LevelDesc { get; set; } = "";
+
+        [JsonPropertyName("levelTags")]
+        public string LevelTags { get; set; } = "";
+
+        [JsonPropertyName("artistLinks")]
+        public string ArtistLinks { get; set; } = "";
+
+        [JsonPropertyName("difficulty")]
+        public int Difficulty { get; set; } = 1;
+
+        [JsonPropertyName("requiredMods")]
+        public List<Object> RequiredMods { get; set; } = new();
+
+        [JsonPropertyName("songFilename")]
+        public string SongFilename { get; set; } = "";
+
+        [JsonPropertyName("bpm")]
+        public int Bpm { get; set; } = 100;
+
+        [JsonPropertyName("volume")]
+        public int Volume { get; set; } = 100;
+
+        [JsonPropertyName("offset")]
+        public int Offset { get; set; } = 0;
+
+        [JsonPropertyName("pitch")]
+        public int Pitch { get; set; } = 100;
+
+        [JsonPropertyName("hitsound")]
+        public string Hitsound { get; set; } = "Kick";
+
+        [JsonPropertyName("hitsoundVolume")]
+        public int HitsoundVolume { get; set; } = 100;
+
+        [JsonPropertyName("countdownTicks")]
+        public int CountdownTicks { get; set; } = 4;
+
+        [JsonPropertyName("trackColorType")]
+        public string TrackColorType { get; set; } = "Single";
+
+        [JsonPropertyName("trackColor")]
+        public string TrackColor { get; set; } = "debb7b";
+
+        [JsonPropertyName("secondaryTrackColor")]
+        public string SecondaryTrackColor { get; set; } = "ffffff";
+
+        [JsonPropertyName("trackColorAnimDuration")]
+        public int TrackColorAnimDuration { get; set; } = 2;
+
+        [JsonPropertyName("trackColorPulse")]
+        public string TrackColorPulse { get; set; } = "None";
+
+        [JsonPropertyName("trackPulseLength")]
+        public int TrackPulseLength { get; set; } = 10;
+
+        [JsonPropertyName("trackStyle")]
+        public string TrackStyle { get; set; } = "Standard";
+
+        [JsonPropertyName("trackGlowIntensity")]
+        public int TrackGlowIntensity { get; set; } = 100;
+
+        [JsonPropertyName("trackAnimation")]
+        public string TrackAnimation { get; set; } = "None";
+
+        [JsonPropertyName("beatsAhead")]
+        public int BeatsAhead { get; set; } = 3;
+
+        [JsonPropertyName("trackDisappearAnimation")]
+        public string TrackDisappearAnimation { get; set; } = "None";
+
+        [JsonPropertyName("beatsBehind")]
+        public int BeatsBehind { get; set; } = 4;
+
+        [JsonPropertyName("backgroundColor")]
+        public string BackgroundColor { get; set; } = "000000";
+
+        [JsonPropertyName("showDefaultBGIfNoImage")]
+        public string ShowDefaultBgIfNoImage { get; set; } = "Enabled";
+
+        [JsonPropertyName("bgImage")]
+        public string BgImage { get; set; } = "";
+
+        [JsonPropertyName("bgImageColor")] 
+        public string BgImageColor { get; set; } = "ffffff";
+
+        [JsonPropertyName("parallax")]
+        public float[] Parallax { get; set; } = new float[2];
+
+        [JsonPropertyName("bgDisplayMode")]
+        public string BgDisplayMode { get; set; } = "FitToScreen";
+
+        [JsonPropertyName("lockRot")]
+        public string LockRot { get; set; } = "Disabled";
+
+        [JsonPropertyName("loopBG")]
+        public string LoopBg { get; set; } = "Disabled";
+
+        [JsonPropertyName("unscaledSize")]
+        public int UnscaledSize { get; set; } = 100;
+
+        [JsonPropertyName("relativeTo")]
+        public string RelativeTo { get; set; } = "Player";
+
+        [JsonPropertyName("position")]
+        public float[] Position { get; set; } = new float[2];
+
+        [JsonPropertyName("rotation")]
+        public float Rotation { get; set; } = 0;
+
+        [JsonPropertyName("zoom")]
+        public int Zoom { get; set; } = 200;
+
+        [JsonPropertyName("pulseOnFloor")]
+        public string PulseOnFloor { get; set; } = "Enabled";
+
+        [JsonPropertyName("bgVideo")]
+        public string BgVideo { get; set; } = "";
+
+        [JsonPropertyName("loopVideo")]
+        public string LoopVideo { get; set; } = "Disabled";
+
+        [JsonPropertyName("vidOffset")]
+        public int VidOffset { get; set; } = 0;
+
+        [JsonPropertyName("floorIconOutlines")]
+        public string FloorIconOutlines { get; set; } = "Disabled";
+
+        [JsonPropertyName("stickToFloors")]
+        public string StickToFloors { get; set; } = "Enabled";
+
+        [JsonPropertyName("planetEase")]
+        public string PlanetEase { get; set; } = "Linear";
+
+        [JsonPropertyName("planetEaseParts")]
+        public int PlanetEaseParts { get; set; } = 1;
+
+        [JsonPropertyName("planetEasePartBehavior")]
+        public string PlanetEasePartBehavior { get; set; } = "Mirror";
+        [JsonPropertyName("defalutTextColor")]
+        public string DefaultTextColor { get; set; } = "ffffff";
+        [JsonPropertyName("defaultTextShadowColor")]
+        public string DefaultTextShadowColor { get; set; } = "00000050";
+        [JsonPropertyName("congratsText")]
+        public string CongratsText { get; set; } = "";
+        [JsonPropertyName("perfectText")]
+        public string PerfectText { get; set; } = "";
+
+        [JsonPropertyName("legacyFlash")]
+        public bool LegacyFlash { get; set; } = false;
+
+        [JsonPropertyName("legacyCamRelativeTo")]
+        public bool LegacyCamRelativeTo { get; set; } = false;
+
+        [JsonPropertyName("legacySpriteTiles")]
+        public bool LegacySpriteTiles { get; set; } = false;
+
     }
 }

@@ -11,5 +11,6 @@ namespace ADODesigner.Models
     public class ConfigurationModel
     {
         public ObservableCollection<Project> Projects { get; set; }
+        public bool FastProject { get; set; } = true;
     }
 }

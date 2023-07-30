@@ -11,24 +11,24 @@ namespace ADODesigner.Converters
     /// </summary>
     public class AddDecoration
     {
-        public int floor = 0;
-        public string eventType = "AddDecoration";
-        public bool locked = false;
-        public string decorationImage = "";
-        public float[] position = new float[2];
-        public string relativeTo = "Tile";
-        public float[] pivotOffset = new float[2];
-        public float rotation = 0;
-        public string lockRotation = "Disabled";
-        public float[] scale = new float[2];
-        public string lockScale = "Disabled";
-        public int[] tile = new int[2];
-        public string color = "ffffff";
-        public float opacity = 100;
-        public float depth = -1;
-        public float[] parallax = new float[2];
-        public float[] parallaxOffset = new float[2];
-        public string tag = "";
-        public string imageSmoothing = "Enabled";
+        public int floor { get; set; } = 0;
+        public string eventType { get; set; } = "AddDecoration";
+        public bool locked { get; set; } = false;
+        public string decorationImage { get; set; } = "";
+        public float[] position { get; set; } = new float[2];
+        public string relativeTo { get; set; } = "Tile";
+        public float[] pivotOffset { get; set; } = new float[2];
+        public float rotation { get; set; } = 0;
+        public string lockRotation { get; set; } = "Disabled";
+        public float[] scale { get; set; } = new float[2];
+        public string lockScale { get; set; } = "Disabled";
+        public int[] tile { get; set; } = new int[2];
+        public string color { get; set; } = "ffffff";
+        public float opacity { get; set; } = 100;
+        public float depth { get; set; } = -1;
+        public float[] parallax { get; set; } = new float[2];
+        public float[] parallaxOffset { get; set; } = new float[2];
+        public string tag { get; set; } = "";
+        public string imageSmoothing { get; set; } = "Enabled";
     }
 }

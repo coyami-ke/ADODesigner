@@ -1,4 +1,5 @@
 ﻿using ADODesigner.Core.API;
+using ADODesigner.Localization;
 using ADODesigner.Views;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,18 @@ namespace ADODesigner
 {
     public partial class App : Application
     {
+        ExtensionLoader? ExtensionLoader { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
-            ExtensionLoader extensionLoader = new();
-            extensionLoader.AddExtension(@"Python\animations\main.py");
+            //Localization.Resources.Culture = new System.Globalization.CultureInfo("ko");
+            //ExtensionLoader = new();
+            //ExtensionLoader.AddExtension(@"python\animations\main.py");
 
-            HomeView homeView = new();
-            homeView.Show();
+            //HomeView homeView = new();
+            //homeView.Show();
+
+            EditorAPI.Editor = new();
+            EditorAPI.Editor.Show();
         }
     }
 }

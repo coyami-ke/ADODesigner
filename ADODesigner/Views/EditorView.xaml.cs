@@ -31,21 +31,14 @@ namespace ADODesigner.Views
         /// <summary>
         /// The initialized ViewModel for the editor.
         /// </summary>
-        public static EditorVM Editor
-        {
-            get { return (EditorVM)EditorAPI.Editor.DataContext; }
-            set { EditorAPI.Editor.DataContext = value; }
-        }
+        public static EditorVM Editor { get; set; }
         public EditorView()
         {
+            Editor = new();
             Editor.PropertyChanged += Editor_PropertyChanged;
             DataContextChanged += EditorView_DataContextChanged;
             InitializeComponent();
-
-            for (int i = 0; i < Editor.TimeLines.Count; i++)
-            {
-                panelTimeLines.Children.Add(new TimeLine());
-            }
+            panelTimeLines.Children.Add(new TimeLine());
         }
         #region Events
 

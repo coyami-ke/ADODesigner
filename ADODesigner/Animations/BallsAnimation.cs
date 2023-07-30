@@ -14,15 +14,19 @@ namespace ADODesigner.Animations
 {
     public class BallsAnimationArgs
     {
+        public int AngleOffset { get; set; } = 45;
         public int Intensivity { get; set; } = 1;
         public int Count { get; set; } = 5;
         public Ease Easing { get; set; } = Ease.Linear;
         public KeyFrame FirstFrame { get; set; } = new();
         public KeyFrame SecondFrame { get; set; } = new();
         public bool IsCurve { get; set; } = true;
-        public int FrameRate { get; set; } = 30;
+        public int FrameRate { get; set; } = 60;
         public int Duration { get; set; } = 5;
         public int Floor { get; set; } = 1;
+        public bool Invert { get; set; } = false;
+        public bool VerticalInvert { get; set; } = false;
+        public string Tag { get; set; } = "Ball";
     }
     /// <summary>
     /// Class for creating procedural animation of ADOFAI balls.
@@ -33,21 +37,21 @@ namespace ADODesigner.Animations
         {
             
         }
-        public override void CreateAnimation()
+        public override (KeyFrame[], Decoration[]) CreateAnimation()
         {
-            List<Decoration> decorations = new();
-
             int countFrames = Args.Duration * Args.FrameRate;
+
+            List<Decoration> decorations = new(Args.Count);
+            List<KeyFrame> keyFrames = new(countFrames);
 
             for (int i = 0; i < Args.Count; i++)
             {
                 Decoration decoration = new();
                 decoration.Position = Args.FirstFrame.PositionOffset;
                 decoration.Tag = "Ball" + i;
-                decoration.Opacity -= i * 8 * Args.Intensivity;
-                decoration.Scale -= new Vector2(i * 10, i * 10);
+                decoration.Opacity = Args.FirstFrame.Opacity;
+                decoration.Scale = Args.FirstFrame.Scale;
                 decorations.Add(decoration);
-                EditorView.Editor.AddDecoration(decoration);
             }
 
             if (Args.IsCurve)
@@ -57,39 +61,41 @@ namespace ADODesigner.Animations
                     for (int s = 0; s < countFrames; s++)
                     {
                         KeyFrame keyFrame = new();
-                        keyFrame.Duration = Args.FrameRate / countFrames;
-                        keyFrame.AngleOffset = 180 / Args.FrameRate * (s + 1);
-                        keyFrame.Tag = "Ball" + i;
+                        keyFrame.Duration = 1 / countFrames;
+                        keyFrame.AngleOffset = (180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset;
+                        keyFrame.Tag = Args.Tag + i;
                         keyFrame.Key = "BallsAnimation" + decorations[i].Tag + s.ToString();
                         keyFrame.Floor = Args.Floor;
                         
-                        //Vector2 position = new(0,0);
-                        //float positionX = (Args.FirstPosition.X - Args.SecondPosition.X) / countFrames * s;
-                        //float normalizedPositionX = (positionX - Args.FirstPosition.X) / (Args.SecondPosition.X / Args.FirstPosition.X);
-                        //float newPositionX = (float)EasingFunctions.InOutSine(normalizedPositionX * positionX);
-                        //position.X = newPositionX;
+                        float t = (float)EasingFunctions.ApplyFunction(Args.Easing, MathFunctions.Normalize(s, 0, countFrames));
 
-                        //float positionY = (Args.FirstPosition.Y - Args.SecondPosition.Y) / countFrames * s;
-                        //float normalizedPositionY = (positionX - Args.FirstPosition.Y) / (Args.SecondPosition.X / Args.FirstPosition.Y);
-                        //float newPositionY = (float)EasingFunctions.InOutSine(normalizedPositionY * positionY);
-                        //position.Y = newPositionY;
+                        Vector2 processedPosition;
+                        if (!Args.Invert)
+                        {
+                            processedPosition = Bezier.QuadraticBezier(Args.FirstFrame.PositionOffset, new(Args.FirstFrame.PositionOffset.X, Args.SecondFrame.PositionOffset.Y), Args.SecondFrame.PositionOffset, t);
+                        }
+                        else
+                        {
+                            processedPosition = Bezier.QuadraticBezier(Args.FirstFrame.PositionOffset, new(Args.SecondFrame.PositionOffset.X, Args.FirstFrame.PositionOffset.Y), Args.SecondFrame.PositionOffset, t);
+                        }
 
-                        Vector2 position = (Args.FirstFrame.PositionOffset - Args.SecondFrame.PositionOffset) / countFrames * s;
-                        Vector2 normalizedPosition = MathFunctions.Normalize(position, Args.FirstFrame.PositionOffset, Args.SecondFrame.PositionOffset);
-                        float newPositionX = (float)EasingFunctions.InOutCubic(normalizedPosition.X * position.X);
-                        float newPositionY = (float)EasingFunctions.InOutCubic(normalizedPosition.Y * position.Y);
+                        float processedOpacity = t * Args.SecondFrame.Opacity;
+                        Vector2 processedParallax = t * Args.SecondFrame.Parallax;
+                        float processedRotation = t * Args.SecondFrame.RotationOffset;
+                        Vector2 processedScale = t * Args.SecondFrame.Scale;
+                        float processedDepth = t * Args.SecondFrame.Depth;
 
-                        keyFrame.PositionOffset = new Vector2(newPositionX, newPositionY);
+                        keyFrame.PositionOffset = processedPosition;
+                        keyFrame.Opacity = processedOpacity;
+                        keyFrame.Depth = processedDepth;
+                        keyFrame.RotationOffset = processedRotation;
+                        keyFrame.Scale = processedScale;
 
-                        keyFrame.Opacity = Args.SecondFrame.Opacity;
-                        keyFrame.Depth = Args.SecondFrame.Depth;
-                        keyFrame.RotationOffset = Args.SecondFrame.RotationOffset;
-                        keyFrame.Scale = Args.SecondFrame.Scale;
-
-                        EditorView.Editor.AddKeyFrame(keyFrame);
+                        keyFrames.Add(keyFrame);
                     }
                 }
             }
+            return (keyFrames.ToArray(), decorations.ToArray());
         }
     }
 }

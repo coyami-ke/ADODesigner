@@ -1,4 +1,5 @@
-﻿using ADODesigner.Models;
+﻿using ADODesigner.Core.API;
+using ADODesigner.Models;
 using ADODesigner.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static IronPython.Modules._ast;
 #nullable disable
 #pragma warning disable 1591
 namespace ADODesigner.ViewModels
@@ -36,9 +38,11 @@ namespace ADODesigner.ViewModels
             };
             File.WriteAllText(Path.Combine("projects", Project.Name, "main.json"), JsonSerializer.Serialize<Project>(Project, options));
 
-            EditorView editor = new();
-            editor.Show();
+            EditorAPI.Editor = new();
+            EditorAPI.Editor.Show();
             EditorView.Editor.Project = this.Project;
+
+            EditorView.Editor.InitKeyBindings();
         }
     }
 }

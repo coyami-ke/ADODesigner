@@ -9,7 +9,7 @@ namespace ADODesigner.Models
     /// <summary>
     /// List of aviable eases
     /// </summary>
-    public enum Ease
+    public enum Ease : byte
     {
         Linear,
         IsSine,

@@ -8,23 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+#nullable disable
 namespace ADODesigner.Core.API
 {
     public static class EditorAPI
     {
+        public enum ContextMenuDesignerCategory
+        {
+            None,
+        }
         public enum MenuCategory
         {
             File,
             Edit,
             Project,
         }
-        internal static EditorView Editor { get; set; }
-        static EditorAPI()
-        {
-            Editor = new();
-            Editor.DataContext = new EditorVM();
-        }
+        public static EditorView Editor { get; set; } 
         #region KeyBindings
         public static void AddHotKeyToTimeLine(Action action, Key key, ModifierKeys modifiers)
         {
@@ -57,6 +56,22 @@ namespace ADODesigner.Core.API
             if (category == MenuCategory.File) Editor.PART_menuFile.Items.Add(item);
             if (category == MenuCategory.Edit) Editor.PART_menuEdit.Items.Add(item);
             if (category == MenuCategory.Project) Editor.PART_menuProject.Items.Add(item);
+        }
+        public static void AddMenuItem(Action action, MenuItem menuItem, MenuCategory category)
+        {
+            MenuItem item = menuItem;
+            item.Command = new RelayCommand(action);
+
+            if (category == MenuCategory.File) Editor.PART_menuFile.Items.Add(item);
+            if (category == MenuCategory.Edit) Editor.PART_menuEdit.Items.Add(item);
+            if (category == MenuCategory.Project) Editor.PART_menuProject.Items.Add(item);
+        }
+        public static void AddMenuItemToDesigner(Action action, MenuItem menuItem, ContextMenuDesignerCategory category)
+        {
+            MenuItem item = menuItem;
+            item.Command = new RelayCommand(action);
+
+            //if (category == ContextMenuDesignerCategory.None) Editor.PART
         }
         #endregion
     }

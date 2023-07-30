@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:ADODesigner.ViewModels"
         xmlns:res="clr-namespace:ADODesigner.Localization"
         mc:Ignorable="d"
-        Title="{x:Static res:Resources.TextBlockHomePageTitle}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Background="#FF121215" WindowStyle="None" ResizeMode="NoResize" MouseDown="RowDefinition_MouseDown">
+        Title="{x:Static res:Resources.ADODesignerHome}" Height="600" Width="800" WindowStartupLocation="CenterScreen" Background="#FF111114" WindowStyle="None" ResizeMode="NoResize" MouseDown="RowDefinition_MouseDown">
     <Window.DataContext>
         <vm:HomeVM/>
     </Window.DataContext>
@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <Image Source="../Assets/close-window.png" Grid.Column="1" HorizontalAlignment="Right" Opacity="0.9" x:Name="closeWindow" MouseDown="closeWindow_MouseDown"/>
-        <TextBlock Text="{x:Static res:Resources.TextBlockHomePageTitle}" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+        <TextBlock Text="{x:Static res:Resources.ADODesignerHome}" Foreground="White" Opacity="0.5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
 
         <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource BackgroundColor}" Margin="5 5 5 5">
             <StackPanel>
@@ -32,8 +32,8 @@
                     <Button.Content>
                         <Grid>
                             <Image Source="../Assets/create-file.png" Margin="-110,0,109,0" Opacity="0.9"/>
-                            <TextBlock Text="{x:Static res:Resources.TextBlockHomePageCreateProject}" Margin="29,13,-29,-13"/>
-                            <TextBlock Text="{x:Static res:Resources.TextBlockHomePageCreateProjectDescription}" Margin="29,33,-29,-33" FontSize="12" Opacity="0.8"/>
+                            <TextBlock Text="{x:Static res:Resources.CreateProject}" Margin="29,13,-29,-13"/>
+                            <TextBlock Text="{x:Static res:Resources.CreateProject}" Margin="29,33,-29,-33" FontSize="12" Opacity="0.8"/>
                         </Grid>
                     </Button.Content>
                 </Button>

@@ -6,12 +6,21 @@
         xmlns:vm="clr-namespace:ADODesigner.ViewModels"
         xmlns:controls="clr-namespace:ADODesigner.Views.Controls"
         xmlns:local="clr-namespace:ADODesigner.Views"
+        xmlns:models="clr-namespace:ADODesigner.Models"
         mc:Ignorable="d"
-        xmlns:ex="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="ADODesigner - Editor" Height="640" Width="1000" Background="{DynamicResource ForegroundColor}" WindowStyle="None">
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="ADODesigner - Editor" Height="640" Width="1000" Background="#FF121316" WindowStyle="None">
     <Window.DataContext>
         <vm:EditorVM/>
     </Window.DataContext>
+    <Window.Resources>
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:Ease"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -27,7 +36,7 @@
         <Image Source="../Assets/copy.png" HorizontalAlignment="Right" Grid.ColumnSpan="3" Opacity="0.9" Height="28" Margin="48 0"/>
         <Image Source="../Assets/min-window.png" Grid.Row="1" Opacity="0.9" />
         <Border Grid.Row="2" Grid.ColumnSpan="3" Background="#FF101013"/>
-        <ToolBar Grid.Row="1">
+        <ToolBar Grid.Row="1" Grid.ColumnSpan="3" Background="#FF121316">
             <Image Source="../Assets/copy.png" Grid.Row="1" Opacity="0.9" Height="24"/>
             <Image Source="../Assets/paste.png" Grid.Row="1" Opacity="0.9" />
         </ToolBar>
@@ -48,17 +57,26 @@
         <Border Grid.Column="1" Grid.Row="2" Background="#FF101013" Margin="5">
             <TabControl Background="Transparent" BorderBrush="#FF101013" BorderThickness="5">
                 <TabItem x:FieldModifier="public" x:Name="PART_designer" Header="Designer" Height="30">
-                    <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
+                    <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF131417">
                         <Grid Height="500" Width="500">
                             <Rectangle Fill="White" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 0 540"/>
                         </Grid>
                     </ScrollViewer>
+                    <TabItem.ContextMenu>
+                        <ContextMenu x:FieldModifier="public" x:Name="PART_timeLineContextMenu">
+
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
                 </TabItem>
                 <TabItem x:Name="PART_timeLine" x:FieldModifier="public" Header="TimeLine" Height="30">
                     <TabItem.ContextMenu>
-                        <ContextMenu x:FieldModifier="public" x:Name="PART_timeLineContextMenu"/>
+                        <ContextMenu>
+                            <MenuItem x:Name="PART_designerContextMenuEditor" Header="Editor">
+
+                            </MenuItem>
+                        </ContextMenu>
                     </TabItem.ContextMenu>
-                    <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF121215">
+                    <ScrollViewer Style="{DynamicResource ScrollViewerStyle}" HorizontalScrollBarVisibility="Visible" Background="#FF131417">
                         <Grid>
                             <StackPanel x:Name="panelTimeLines">
 
@@ -101,10 +119,9 @@
                             <TextBlock Text="Opacity" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,161,0,0"/>
                             <TextBox Text="{Binding SelectedKeyFrame.Opacity}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,184,0,0" Width="54"/>
                             <TextBlock Text="Ease" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,213,0,0"/>
-                            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,234,0,0" Width="52">
-                                <ComboBoxItem Content="AZAZAZ"/>
-                                <ComboBoxItem Content="HUHUHUH"/>
-                            </ComboBox>
+                            <ComboBox Foreground="{DynamicResource TextColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,234,0,0" Width="96" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedValue="{Binding SelectedKeyFrame.Ease}"/>
+                            <TextBlock Text="Tag" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,261,0,0"/>
+                            <TextBox Text="{Binding SelectedKeyFrame.Tag}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,282,0,0" Width="54"/>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Decoration">

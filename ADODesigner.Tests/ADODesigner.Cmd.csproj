@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Coyami-Ke</Company>
+    <Product>ADODesigner Command Line</Product>
+    <Authors>Coyami-Ke</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ADODesigner\ADODesigner.csproj" />
+  </ItemGroup>
+
+</Project>

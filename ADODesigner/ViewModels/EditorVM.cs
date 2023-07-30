@@ -1,5 +1,6 @@
 ﻿using ADODesigner.Converters;
 using ADODesigner.Core.API;
+using ADODesigner.Localization;
 using ADODesigner.Models;
 using ADODesigner.ViewModels.Buffer;
 using ADODesigner.Views;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
@@ -25,6 +27,14 @@ namespace ADODesigner.ViewModels
     /// </summary>
     public partial class EditorVM : ObservableObject
     {
+        #region Enums
+        public enum MainTabCategory
+        {
+            TimeLines,
+            Designer,
+            Render,
+        }
+        #endregion
         #region Properties
         [ObservableProperty]
         private ObservableList<Decoration> decorations = new();
@@ -46,6 +56,16 @@ namespace ADODesigner.ViewModels
         private BufferStates<ObservableList<Decoration>> bufferDecorations = new();
         #endregion
         #region Actions
+        public void ConvertToADOFAILevel()
+        {
+            CustomLevel customLevel = new();
+            for (int i = 0; i < Decorations.Count; i++)
+            {
+               customLevel.Decorations.Add(DecorationConverter.Convert(Decorations[i]));
+            }
+
+            JsonSerializer.Serialize(customLevel);
+        }
         public void Save()
         {
 
@@ -65,7 +85,7 @@ namespace ADODesigner.ViewModels
         /// <param name="key"></param>
         public void AddKeyFrame(string key)
         {
-            TimeLines[0].Add(new() { Key = key });
+            TimeLines[0].Add(new() { Key = key, IsSelected = true }) ;
         }
         /// <summary>
         /// Adds a keyframe to the editor.
@@ -73,8 +93,15 @@ namespace ADODesigner.ViewModels
         /// <param name="keyFrame"></param>
         public void AddKeyFrame(KeyFrame keyFrame)
         {
+            KeyFrame selectedKeyFrame = keyFrame;
+            selectedKeyFrame.IsSelected = true;
             TimeLines[0].Add(keyFrame);
         }
+        /// <summary>
+        /// Finds a keyframe using key. If the method does not find a keyframe, will return null
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public KeyFrame? FindKeyFrame(string key)
         {
             for (int i = 0; TimeLines.Count < 0; i++)
@@ -93,9 +120,9 @@ namespace ADODesigner.ViewModels
         /// <returns>Index of TimeLines. Index of TimeLines[i]</returns>
         public (int, int) GetKeyFrameIndex(string key)
         {
-            for (int i = 0; TimeLines.Count < 0; i++)
+            for (int i = 0; i < TimeLines.Count; i++)
             {
-                for (int s = 0; TimeLines[i].Count < 0; s++)
+                for (int s = 0; s < TimeLines[i].Count; s++)
                 {
                     if (TimeLines[i][s].Key == key) return (i, s);
                 }
@@ -166,13 +193,13 @@ namespace ADODesigner.ViewModels
                 {
                     for (int s = 0; s < TimeLines[i].Count; s++)
                     {
-                        level.actions.Add(KeyFrameConverter.Convert(TimeLines[i][s]));
+                        level.Actions.Add(KeyFrameConverter.Convert(TimeLines[i][s]));
                     }
                 }
 
                 for (int i = 0; i < Decorations.Count; i++)
                 {
-                    level.decorations.Add(DecorationConverter.Convert(Decorations[i]));
+                    level.Decorations.Add(DecorationConverter.Convert(Decorations[i]));
                 }
             }
         }
@@ -287,11 +314,20 @@ namespace ADODesigner.ViewModels
             EditorAPI.AddHotKeyToTimeLine(Editor_SelectAllKeyFrames, Key.A, ModifierKeys.Control);
             EditorAPI.AddHotKeyToTimeLine(Editor_UndoKeyFrames, Key.Z, ModifierKeys.Control);
             EditorAPI.AddHotKeyToTimeLine(Editor_RemoveKeyFrames, Key.Delete, ModifierKeys.None);
-            EditorAPI.AddHotKeyToTimeLine(Editor_AddKeyFrame, Key.K, ModifierKeys.Shift);
             EditorAPI.AddHotKeyToTimeLine(Editor_ShiftKeyframeToLeft, Key.Left, ModifierKeys.None);
             EditorAPI.AddHotKeyToTimeLine(Editor_ShiftKeyframeToRight, Key.Right, ModifierKeys.None);
 
-            EditorAPI.AddGlobalHotKey(Editor_Save, Key.S, ModifierKeys.Control);
+            EditorAPI.AddMenuItem(Editor_ConvertToADOFAILevel, 
+                new MenuItem() { Header = Resources.ConvertToADOFAILevel }, 
+                EditorAPI.MenuCategory.File);
+
+            EditorAPI.AddGlobalHotKeyWithMenuItem(Editor_Save, Key.S, ModifierKeys.Control, 
+                new MenuItem() { Header = Resources.Save },
+                EditorAPI.MenuCategory.File);
+
+            EditorAPI.AddGlobalHotKeyWithMenuItem(Editor_AddKeyFrame, Key.K, ModifierKeys.Control | ModifierKeys.Shift,
+                new MenuItem() { Header = Resources.AddKeyFrame },
+                EditorAPI.MenuCategory.Project);
         }
         #endregion
         #region Constructors
