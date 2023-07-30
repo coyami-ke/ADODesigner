@@ -1,4 +1,7 @@
-﻿using ADODesigner.Animations;
+﻿// 
+// ADODesigner Command Line | by Coyami-Ke
+//
+using ADODesigner.Animations;
 using ADODesigner.Converters;
 using ADODesigner.Models;
 using System.Globalization;
