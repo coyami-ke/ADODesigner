@@ -61,6 +61,7 @@ namespace ADODesigner.Animations
                     for (int s = 0; s < countFrames; s++)
                     {
                         KeyFrame keyFrame = new();
+                        keyFrame.PositionOffset = Args.FirstFrame.PositionOffset;
                         keyFrame.Duration = 1 / countFrames;
                         keyFrame.AngleOffset = (180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset;
                         keyFrame.Tag = Args.Tag + i;
@@ -79,17 +80,18 @@ namespace ADODesigner.Animations
                             processedPosition = Bezier.QuadraticBezier(Args.FirstFrame.PositionOffset, new(Args.SecondFrame.PositionOffset.X, Args.FirstFrame.PositionOffset.Y), Args.SecondFrame.PositionOffset, t);
                         }
 
-                        float processedOpacity = t * Args.SecondFrame.Opacity;
-                        Vector2 processedParallax = t * Args.SecondFrame.Parallax;
-                        float processedRotation = t * Args.SecondFrame.RotationOffset;
-                        Vector2 processedScale = t * Args.SecondFrame.Scale;
-                        float processedDepth = t * Args.SecondFrame.Depth;
-
                         keyFrame.PositionOffset = processedPosition;
-                        keyFrame.Opacity = processedOpacity;
-                        keyFrame.Depth = processedDepth;
-                        keyFrame.RotationOffset = processedRotation;
-                        keyFrame.Scale = processedScale;
+
+                        //float processedOpacity = t * Args.SecondFrame.Opacity;
+                        //Vector2 processedParallax = t * Args.SecondFrame.Parallax;
+                        //float processedRotation = t * Args.SecondFrame.RotationOffset;
+                        //Vector2 processedScale = t * Args.SecondFrame.Scale;
+                        //float processedDepth = t * Args.SecondFrame.Depth;
+                        
+                        //keyFrame.Opacity = processedOpacity;
+                        //keyFrame.Depth = processedDepth;
+                        //keyFrame.RotationOffset = processedRotation;
+                        //keyFrame.Scale = processedScale;
 
                         keyFrames.Add(keyFrame);
                     }

@@ -44,5 +44,13 @@ namespace ADODesigner.Models
         private bool isSelected = false;
         [ObservableProperty]
         private string iD = "";
+        [ObservableProperty]
+        private bool lockRotation = false;
+        [ObservableProperty]
+        private bool lockScale = false;
+        [ObservableProperty]
+        private Vector2 parallaxOffset;
+        [ObservableProperty]
+        private bool imageSmoothing;
     }
 }

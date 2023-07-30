@@ -14,7 +14,7 @@ namespace ADODesigner.Converters
     public static class DecorationConverter
     {
         /// <summary>
-        /// Convert <see cref="Decoration"/> to <see cref="AddDecoration"/>
+        /// Converts <see cref="Decoration"/> to <see cref="AddDecoration"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -30,6 +30,9 @@ namespace ADODesigner.Converters
             result.position = new float[2] { value.Position.X, value.Position.Y };
             result.scale = new float[2] { value.Scale.X, value.Scale.Y};
             result.tile = new int[2] { (int)value.Tiling.X, (int)value.Tiling.Y };
+            result.parallaxOffset = new float[2] { value.ParallaxOffset.X, value.ParallaxOffset.Y };
+            result.pivotOffset = new float[2] { 0, 0 };
+            result.imageSmoothing = "Enabled";
 
             return result;
         }

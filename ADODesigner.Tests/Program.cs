@@ -50,7 +50,6 @@ namespace ADODesigner.Cmd
                 Console.Write("Easing function: ");
                 Ease ease = Enum.Parse<Ease>(Console.ReadLine());
                 BallsAnimation ballsAnimation = new(animationArgs);
-                ballsAnimation.Args.Floor = i * ballsAnimation.Args.Duration + 1;
                 ballsAnimation.Args.Easing = ease;
                 ballsAnimation.Args.FirstFrame.PositionOffset = new(firstPosition.X, firstPosition.Y);
                 ballsAnimation.Args.SecondFrame.PositionOffset = new(secondPosition.X, secondPosition.Y);
@@ -60,6 +59,7 @@ namespace ADODesigner.Cmd
             for (int i = 0; i < countAnimations; i++)
             {
                 Console.WriteLine($"Processing... ({i + 1} / {countAnimations})");
+                animations[i].Args.Floor = animations[i].Args.Duration * i + 1;
                 (KeyFrame[], Decoration[]) processed = animations[i].CreateAnimation();
                 keyFrames.AddRange(processed.Item1);
                 decorations.AddRange(processed.Item2);
@@ -79,7 +79,6 @@ namespace ADODesigner.Cmd
 
             for (int i = 0; i < keyFrames.Count; i++)
             {
-                Console.WriteLine(keyFrames[i].Floor);
                 keyFrames[i].EventTag = "";
                 customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
             }
