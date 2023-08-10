@@ -1,5 +1,4 @@
 ﻿using ADODesigner.Models;
-using ADODesigner.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

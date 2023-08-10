@@ -1,29 +1,33 @@
 ﻿using ADODesigner.Animations;
 using ADODesigner.Converters;
 using ADODesigner.Models;
-using System.Globalization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
-using System.Reflection.Metadata;
+using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 #nullable disable
 namespace ADODesigner.Cmd
 {
-    internal class Program
+    public static class BallsAnimationCommand
     {
-        static void Main(string[] args)
+        public static void Run()
         {
-            Console.WriteLine("ADODesigner Command Line by Coyami-Ke");
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.IncludeFields = true;
+            options.WriteIndented = true;
             BallsAnimationArgs animationArgs = new();
-            if (!File.Exists("balls_animation.json"))
+            Directory.CreateDirectory("config");
+            if (!File.Exists(@"config\balls_animation.json"))
             {
-                File.Create("balls_animation.json").Dispose();
-                File.WriteAllText("balls_animation.json", JsonSerializer.Serialize<BallsAnimationArgs>(animationArgs));
+                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize<BallsAnimationArgs>(animationArgs, options));
             }
             else
             {
-                FileStream reader = new("balls_animation.json", FileMode.Open);
-                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(reader);
+                FileStream reader = new(@"config\balls_animation.json", FileMode.Open);
+                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(reader, options);
             }
 
             Console.Write("How many animations do you want to create?: ");
@@ -44,23 +48,25 @@ namespace ADODesigner.Cmd
                 firstPosition.X = Convert.ToSingle(Console.ReadLine());
                 Console.Write("First Position Y: ");
                 firstPosition.Y = Convert.ToSingle(Console.ReadLine());
-                Console.Write("Second Position X: "); 
+                Console.Write("Second Position X: ");
                 secondPosition.X = Convert.ToSingle(Console.ReadLine());
                 Console.Write("Second Position Y: ");
                 secondPosition.Y = Convert.ToSingle(Console.ReadLine());
                 Console.Write("Easing function: ");
                 Ease ease = Enum.Parse<Ease>(Console.ReadLine());
                 BallsAnimation ballsAnimation = new(animationArgs);
+                
                 ballsAnimation.Args.Easing = ease;
                 ballsAnimation.Args.FirstFrame.PositionOffset = new(firstPosition.X, firstPosition.Y);
                 ballsAnimation.Args.SecondFrame.PositionOffset = new(secondPosition.X, secondPosition.Y);
-                if (i + 2 % 2 == 0) ballsAnimation.Args.Invert = true;
+                if (i % 2 == 1) ballsAnimation.Args.Invert = true;
+                
                 animations.Add(ballsAnimation);
             }
             for (int i = 0; i < countAnimations; i++)
             {
-                Console.WriteLine($"Processing... ({i + 1} / {countAnimations})");
                 animations[i].Args.Floor = animations[i].Args.Duration * i + 1;
+                Console.WriteLine($"Processing... ({i + 1} / {countAnimations})");
                 (KeyFrame[], Decoration[]) processed = animations[i].CreateAnimation();
                 keyFrames.AddRange(processed.Item1);
                 decorations.AddRange(processed.Item2);
@@ -80,7 +86,8 @@ namespace ADODesigner.Cmd
 
             for (int i = 0; i < keyFrames.Count; i++)
             {
-                keyFrames[i].EventTag = "";
+                Console.WriteLine();
+                KeyFrame.GetDescription(keyFrames[i]);
                 customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
             }
 
@@ -90,8 +97,7 @@ namespace ADODesigner.Cmd
                 decorations[i].Image = "cat.png";
                 customLevel.Decorations.Add(DecorationConverter.Convert(decorations[i]));
             }
-
-            string json = JsonSerializer.Serialize<CustomLevel>(customLevel);
+            string json = JsonSerializer.Serialize<CustomLevel>(customLevel, options);
             Console.WriteLine("Writing to file result.adofai...");
             File.WriteAllText("result.adofai", json);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -99,7 +105,6 @@ namespace ADODesigner.Cmd
             Console.WriteLine("Result:");
             Console.WriteLine($"  Count keyframes: {keyFrames.Count}");
             Console.WriteLine($"  Count decorations: {decorations.Count}");
-            Console.ReadKey();
         }
     }
 }

@@ -28,7 +28,10 @@ namespace ADODesigner.Converters
             result.ease = value.Ease.ToString();
             result.tag = value.Tag;
             result.eventTag = value.EventTag;
-
+            result.parallax[0] = value.Parallax.X;
+            result.parallax[1] = value.Parallax.Y;
+            result.parallaxOffset[0] = value.ParallaxOffset.X;
+            result.parallaxOffset[1] = value.ParallaxOffset.Y;
             return result;
         }
     }

@@ -25,7 +25,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private Vector2 pivotOffset = new Vector2(0, 0);
         [ObservableProperty]
-        private string color = "FFFFFFFF";
+        private string color = "FFFFFF";
         [ObservableProperty]
         private float opacity = 100;
         [ObservableProperty]
