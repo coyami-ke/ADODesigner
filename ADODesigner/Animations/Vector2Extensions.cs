@@ -9,10 +9,10 @@ namespace ADODesigner.Animations
 {
     public static class Vector2Extensions
     {
-        public static bool IsInfinity(this Vector2 value)
+        public static bool IsNan(this Vector2 value)
         {
-            if (float.IsInfinity(value.X) || float.IsInfinity(value.Y)) return false;
-            return true;
+            if (float.IsNaN(value.X) || float.IsNaN(value.Y)) return true;
+            return false;
         }
     }
 }

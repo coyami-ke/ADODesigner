@@ -18,7 +18,7 @@ namespace ADODesigner.Cmd
             Console.WriteLine(@"  ""balls"" : Create an animation of balls.");
             Console.Write("Enter command: ");
             string command = Console.ReadLine();
-            if (command == "balls") BallsAnimationCommand.Run();
+            if (command == "balls" || command == "0") BallsAnimationCommand.Run();
             //if (command == "following") FollowingDecorationCommand.Run();
             Console.ReadKey();
         }

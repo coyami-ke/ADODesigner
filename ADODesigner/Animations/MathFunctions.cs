@@ -19,9 +19,12 @@ namespace ADODesigner.Animations
         /// <returns>Normalized number</returns>
         public static float Normalize(float value, float minValue, float maxValue)
         {
-            float result = (value - minValue) / (maxValue - minValue);
-            if (float.IsInfinity(result)) return 1;
-            else return result;
+            if (minValue == maxValue) return 1;
+            float min = Math.Min(minValue, maxValue);
+            float max = Math.Max(maxValue, minValue);
+            float normalizedValue = (value - min) / (max - min);
+            return normalizedValue;
+            // return (value - minValue) / (maxValue - minValue);
         }
         /// <summary>
         /// Normalizes a <see cref="Vector2"/> from 0 to 1.
@@ -32,9 +35,11 @@ namespace ADODesigner.Animations
         /// <returns>Normalized <see cref="Vector2"/></returns>
         public static Vector2 Normalize(Vector2 value, Vector2 minValue, Vector2 maxValue)
         {
-            Vector2 result = (value - minValue) / (maxValue - minValue);
-            if (result.IsInfinity()) return new(1, 1);
-            else return result;
+            Vector2 result;
+            float x = Normalize(value.X, minValue.X, maxValue.X);
+            float y = Normalize(value.Y, minValue.Y, maxValue.Y);
+            result = new Vector2(x, y);
+            return result;
         }
     }
 }

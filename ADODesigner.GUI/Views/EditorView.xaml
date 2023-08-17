@@ -4,12 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADODesigner.Views"
-        xmlns:editor="clr-namespace:ADODesigner.ViewModels"
         mc:Ignorable="d"
         Title="EditorView" Height="450" Width="800" Background="#FF131517" WindowStyle="None">
-    <Window.DataContext>
-        <editor:ADOFAIEditor/>
-    </Window.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="36"/>

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 #pragma warning disable 1591
 namespace ADODesigner.Converters
 {
@@ -19,6 +18,7 @@ namespace ADODesigner.Converters
             result.floor = value.Floor;
             result.positionOffset[0] = value.PositionOffset.X;
             result.positionOffset[1] = value.PositionOffset.Y;
+            result.rotationOffset = value.RotationOffset;
             result.scale[0] = value.Scale.X;
             result.scale[1] = value.Scale.Y;
             result.angleOffset = value.AngleOffset;

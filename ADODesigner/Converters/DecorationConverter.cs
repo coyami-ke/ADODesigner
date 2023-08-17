@@ -21,18 +21,18 @@ namespace ADODesigner.Converters
         public static AddDecoration Convert(Decoration value)
         {
             AddDecoration result = new();
-            result.floor = value.Floor;
-            result.color = value.Color;
-            result.tag = value.Tag;
-            result.rotation = value.Rotation;
-            result.opacity = value.Opacity;
-            result.decorationImage = value.Image;
-            result.position = new float[2] { value.Position.X, value.Position.Y };
-            result.scale = new float[2] { value.Scale.X, value.Scale.Y};
-            result.tile = new int[2] { (int)value.Tiling.X, (int)value.Tiling.Y };
-            result.parallaxOffset = new float[2] { value.ParallaxOffset.X, value.ParallaxOffset.Y };
-            result.pivotOffset = new float[2] { 0, 0 };
-            result.imageSmoothing = "Enabled";
+            result.Floor = value.Floor;
+            result.Color = value.Color;
+            result.Tag = value.Tag;
+            result.Rotation = value.Rotation;
+            result.Opacity = value.Opacity;
+            result.DecorationImage = value.Image;
+            result.Position = new float[2] { value.Position.X, value.Position.Y };
+            result.Scale = new float[2] { value.Scale.X, value.Scale.Y};
+            result.Tile = new int[2] { (int)value.Tiling.X, (int)value.Tiling.Y };
+            result.ParallaxOffset = new float[2] { value.ParallaxOffset.X, value.ParallaxOffset.Y };
+            result.PivotOffset = new float[2] { 0, 0 };
+            result.ImageSmoothing = "Enabled";
 
             return result;
         }

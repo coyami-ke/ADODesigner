@@ -1,54 +1,33 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 #pragma warning disable 1591
 namespace ADODesigner.Models
 {
     /// <summary>
     /// Base class for holding decoration states. 
     /// </summary>
-    public partial class KeyFrame : ObservableObject
+    public partial class KeyFrame
     {
-        [ObservableProperty]
-        private string tag = "";
-        [ObservableProperty]
-        private Vector2 positionOffset = new(0,0);
-        [ObservableProperty]
-        private Vector2 scale = new(100, 100);
-        [ObservableProperty]
-        private float rotationOffset = 0;
-        [ObservableProperty]
-        private string color = "";
-        [ObservableProperty]
-        private float opacity = 100;
-        [ObservableProperty]
-        private float depth = -1;
-        [ObservableProperty]
-        private Vector2 parallax = Vector2.Zero;
-        [ObservableProperty]
-        private RelativeTo relativeTo = RelativeTo.Tile;
-        [ObservableProperty]
-        private string eventTag = String.Empty;
-        [ObservableProperty]
-        private Ease ease = Ease.Linear;
-        [ObservableProperty]
-        private float angleOffset = 0;
-        [ObservableProperty]
-        private bool isSelected = false;
-        [ObservableProperty]
-        private float duration = 1;
-        [ObservableProperty]
-        private int floor = 1;
-        [ObservableProperty]
-        private string key = String.Empty;
-        [ObservableProperty]
-        private Vector2 parallaxOffset = new(0, 0);
+        public string Tag { get; set; } = "";
+        public Vector2 PositionOffset { get; set; } = new(0,0);
+        public Vector2 Scale { get; set; } = new(100, 100);
+        public float RotationOffset { get; set; } = 0;
+        public string Color { get; set; } = "";
+        public float Opacity { get; set; } = 100;
+        public float Depth { get; set; } = -1;
+        public Vector2 Parallax { get; set; } = Vector2.Zero;
+        public string EventTag { get; set; } = String.Empty;
+        public Ease Ease { get; set; } = Ease.Linear;
+        public float AngleOffset { get; set; } = 0;
+        public bool IsSelected { get; set; } = false;
+        public float Duration { get; set; } = 1;
+        public int Floor { get; set; } = 1;
+        public Vector2 ParallaxOffset { get; set; } = new(0, 0);
 
         public static void GetDescription(KeyFrame keyFrame)
         {

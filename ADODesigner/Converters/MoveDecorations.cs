@@ -25,5 +25,6 @@ namespace ADODesigner.Converters
         public string eventTag { get; set; }
         public float[] parallax { get; set; } = new float[2];
         public float[] parallaxOffset { get; set; } = new float[2];
+        public float rotationOffset { get; set; } = 0;
     }
 }
