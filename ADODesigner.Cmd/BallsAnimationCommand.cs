@@ -19,6 +19,7 @@ namespace ADODesigner.Cmd
         public static void Run()
         {
             BallsAnimationArgs animationArgs = new();
+
             Directory.CreateDirectory("config");
             if (!File.Exists(@"config\balls_animation.json"))
             {

@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:ADODesigner.Views"
         mc:Ignorable="d"
         Title="EditorView" Height="450" Width="800" Background="#FF131517" WindowStyle="None">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="36"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Menu Background="Transparent" VerticalAlignment="Center">
@@ -30,6 +30,31 @@
                 <MenuItem Header="Balls Animation..."/>
             </MenuItem>
         </Menu>
-        <GridSplitter Width="5" Grid.Row="1" Background="#FF101113"/>
+        <Border Background="#FF101013" Grid.Row="1" Grid.Column="0" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Background="#FF121215">
+                    <TextBlock Text="Properties" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource TextColor2}"/>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Background="#FF101013" Grid.Row="1" Grid.Column="1" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Background="#FF121215">
+                    <TextBlock Text="Editor" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource TextColor2}"/>
+                </Border>
+                <Canvas x:Name="PART_Editor" Grid.Row="1">
+                    
+                </Canvas>
+            </Grid>
+        </Border>
+        <GridSplitter Width="5" Grid.Row="1" Background="Transparent"/>
     </Grid>
 </Window>
