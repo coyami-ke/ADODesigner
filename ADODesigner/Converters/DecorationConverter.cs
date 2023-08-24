@@ -18,7 +18,7 @@ namespace ADODesigner.Converters
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AddDecoration Convert(Decoration value)
+        public static AddDecoration ToAddDecoration(Decoration value)
         {
             AddDecoration result = new();
             result.Floor = value.Floor;
@@ -34,6 +34,20 @@ namespace ADODesigner.Converters
             result.PivotOffset = new float[2] { 0, 0 };
             result.ImageSmoothing = "Enabled";
 
+            return result;
+        }
+        public static KeyFrame ToKeyFrame(Decoration value)
+        {
+            KeyFrame result = new();
+            result.PositionOffset = value.Position;
+            result.RotationOffset = value.Rotation;
+            result.Scale = value.Scale;
+            result.Tag = value.Tag;
+            result.Opacity = value.Opacity;
+            result.Depth = value.Depth;
+            result.Parallax = value.Parallax;
+            result.ParallaxOffset = value.ParallaxOffset;
+            result.Color = value.Color;
             return result;
         }
     }

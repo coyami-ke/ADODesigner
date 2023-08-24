@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 #nullable disable
 namespace ADODesigner.Converters
@@ -16,6 +18,23 @@ namespace ADODesigner.Converters
     /// </summary>
     public class CustomLevel
     {
+        [JsonIgnore]
+        public List<IADOFAIEvent> Events { get; set; } = new();
+        public static CustomLevel Parse(string json)
+        {
+            var options = new JsonSerializerOptions()
+            {
+                IncludeFields = true,
+                WriteIndented = true
+            };
+            CustomLevel level = JsonSerializer.Deserialize<CustomLevel>(json, options);
+            for (int i = 0; i < level.Actions.Count; i++)
+            {
+                level.Events.Add(ADOFAIEventConverter.JsonObjectToEvent(level.Actions[i].AsObject()));
+            }
+            return level;
+        }
+        
         /// <summary>
         /// Angles of tiles
         /// </summary>
@@ -35,7 +54,7 @@ namespace ADODesigner.Converters
         /// Actions
         /// </summary>
         [JsonPropertyName("actions")]
-        public List<MoveDecorations> Actions { get; set; } = new();
+        public JsonArray Actions { get; set; } = new();
     }
     public class CustomLevelSettings
     {
@@ -89,7 +108,6 @@ namespace ADODesigner.Converters
 
         [JsonPropertyName("difficulty")]
         public int Difficulty { get; set; } = 1;
-
         [JsonPropertyName("requiredMods")]
         public List<Object> RequiredMods { get; set; } = new();
 
@@ -97,7 +115,7 @@ namespace ADODesigner.Converters
         public string SongFilename { get; set; } = "";
 
         [JsonPropertyName("bpm")]
-        public int Bpm { get; set; } = 100;
+        public int Bpm { get; set; } = 300;
 
         [JsonPropertyName("volume")]
         public int Volume { get; set; } = 100;
@@ -235,6 +253,5 @@ namespace ADODesigner.Converters
 
         [JsonPropertyName("legacySpriteTiles")]
         public bool LegacySpriteTiles { get; set; } = false;
-
     }
 }

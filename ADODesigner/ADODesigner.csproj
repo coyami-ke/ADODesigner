@@ -9,8 +9,4 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="python\" />
-  </ItemGroup>
-
 </Project>

@@ -50,5 +50,25 @@ namespace ADODesigner.Converters
         public string Tag { get; set; } = "";
         [JsonPropertyName("imageSmoothing")]
         public string ImageSmoothing { get; set; } = "Enabled";
+        [JsonPropertyName("blendMode")]
+        public string BlendMode { get; set; } = "None";
+        [JsonPropertyName("maskingType")]
+        public string MaskingType { get; set; } = "None";
+        [JsonPropertyName("useMaskingDepth")]
+        public string UseMaskingDepth { get; set; } = "Disabled";
+        [JsonPropertyName("maskingFrontDepth")]
+        public int MaskingFrontDepth { get; set; } = -1;
+        [JsonPropertyName("maskingBackDepth")]
+        public int MaskingBackDepth { get; set; } = -1;
+        [JsonPropertyName("failHitbox")]
+        public string FailHitBox { get; set; } = "Disabled";
+        [JsonPropertyName("failHitboxType")]
+        public string FailHitBoxType { get; set; } = "Box";
+        [JsonPropertyName("failHitboxScale")]
+        public int[] FailHitBoxScale { get;set; } = new int[2];
+        [JsonPropertyName("failHitboxOffset")]
+        public int[] FailHitBoxOffset { get; set; } = new int[2];
+        [JsonPropertyName("failHitboxRotation")]
+        public int FailHitBoxRotation { get; set; } = 0;
     }
 }

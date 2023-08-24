@@ -16,7 +16,7 @@ namespace ADODesigner.Models
         public string Tag { get; set; } = "";
         public Vector2 PositionOffset { get; set; } = new(0,0);
         public Vector2 Scale { get; set; } = new(100, 100);
-        public float RotationOffset { get; set; } = 0;
+        public float RotationOffset { get; set; }
         public string Color { get; set; } = "";
         public float Opacity { get; set; } = 100;
         public float Depth { get; set; } = -1;

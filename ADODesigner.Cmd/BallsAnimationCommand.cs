@@ -1,5 +1,4 @@
 ﻿using ADODesigner.Animations;
-using ADODesigner.Cmd.Json;
 using ADODesigner.Converters;
 using ADODesigner.Models;
 using System.Text.Json.Serialization;
@@ -11,6 +10,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Reflection;
+using System.Text.Json.Nodes;
 #nullable disable
 namespace ADODesigner.Cmd
 {
@@ -22,11 +23,11 @@ namespace ADODesigner.Cmd
             Directory.CreateDirectory("config");
             if (!File.Exists(@"config\balls_animation.json"))
             {
-                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs!, BallsAnimationArgsGen.Default.BallsAnimationArgs));
+                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs));
             }
             else
             {
-                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), BallsAnimationArgsGen.Default.BallsAnimationArgs);
+                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"));
             }
 
             Console.Write("How many animations do you want to create?: ");
@@ -44,16 +45,35 @@ namespace ADODesigner.Cmd
                 Console.WriteLine($"Enter four floating-point numbers. ( {i + 1} / {countAnimations} )");
                 Vector2 firstPosition = new();
                 Vector2 secondPosition = new();
-                Console.Write("First Position X: ");
-                firstPosition.X = Convert.ToSingle(Console.ReadLine());
-                Console.Write("First Position Y: ");
-                firstPosition.Y = Convert.ToSingle(Console.ReadLine());
-                Console.Write("Second Position X: ");
-                secondPosition.X = Convert.ToSingle(Console.ReadLine());
-                Console.Write("Second Position Y: ");
-                secondPosition.Y = Convert.ToSingle(Console.ReadLine());
+                try
+                {
+                    Console.Write("First Position X: ");
+                    firstPosition.X = Convert.ToSingle(Console.ReadLine());
+                    Console.Write("First Position Y: ");
+                    firstPosition.Y = Convert.ToSingle(Console.ReadLine());
+                    Console.Write("Second Position X: ");
+                    secondPosition.X = Convert.ToSingle(Console.ReadLine());
+                    Console.Write("Second Position Y: ");
+                    secondPosition.Y = Convert.ToSingle(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Wrong format.");
+                    Console.ReadKey();
+                    return;
+                }
                 Console.Write("Easing function: ");
-                Ease ease = Enum.Parse<Ease>(Console.ReadLine());
+                Ease ease = Ease.Linear;
+                try
+                {
+                    ease = Enum.Parse<Ease>(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine($"{ease} don't exists.");
+                    Console.ReadKey();
+                    return;
+                }
 
                 BallsAnimation ballsAnimation = new(animationArgs);
                 
@@ -92,11 +112,12 @@ namespace ADODesigner.Cmd
 
             for (int i = 0; i < keyFrames.Count; i++)
             {
-                customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
+                MoveDecorations moveDecorations = KeyFrameConverter.Convert(keyFrames[i]);
+                customLevel.Actions.Add(moveDecorations);
             }
             
             Console.WriteLine("Writing custom level to json file...");
-            File.WriteAllText("result.adofai", JsonSerializer.Serialize(customLevel!, CustomLevelGen.Default.CustomLevel));
+            File.WriteAllText("result.adofai", JsonSerializer.Serialize(customLevel!));
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Complete!");
             Console.WriteLine("Result:");
