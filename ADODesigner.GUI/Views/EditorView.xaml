@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADODesigner.Views"
         mc:Ignorable="d"
-        Title="EditorView" Height="450" Width="800" Background="#FF131517" WindowStyle="None">
-
+        Title="ADODesigner - Editor" WindowStartupLocation="CenterScreen" Height="700" Width="1200" Background="#FF131517" WindowStyle="None">
+    <Window.DataContext>
+        <local:EditorVM/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="36"/>
@@ -30,6 +32,9 @@
                 <MenuItem Header="Balls Animation..."/>
             </MenuItem>
         </Menu>
+<<<<<<< Updated upstream
+        <GridSplitter Width="5" Grid.Row="1" Background="#FF101113"/>
+=======
         <Border Background="#FF101013" Grid.Row="1" Grid.Column="0" Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -56,5 +61,6 @@
             </Grid>
         </Border>
         <GridSplitter Width="5" Grid.Row="1" Background="Transparent"/>
+>>>>>>> Stashed changes
     </Grid>
 </Window>

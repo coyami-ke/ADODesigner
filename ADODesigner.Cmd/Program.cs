@@ -19,8 +19,7 @@ namespace ADODesigner.Cmd
             Console.Write("Enter command: ");
             string command = Console.ReadLine();
             if (command == "balls" || command == "0") BallsAnimationCommand.Run();
-            //if (command == "following") FollowingDecorationCommand.Run();
-            Console.ReadKey();
+            
         }
     }
 }

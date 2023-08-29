@@ -16,6 +16,24 @@ namespace ADODesigner.Converters
     /// </summary>
     public class CustomLevel
     {
+        [JsonIgnore]
+        public List<IADOFAIEvent> Events { get; set; } = new();
+        public static CustomLevel Parse(string json)
+        {
+            var options = new JsonSerializerOptions()
+            {
+                IncludeFields = true,
+                WriteIndented = true,
+                AllowTrailingCommas = true,
+            };
+            CustomLevel level = JsonSerializer.Deserialize<CustomLevel>(json, options);
+            for (int i = 0; i < level.Actions.Count; i++)
+            {
+                level.Events.Add(ADOFAIEventConverter.JsonObjectToEvent(level.Actions[i].AsObject()));
+            }
+            return level;
+        }
+        
         /// <summary>
         /// Angles of tiles
         /// </summary>

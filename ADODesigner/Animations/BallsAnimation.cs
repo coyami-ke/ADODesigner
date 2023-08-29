@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using static ADODesigner.Animations.MathFunctions;
 using static ADODesigner.Animations.EasingFunctions;
-using System.Threading;
+using System.Reflection;
 
 namespace ADODesigner.Animations
 {
     public class BallsAnimationArgs
     {
-        public Vector2 ScaleDifference { get; set; } = new(0, 0);
-        public float OpacityDifference { get; set; } = 0;
         public int AngleOffset { get; set; } = 45;
         public int Count { get; set; } = 5;
         public Ease Easing { get; set; } = Ease.Linear;
@@ -68,7 +66,7 @@ namespace ADODesigner.Animations
                     keyFrame.Opacity = Args.SecondFrame.Opacity;
                     keyFrame.EventTag = Args.SecondFrame.EventTag;
                     keyFrame.Duration = 0;
-                    keyFrame.AngleOffset = (180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset;
+                    keyFrame.AngleOffset = ((180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset) + Args.Delay;
                     keyFrame.Tag = Args.Tag + i;
                     keyFrame.Floor = Args.Floor;
 
@@ -98,8 +96,8 @@ namespace ADODesigner.Animations
                     keyFrame.RotationOffset = Args.SecondFrame.RotationOffset * tRotation;
 
                     Vector2 tScale = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Scale / countFrames * s, Args.FirstFrame.Scale, Args.SecondFrame.Scale));
-                    keyFrame.Scale = Args.SecondFrame.Scale * tScale - Args.ScaleDifference * i;
-                    if (!keyFrame.Scale.IsNan()) keyFrame.Scale = Args.SecondFrame.Scale - Args.ScaleDifference * i;
+                    keyFrame.Scale = Args.SecondFrame.Scale * tScale;
+                    if (!keyFrame.Scale.IsNan()) keyFrame.Scale = Args.SecondFrame.Scale;
 
                     Vector2 tParallax = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Parallax / countFrames * s, Args.FirstFrame.Parallax, Args.SecondFrame.Parallax));
                     keyFrame.Parallax = Args.SecondFrame.Parallax * tParallax;
