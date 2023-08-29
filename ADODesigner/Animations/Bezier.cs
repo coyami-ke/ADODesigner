@@ -9,6 +9,14 @@ namespace ADODesigner.Animations
 {
     public static class Bezier
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p0"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static Vector2 QuadraticBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
         {
             float u = 1 - t;
