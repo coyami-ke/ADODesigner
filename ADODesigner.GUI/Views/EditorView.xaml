@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADODesigner.Views"
+        xmlns:local="clr-namespace:ADODesigner.GUI.ViewModels"
         mc:Ignorable="d"
         Title="ADODesigner - Editor" WindowStartupLocation="CenterScreen" Height="700" Width="1200" Background="#FF131517" WindowStyle="None">
     <Window.DataContext>
@@ -18,10 +18,12 @@
             <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu Background="Transparent" VerticalAlignment="Center">
+        <Image x:Name="closeWindowButton" MouseDown="closeWindowButton_MouseDown" Opacity="0.9" Height="36" Width="36" HorizontalAlignment="Right" Source="../Assets/close-window.png" Grid.Column="1"/>
+        <Menu Background="Transparent" VerticalAlignment="Center" Margin="10">
             <MenuItem Header="File">
+                <MenuItem Header="Open ADOFAI Level..." Command="{Binding OpenADOFAILevelCommand}"/>
                 <MenuItem Header="Save..." InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Convert to .adofai..." InputGestureText="Ctrl+D"/>
+                <MenuItem Header="Convert to .adofai..." InputGestureText="Ctrl+D" Command="{Binding ConvertToADOFAILevelCommand}"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Copy" InputGestureText="Ctrl+C"/>
@@ -29,38 +31,10 @@
                 <MenuItem Header="Cut" InputGestureText="Ctrl+X"/>
             </MenuItem>
             <MenuItem Header="Animations">
-                <MenuItem Header="Balls Animation..."/>
+                <MenuItem Header="Add Balls Animation..." Command="{Binding AddBallsAnimationCommand}"/>
             </MenuItem>
         </Menu>
 <<<<<<< Updated upstream
         <GridSplitter Width="5" Grid.Row="1" Background="#FF101113"/>
-=======
-        <Border Background="#FF101013" Grid.Row="1" Grid.Column="0" Margin="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Border Background="#FF121215">
-                    <TextBlock Text="Properties" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource TextColor2}"/>
-                </Border>
-            </Grid>
-        </Border>
-        <Border Background="#FF101013" Grid.Row="1" Grid.Column="1" Margin="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Border Background="#FF121215">
-                    <TextBlock Text="Editor" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource TextColor2}"/>
-                </Border>
-                <Canvas x:Name="PART_Editor" Grid.Row="1">
-                    
-                </Canvas>
-            </Grid>
-        </Border>
-        <GridSplitter Width="5" Grid.Row="1" Background="Transparent"/>
->>>>>>> Stashed changes
     </Grid>
 </Window>

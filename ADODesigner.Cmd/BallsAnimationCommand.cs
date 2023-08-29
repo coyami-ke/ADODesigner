@@ -1,5 +1,4 @@
 ﻿using ADODesigner.Animations;
-using ADODesigner.Cmd.Json;
 using ADODesigner.Converters;
 using ADODesigner.Models;
 using System.Text.Json.Serialization;
@@ -11,6 +10,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Reflection;
+using System.Text.Json.Nodes;
 #nullable disable
 namespace ADODesigner.Cmd
 {
@@ -30,11 +31,11 @@ namespace ADODesigner.Cmd
             Directory.CreateDirectory("config");
             if (!File.Exists(@"config\balls_animation.json"))
             {
-                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs, options));
+                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs!, BallsAnimationArgsGen.Default.BallsAnimationArgs));
             }
             else
             {
-                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), options);
+                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), BallsAnimationArgsGen.Default.BallsAnimationArgs);
             }
 
             Console.Write("How many animations do you want to create?: ");
@@ -63,34 +64,26 @@ namespace ADODesigner.Cmd
                 Console.WriteLine($"Enter four floating-point numbers. ( {i + 1} / {countAnimations} )");
                 Vector2 firstPosition = new();
                 Vector2 secondPosition = new();
+                Console.Write("First Position X: ");
+                firstPosition.X = Convert.ToSingle(Console.ReadLine());
+                Console.Write("First Position Y: ");
+                firstPosition.Y = Convert.ToSingle(Console.ReadLine());
+                Console.Write("Second Position X: ");
+                secondPosition.X = Convert.ToSingle(Console.ReadLine());
+                Console.Write("Second Position Y: ");
+                secondPosition.Y = Convert.ToSingle(Console.ReadLine());
+                Console.Write("Easing function: ");
+                Ease ease = Ease.Linear;
                 try
                 {
-                    Console.Write("First Position X: ");
-                    firstPosition.X = Convert.ToSingle(Console.ReadLine());
-                    Console.Write("First Position Y: ");
-                    firstPosition.Y = Convert.ToSingle(Console.ReadLine());
-                    Console.Write("Second Position X: ");
-                    secondPosition.X = Convert.ToSingle(Console.ReadLine());
-                    Console.Write("Second Position Y: ");
-                    secondPosition.Y = Convert.ToSingle(Console.ReadLine());
-                    if (use2point5mode)
-                    {
-                        (float, float) result;
-                        Console.Write("First Position Z: ");
-                        result.Item1 = Convert.ToSingle(Console.ReadLine());
-                        Console.Write("Second Position Z: ");
-                        result.Item2 = Convert.ToSingle(Console.ReadLine());
-                        positionsZ.Add(result);
-                    }
+                    ease = Enum.Parse<Ease>(Console.ReadLine());
                 }
                 catch
                 {
-                    Console.WriteLine("Wrong format.");
+                    Console.WriteLine($"{ease} don't exists.");
                     Console.ReadKey();
-                    return (keyFrames.ToArray(), decorations.ToArray());
+                    return;
                 }
-                Console.Write("Easing function: ");
-                Ease ease = Enum.Parse<Ease>(Console.ReadLine());
 
                 BallsAnimation ballsAnimation = new(animationArgs);
                 
@@ -119,10 +112,32 @@ namespace ADODesigner.Cmd
                 Console.WriteLine($"Processing... ({i + 1} / {countAnimations})");
                 (KeyFrame[], Decoration[]) processed = animations[i].CreateAnimation();
                 keyFrames.AddRange(processed.Item1);
-                if (i == 0) decorations.AddRange(processed.Item2);
             }
 
-            return (keyFrames.ToArray(), decorations.ToArray());
+            CustomLevel customLevel = new();
+
+            const int countTiles = 128;
+            customLevel.AngleData = new();
+
+            Console.WriteLine("Converting to ADOFAI Level...");
+
+            for (int i = 0; i < countTiles; i++)
+            {
+                customLevel.AngleData.Add(0);
+            }
+
+            for (int i = 0; i < keyFrames.Count; i++)
+            {
+                customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
+            }
+            
+            Console.WriteLine("Writing custom level to json file...");
+            File.WriteAllText("result.adofai", JsonSerializer.Serialize(customLevel!, CustomLevelGen.Default.CustomLevel));
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Complete!");
+            Console.WriteLine("Result:");
+            Console.WriteLine($"  Count keyframes: {keyFrames.Count}");
+            Console.WriteLine($"  Count decorations: {decorations.Count}");
         }
     }
 }

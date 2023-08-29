@@ -15,42 +15,23 @@ namespace ADODesigner.Converters
         public static MoveDecorations Convert(KeyFrame value)
         {
             MoveDecorations result = new();
-            result.Floor = value.Floor;
-            if (value.UsePositionOffset)
-            {
-                result.PositionOffset = new float?[2];
-                result.PositionOffset[0] = value.PositionOffset.X;
-                result.PositionOffset[1] = value.PositionOffset.Y;
-            }
-            if (value.UseRotationOffset) result.RotationOffset = value.RotationOffset;
-            if (value.UseScale)
-            {
-                result.Scale = new float?[2];
-                result.Scale[0] = value.Scale.X;
-                result.Scale[1] = value.Scale.Y;
-            }
-            result.AngleOffset = value.AngleOffset;
-            if (value.UseOpacity)
-            {
-                result.Opacity = value.Opacity;
-            }
-            result.Duration = value.Duration;
-            if (value.UseDepth) result.Depth = value.Depth;
-            result.Ease = value.Ease.ToString();
-            result.Tag = value.Tag;
-            result.EventTag = value.EventTag;
-            if (value.UseParallax)
-            {
-                result.Parallax = new float?[2];
-                result.Parallax[0] = value.Parallax.X;
-                result.Parallax[1] = value.Parallax.Y;
-            }
-            if (value.UseParallaxOffset)
-            {
-                result.ParallaxOffset = new float?[2];
-                result.ParallaxOffset[0] = value.ParallaxOffset.X;
-                result.ParallaxOffset[1] = value.ParallaxOffset.Y;
-            }
+            result.floor = value.Floor;
+            result.positionOffset[0] = value.PositionOffset.X;
+            result.positionOffset[1] = value.PositionOffset.Y;
+            result.rotationOffset = value.RotationOffset;
+            result.scale[0] = value.Scale.X;
+            result.scale[1] = value.Scale.Y;
+            result.angleOffset = value.AngleOffset;
+            result.opacity = value.Opacity;
+            result.duration = value.Duration;
+            result.depth = value.Depth;
+            result.ease = value.Ease.ToString();
+            result.tag = value.Tag;
+            result.eventTag = value.EventTag;
+            result.parallax[0] = value.Parallax.X;
+            result.parallax[1] = value.Parallax.Y;
+            result.parallaxOffset[0] = value.ParallaxOffset.X;
+            result.parallaxOffset[1] = value.ParallaxOffset.Y;
             return result;
         }
     }

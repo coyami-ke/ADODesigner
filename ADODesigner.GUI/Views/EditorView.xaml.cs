@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADODesigner.GUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+#nullable disable
 namespace ADODesigner.Views
 {
-    /// <summary>
-    /// Interaction logic for EditorView.xaml
-    /// </summary>
     public partial class EditorView : Window
     {
         public EditorView()

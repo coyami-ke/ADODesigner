@@ -9,10 +9,4 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="python\**" />
-    <EmbeddedResource Remove="python\**" />
-    <None Remove="python\**" />
-  </ItemGroup>
-
 </Project>
