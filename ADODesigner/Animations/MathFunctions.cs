@@ -24,7 +24,6 @@ namespace ADODesigner.Animations
             float max = Math.Max(maxValue, minValue);
             float normalizedValue = (value - min) / (max - min);
             return normalizedValue;
-            // return (value - minValue) / (maxValue - minValue);
         }
         /// <summary>
         /// Normalizes a <see cref="Vector2"/> from 0 to 1.

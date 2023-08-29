@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="python\" />
+    <Compile Remove="python\**" />
+    <EmbeddedResource Remove="python\**" />
+    <None Remove="python\**" />
   </ItemGroup>
 
 </Project>

@@ -25,6 +25,8 @@ namespace ADODesigner.Converters
                 IncludeFields = true,
                 WriteIndented = true,
                 AllowTrailingCommas = true,
+                UnknownTypeHandling = JsonUnknownTypeHandling.JsonNode,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             CustomLevel level = JsonSerializer.Deserialize<CustomLevel>(json, options);
             for (int i = 0; i < level.Actions.Count; i++)
@@ -53,7 +55,7 @@ namespace ADODesigner.Converters
         /// Actions
         /// </summary>
         [JsonPropertyName("actions")]
-        public List<MoveDecorations> Actions { get; set; } = new();
+        public JsonArray Actions { get; set; } = new();
     }
     public class CustomLevelSettings
     {
@@ -115,7 +117,7 @@ namespace ADODesigner.Converters
         public string SongFilename { get; set; } = "";
 
         [JsonPropertyName("bpm")]
-        public int Bpm { get; set; } = 100;
+        public int Bpm { get; set; } = 300;
 
         [JsonPropertyName("volume")]
         public int Volume { get; set; } = 100;

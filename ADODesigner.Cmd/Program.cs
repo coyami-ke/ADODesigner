@@ -13,13 +13,47 @@ namespace ADODesigner.Cmd
     {
         static void Main(string[] args)
         {
+            const string PATH_TO_RESULT = "result.adofai";
+            List<IADODesignerCommand> commands = new();
             Console.WriteLine("ADODesigner Command Line by Coyami-Ke");
+            commands.Add(new BallsAnimationCommand());
             Console.WriteLine(@"Commands: ");
-            Console.WriteLine(@"  ""balls"" : Create an animation of balls.");
+            for (int i = 0; i < commands.Count; i++)
+            {
+                Console.WriteLine($@"  ""{commands[i].Command}"": {commands[i].Description}");
+            }
             Console.Write("Enter command: ");
             string command = Console.ReadLine();
-            if (command == "balls" || command == "0") BallsAnimationCommand.Run();
-            
+            for (int i = 0; i < commands.Count; i++)
+            {
+                if (command == commands[i].Command)
+                {
+                    CustomLevel level = new();
+                    (KeyFrame[], Decoration[]) result = commands[i].Run();
+
+                    Console.WriteLine("Converting to ADOFAI level and writing to " + PATH_TO_RESULT + "...");
+                    foreach (var s in result.Item1)
+                    {
+                        MoveDecorations value = KeyFrameConverter.Convert(s);
+                        level.Actions.Add(value);
+                    }
+                    foreach (var s in result.Item2)
+                    {
+                        AddDecoration value = DecorationConverter.Convert(s);
+                        level.Decorations.Add(value);
+                    }
+                    JsonSerializerOptions jsonOptions = new();
+                    jsonOptions.IncludeFields = true;
+                    jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                    File.WriteAllText(PATH_TO_RESULT, JsonSerializer.Serialize(level, jsonOptions));
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Complete!");
+                    Console.WriteLine("  Number of events: " + level.Actions.Count);
+                    Console.WriteLine("  Number of decorations: " + level.Decorations.Count);
+                    Console.ReadKey();
+                }
+            }
         }
     }
 }

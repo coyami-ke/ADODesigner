@@ -9,23 +9,26 @@ using System.Threading.Tasks;
 using System.Windows;
 using static ADODesigner.Animations.MathFunctions;
 using static ADODesigner.Animations.EasingFunctions;
-using System.Reflection;
 
 namespace ADODesigner.Animations
 {
     public class BallsAnimationArgs
     {
-        public int AngleOffset { get; set; } = 45;
+        public int AngleOffset { get; set; } = 90;
         public int Count { get; set; } = 5;
         public Ease Easing { get; set; } = Ease.Linear;
-        public string Tag { get; set; } = "Ball";
+        public string Tag { get; set; } = "cat";
+        public float OpacityDifference { get; set; } = 0;
+        public Vector2 ScaleDifference { get; set; } = Vector2.Zero;
         public KeyFrame FirstFrame { get; set; } = new();
         public KeyFrame SecondFrame { get; set; } = new();
         public bool IsCurve { get; set; } = true;
         public int FrameRate { get; set; } = 60;
-        public int Duration { get; set; } = 5;
+        public int Duration { get; set; } = 4;
         public int Floor { get; set; } = 1;
         public bool Invert { get; set; } = false;
+        public int Delay { get; set; } = 0;
+        public bool UseParallaxOffset { get; set; } = false;
     }
     /// <summary>
     /// Class for creating procedural animation of ADOFAI balls.
@@ -69,6 +72,13 @@ namespace ADODesigner.Animations
                     keyFrame.AngleOffset = ((180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset) + Args.Delay;
                     keyFrame.Tag = Args.Tag + i;
                     keyFrame.Floor = Args.Floor;
+                    keyFrame.UsePositionOffset = Args.SecondFrame.UsePositionOffset;
+                    keyFrame.UseRotationOffset = Args.SecondFrame.UseRotationOffset;
+                    keyFrame.UseScale = Args.SecondFrame.UseScale;
+                    keyFrame.UseParallax = Args.SecondFrame.UseParallax;
+                    keyFrame.UseParallaxOffset = Args.SecondFrame.UseParallaxOffset;
+                    keyFrame.UseColor = Args.SecondFrame.UseColor;
+                    keyFrame.UseDepth = Args.SecondFrame.UseDepth;
 
                     Vector2 processedPosition;
                     if (Args.IsCurve)
@@ -87,17 +97,25 @@ namespace ADODesigner.Animations
                     {
                         Vector2 tPosition = Normalize(Args.SecondFrame.PositionOffset / countFrames * s, Args.FirstFrame.PositionOffset, Args.SecondFrame.PositionOffset);
                         processedPosition = tPosition * Args.SecondFrame.PositionOffset;
-                    }        
+                    }
 
-                    if (s + 1 != countFrames) keyFrame.PositionOffset = processedPosition;
-                    else keyFrame.PositionOffset = Args.SecondFrame.PositionOffset;
-
+                    if (s + 1 != countFrames)
+                    {
+                        if (!Args.UseParallaxOffset) keyFrame.PositionOffset = processedPosition;
+                        else keyFrame.ParallaxOffset = processedPosition;
+                    }
+                    else
+                    {
+                        if (!Args.UseParallaxOffset) keyFrame.PositionOffset = Args.SecondFrame.PositionOffset;
+                        else keyFrame.ParallaxOffset = Args.SecondFrame.ParallaxOffset;
+                    }
+                    
                     float tRotation = ApplyFunction(Args.Easing, Normalize(Args.SecondFrame.RotationOffset / countFrames * s, Args.FirstFrame.RotationOffset, Args.SecondFrame.RotationOffset));
                     keyFrame.RotationOffset = Args.SecondFrame.RotationOffset * tRotation;
 
                     Vector2 tScale = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Scale / countFrames * s, Args.FirstFrame.Scale, Args.SecondFrame.Scale));
                     keyFrame.Scale = Args.SecondFrame.Scale * tScale;
-                    if (!keyFrame.Scale.IsNan()) keyFrame.Scale = Args.SecondFrame.Scale;
+                    if (keyFrame.Scale.IsNan()) keyFrame.Scale = Args.SecondFrame.Scale;
 
                     Vector2 tParallax = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Parallax / countFrames * s, Args.FirstFrame.Parallax, Args.SecondFrame.Parallax));
                     keyFrame.Parallax = Args.SecondFrame.Parallax * tParallax;

@@ -14,22 +14,27 @@ using System.Diagnostics;
 #nullable disable
 namespace ADODesigner.Cmd
 {
-    public static class BallsAnimationCommand
+    public class BallsAnimationCommand : IADODesignerCommand
     {
-        public static void Run()
+        public string Command { get; set; } = "balls";
+        public string Description { get; set; } = "Create an animation of balls";
+        public (KeyFrame[], Decoration[]) Run()
         {
+            Command = "balls";
+            Description = "Create a Create an animation of balls.";
             BallsAnimationArgs animationArgs = new();
             JsonSerializerOptions options = new();
             options.IncludeFields = true;
             options.WriteIndented = true;
+            options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             Directory.CreateDirectory("config");
             if (!File.Exists(@"config\balls_animation.json"))
             {
-                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs));
+                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs, options));
             }
             else
             {
-                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"));
+                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), options);
             }
 
             Console.Write("How many animations do you want to create?: ");
@@ -68,12 +73,21 @@ namespace ADODesigner.Cmd
                     secondPosition.X = Convert.ToSingle(Console.ReadLine());
                     Console.Write("Second Position Y: ");
                     secondPosition.Y = Convert.ToSingle(Console.ReadLine());
+                    if (use2point5mode)
+                    {
+                        (float, float) result;
+                        Console.Write("First Position Z: ");
+                        result.Item1 = Convert.ToSingle(Console.ReadLine());
+                        Console.Write("Second Position Z: ");
+                        result.Item2 = Convert.ToSingle(Console.ReadLine());
+                        positionsZ.Add(result);
+                    }
                 }
                 catch
                 {
                     Console.WriteLine("Wrong format.");
                     Console.ReadKey();
-                    return;
+                    return (keyFrames.ToArray(), decorations.ToArray());
                 }
                 Console.Write("Easing function: ");
                 Ease ease = Enum.Parse<Ease>(Console.ReadLine());
@@ -89,8 +103,8 @@ namespace ADODesigner.Cmd
             bool isInvert = animationArgs.Invert;
             for (int i = 0; i < animations.Count; i++) 
             {
-                animations[i].Args.Delay += animations[i].Args.Duration * i * 180; // 1 * 5 = 5; 2 * 5 = 10; 3 * 5 = 15
-                if (i > 1) animations[i].Args.Delay -= (animations.Count - i) * animations[i].Args.Duration * 180;
+                animations[i].Args.Delay += animations[i].Args.Duration * i * 180; // 0 * 5 = 0; 1 * 5 = 5; 2 * 5 = 10; 3 * 5 = 15
+                if (i > 1) animations[i].Args.Delay -= (i - 1) * animations[i].Args.Duration * 180;
                 animations[i].Args.FirstFrame.PositionOffset = positions[i].Item1;
                 animations[i].Args.SecondFrame.PositionOffset = positions[i].Item2;
                 animations[i].Args.Invert = isInvert;
@@ -108,35 +122,7 @@ namespace ADODesigner.Cmd
                 if (i == 0) decorations.AddRange(processed.Item2);
             }
 
-            CustomLevel customLevel = new();
-
-            const int countTiles = 128;
-            customLevel.AngleData = new();
-
-            Console.WriteLine("Converting to ADOFAI Level...");
-
-            for (int i = 0; i < countTiles; i++)
-            {
-                customLevel.AngleData.Add(0);
-            }
-
-            for (int i = 0; i < keyFrames.Count; i++)
-            {
-                customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
-            }
-            
-            for (int i = 0; i < decorations.Count; i++)
-            {
-                AddDecoration addDecoration = DecorationConverter.ToAddDecoration(decorations[i]);
-            }
-
-            Console.WriteLine("Writing custom level to json file...");
-            File.WriteAllText("result.adofai", JsonSerializer.Serialize(customLevel!, CustomLevelGen.Default.CustomLevel));
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Complete!");
-            Console.WriteLine("Result:");
-            Console.WriteLine($"  Count keyframes: {keyFrames.Count}");
-            Console.WriteLine($"  Count decorations: {decorations.Count}");
+            return (keyFrames.ToArray(), decorations.ToArray());
         }
     }
 }

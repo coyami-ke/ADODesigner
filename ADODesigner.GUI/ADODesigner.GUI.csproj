@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Controls\**" />
+    <EmbeddedResource Remove="Views\Controls\**" />
+    <None Remove="Views\Controls\**" />
+    <Page Remove="Views\Controls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\close-window.png" />
     <None Remove="Assets\copy.png" />
     <None Remove="Assets\create-file.png" />
@@ -40,10 +47,6 @@
     <Compile Update="Views\EditorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Controls\" />
   </ItemGroup>
 
 </Project>
