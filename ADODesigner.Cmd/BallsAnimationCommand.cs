@@ -31,11 +31,11 @@ namespace ADODesigner.Cmd
             Directory.CreateDirectory("config");
             if (!File.Exists(@"config\balls_animation.json"))
             {
-                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs!, BallsAnimationArgsGen.Default.BallsAnimationArgs));
+                File.WriteAllText(@"config\balls_animation.json", JsonSerializer.Serialize(animationArgs, options));
             }
             else
             {
-                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), BallsAnimationArgsGen.Default.BallsAnimationArgs);
+                animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), options);
             }
 
             Console.Write("How many animations do you want to create?: ");
@@ -82,7 +82,7 @@ namespace ADODesigner.Cmd
                 {
                     Console.WriteLine($"{ease} don't exists.");
                     Console.ReadKey();
-                    return;
+                    return (keyFrames.ToArray(), decorations.ToArray());
                 }
 
                 BallsAnimation ballsAnimation = new(animationArgs);
@@ -114,30 +114,7 @@ namespace ADODesigner.Cmd
                 keyFrames.AddRange(processed.Item1);
             }
 
-            CustomLevel customLevel = new();
-
-            const int countTiles = 128;
-            customLevel.AngleData = new();
-
-            Console.WriteLine("Converting to ADOFAI Level...");
-
-            for (int i = 0; i < countTiles; i++)
-            {
-                customLevel.AngleData.Add(0);
-            }
-
-            for (int i = 0; i < keyFrames.Count; i++)
-            {
-                customLevel.Actions.Add(KeyFrameConverter.Convert(keyFrames[i]));
-            }
-            
-            Console.WriteLine("Writing custom level to json file...");
-            File.WriteAllText("result.adofai", JsonSerializer.Serialize(customLevel!, CustomLevelGen.Default.CustomLevel));
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Complete!");
-            Console.WriteLine("Result:");
-            Console.WriteLine($"  Count keyframes: {keyFrames.Count}");
-            Console.WriteLine($"  Count decorations: {decorations.Count}");
+            return (keyFrames.ToArray(), decorations.ToArray());
         }
     }
 }

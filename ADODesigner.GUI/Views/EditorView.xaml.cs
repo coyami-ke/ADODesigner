@@ -25,14 +25,5 @@ namespace ADODesigner.Views
         {
             Environment.Exit(0);
         }
-        public void RunAnimation()
-        {
-            EditorVM editor = DataContext as EditorVM;
-            for (int i = 0; i < editor.KeyFrames; i++)
-            {
-
-            }
-            PART_Preview.Children.Add();
-        }
     }
 }

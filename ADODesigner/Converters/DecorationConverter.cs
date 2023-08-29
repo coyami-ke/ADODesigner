@@ -18,7 +18,7 @@ namespace ADODesigner.Converters
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AddDecoration ToAddDecoration(Decoration value)
+        public static AddDecoration Convert(Decoration value)
         {
             AddDecoration result = new();
             result.Floor = value.Floor;

@@ -34,7 +34,6 @@
                 <MenuItem Header="Add Balls Animation..." Command="{Binding AddBallsAnimationCommand}"/>
             </MenuItem>
         </Menu>
-<<<<<<< Updated upstream
         <GridSplitter Width="5" Grid.Row="1" Background="#FF101113"/>
     </Grid>
 </Window>

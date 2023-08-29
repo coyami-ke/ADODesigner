@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 using ADODesigner.Models;
 using ADODesigner.Animations;
 #nullable disable
@@ -17,19 +16,33 @@ namespace ADODesigner.Converters
     /// </summary>
     public class MoveDecorations : IADOFAIEvent
     {
-        public int floor { get; set; } = 0;
-        public string eventType { get; set; } = "MoveDecorations";
-        public float duration { get; set; }
-        public string tag { get; set; }
-        public float[] positionOffset { get; set; } = new float[2];
-        public float[] scale { get; set; } = new float[2];
-        public float opacity { get; set; }
-        public float depth { get; set; }
-        public float angleOffset { get; set; }
-        public string ease { get; set; }
-        public string eventTag { get; set; }
-        public float[] parallax { get; set; } = new float[2];
-        public float[] parallaxOffset { get; set; } = new float[2];
-        public float rotationOffset { get; set; } = 0;
+        [JsonPropertyName("floor")]
+        public int Floor { get; set; } = 0;
+        [JsonPropertyName("duration")]
+        public float Duration { get; set; }
+        [JsonPropertyName("tag")]
+        public string Tag { get; set; }
+        [JsonPropertyName("positionOffset")]
+        public float?[] PositionOffset { get; set; } = null;
+        [JsonPropertyName("scale")]
+        public float?[] Scale { get; set; } = null;
+        [JsonPropertyName("opacity")]
+        public float? Opacity { get; set; } = null;
+        [JsonPropertyName("depth")]
+        public float? Depth { get; set; } = null;
+        [JsonPropertyName("angleOffset")]
+        public float AngleOffset { get; set; } = 0;
+        [JsonPropertyName("ease")]
+        public string Ease { get; set; } = "Linear";
+        [JsonPropertyName("eventTag")]
+        public string EventTag { get; set; } = "";
+        [JsonPropertyName("parallax")]
+        public float?[] Parallax { get; set; } = null;
+        [JsonPropertyName("parallaxOffset")]
+        public float?[] ParallaxOffset { get; set; } = null;
+        [JsonPropertyName("rotationOffset")]
+        public float? RotationOffset { get; set; } = null;
+        [JsonPropertyName("eventType")]
+        public string EventType { get; set; } = "MoveDecorations";
     }
 }

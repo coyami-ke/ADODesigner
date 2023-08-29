@@ -10,7 +10,7 @@ namespace ADODesigner.Converters
     /// <summary>
     /// ADOFAI Event "Add decoration"
     /// </summary>
-    public class AddDecoration
+    public class AddDecoration : IADOFAIEvent
     {
         [JsonPropertyName("floor")]
         public int Floor { get; set; } = 0;
@@ -27,7 +27,7 @@ namespace ADODesigner.Converters
         [JsonPropertyName("pivotOffset")]
         public float[] PivotOffset { get; set; } = new float[2];
         [JsonPropertyName("rotation")]
-        public float Rotation { get; set; } = 0;
+        public float? Rotation { get; set; } = 0;
         [JsonPropertyName("lockRotation")]
         public string LockRotation { get; set; } = "Disabled";
         [JsonPropertyName("scale")]
@@ -39,11 +39,11 @@ namespace ADODesigner.Converters
         [JsonPropertyName("color")]
         public string Color { get; set; } = "ffffff";
         [JsonPropertyName("opacity")]
-        public float Opacity { get; set; } = 100;
+        public float? Opacity { get; set; } = 100;
         [JsonPropertyName("depth")]
-        public float Depth { get; set; } = -1;
+        public float? Depth { get; set; } = -1;
         [JsonPropertyName("parallax")]
-        public float[] Parallax { get; set; } = new float[2];
+        public float?[] Parallax { get; set; } = new float?[2];
         [JsonPropertyName("parallaxOffset")]
         public float[] ParallaxOffset { get; set; } = new float[2];
         [JsonPropertyName("tag")]
