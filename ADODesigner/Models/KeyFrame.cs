@@ -11,7 +11,7 @@ namespace ADODesigner.Models
     /// <summary>
     /// Base class for holding decoration states. 
     /// </summary>
-    public partial class KeyFrame
+    public class KeyFrame
     {
         public string Tag { get; set; } = "";
         public Vector2 PositionOffset { get; set; } = new(0,0);
@@ -37,17 +37,5 @@ namespace ADODesigner.Models
         public bool UseParallaxOffset { get; set; } = true;
         public bool UseOpacity { get; set; } = true;
         public bool UseDepth { get; set; }
-        public static void GetDescription(KeyFrame keyFrame)
-        {
-            Console.WriteLine("Duration: " + keyFrame.Duration);
-            Console.WriteLine("Angle Offset: " + keyFrame.AngleOffset);
-            Console.WriteLine("Position Offset: " + keyFrame.PositionOffset);
-            Console.WriteLine("Rotation offset: " + keyFrame.RotationOffset);
-            Console.WriteLine("Scale: " + keyFrame.Scale);
-            Console.WriteLine("Tag: " + keyFrame.Tag);
-            Console.WriteLine("Parallax: " + keyFrame.Parallax);
-            Console.WriteLine("Parallax Offset: " + keyFrame.ParallaxOffset);
-            Console.WriteLine("Opacity: " + keyFrame.Opacity);
-        }
     }
 }

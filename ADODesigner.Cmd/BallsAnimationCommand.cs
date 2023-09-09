@@ -37,12 +37,12 @@ namespace ADODesigner.Cmd
             {
                 animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), options);
             }
-
-            Console.Write("How many animations do you want to create?: ");
-            int countAnimations = Convert.ToInt32(Console.ReadLine());
             Console.Write("Do you want to use 2.5D mode? Yes - [Y], No - [N] ");
             string answer = Console.ReadLine();
             bool use2point5mode;
+            Console.Write("How many animations do you want to create?: ");
+            int countAnimations = Convert.ToInt32(Console.ReadLine());
+            
             if (answer.ToLower() == "y")
             {
                 use2point5mode = true;
@@ -61,7 +61,8 @@ namespace ADODesigner.Cmd
             Console.WriteLine("Using 2.5D mode: " + use2point5mode);
             for (int i = 0; i < countAnimations; i++)
             {
-                Console.WriteLine($"Enter four floating-point numbers. ( {i + 1} / {countAnimations} )");
+                if (!use2point5mode) Console.WriteLine($"Enter four floating-point numbers. ( {i + 1} / {countAnimations} )");
+                else Console.WriteLine($"Enter six floating-point numbers. ( {i + 1} / {countAnimations} )");
                 Vector2 firstPosition = new();
                 Vector2 secondPosition = new();
                 Console.Write("First Position X: ");
@@ -72,6 +73,16 @@ namespace ADODesigner.Cmd
                 secondPosition.X = Convert.ToSingle(Console.ReadLine());
                 Console.Write("Second Position Y: ");
                 secondPosition.Y = Convert.ToSingle(Console.ReadLine());
+                if (use2point5mode)
+                {
+                    float firstPositionZ;
+                    float secondPositionZ;
+                    Console.Write("First Position Z: ");
+                    firstPositionZ = Convert.ToSingle(Console.ReadLine());
+                    Console.Write("Second Position Z: ");
+                    secondPositionZ = Convert.ToSingle(Console.ReadLine());
+                    positionsZ.Add((firstPositionZ, secondPositionZ));
+                }
                 Console.Write("Easing function: ");
                 Ease ease = Ease.Linear;
                 try
@@ -105,8 +116,11 @@ namespace ADODesigner.Cmd
                 {
                     animations[i].Args.FirstFrame.Parallax = new(positionsZ[i].Item1);
                     animations[i].Args.SecondFrame.Parallax = new(positionsZ[i].Item2);
-                    animations[i].Args.FirstFrame.Scale /= 100 * (100 - positionsZ[i].Item1);
-                    animations[i].Args.SecondFrame.Scale /= 100 * (100 - positionsZ[i].Item2);
+                    float tScale1 = 1 - MathFunctions.Normalize(positionsZ[i].Item1, 100, 0);
+                    float tScale2 = 1 - MathFunctions.Normalize(positionsZ[i].Item2, 100, 0);
+                    Console.WriteLine(tScale1);
+                    animations[i].Args.FirstFrame.Scale *= tScale1;
+                    animations[i].Args.SecondFrame.Scale *= tScale2;
                 }
                 isInvert = !isInvert;
                 Console.WriteLine($"Processing... ({i + 1} / {countAnimations})");

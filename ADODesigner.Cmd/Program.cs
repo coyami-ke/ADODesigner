@@ -29,6 +29,11 @@ namespace ADODesigner.Cmd
                 if (command == commands[i].Command)
                 {
                     CustomLevel level = new();
+                    const int countTiles = 128;
+                    for (int j = 0; j < countTiles; j++)
+                    {
+                        level.AngleData.Add(0);
+                    }
                     (KeyFrame[], Decoration[]) result = commands[i].Run();
 
                     Console.WriteLine("Converting to ADOFAI level and writing to " + PATH_TO_RESULT + "...");

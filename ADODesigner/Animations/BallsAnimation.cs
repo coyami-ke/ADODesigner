@@ -57,8 +57,9 @@ namespace ADODesigner.Animations
             }
             for (int i = 0; i < decorations.Count; i++)
             {
-                for (int s = 0; s < countFrames; s++)
+                for (int j = 0; j < countFrames; j++)
                 {
+                    int s = j + 1;
                     KeyFrame keyFrame = new();
                     keyFrame.Color = Args.SecondFrame.Color;
                     keyFrame.Parallax = Args.SecondFrame.Parallax;
@@ -69,7 +70,7 @@ namespace ADODesigner.Animations
                     keyFrame.Opacity = Args.SecondFrame.Opacity;
                     keyFrame.EventTag = Args.SecondFrame.EventTag;
                     keyFrame.Duration = 0;
-                    keyFrame.AngleOffset = ((180 / Args.FrameRate * (s + 1)) + i * Args.AngleOffset) + Args.Delay;
+                    keyFrame.AngleOffset = (180 / Args.FrameRate * (s - 1) + i * Args.AngleOffset) + Args.Delay;
                     keyFrame.Tag = Args.Tag + i;
                     keyFrame.Floor = Args.Floor;
                     keyFrame.UsePositionOffset = Args.SecondFrame.UsePositionOffset;
@@ -79,11 +80,12 @@ namespace ADODesigner.Animations
                     keyFrame.UseParallaxOffset = Args.SecondFrame.UseParallaxOffset;
                     keyFrame.UseColor = Args.SecondFrame.UseColor;
                     keyFrame.UseDepth = Args.SecondFrame.UseDepth;
+                    keyFrame.UseOpacity = Args.SecondFrame.UseOpacity;
 
-                    Vector2 processedPosition;
+                    float t = ApplyFunction(Args.Easing, Normalize(s, 0, countFrames));
+                    Vector2 processedPosition = new();
                     if (Args.IsCurve)
                     {
-                        float t = ApplyFunction(Args.Easing, Normalize(s, 0, countFrames));
                         if (!Args.Invert)
                         {
                             processedPosition = Bezier.QuadraticBezier(Args.FirstFrame.PositionOffset, new(Args.FirstFrame.PositionOffset.X, Args.SecondFrame.PositionOffset.Y), Args.SecondFrame.PositionOffset, t);
@@ -96,33 +98,21 @@ namespace ADODesigner.Animations
                     else
                     {
                         Vector2 tPosition = Normalize(Args.SecondFrame.PositionOffset / countFrames * s, Args.FirstFrame.PositionOffset, Args.SecondFrame.PositionOffset);
-                        processedPosition = tPosition * Args.SecondFrame.PositionOffset;
                     }
 
-                    if (s + 1 != countFrames)
-                    {
-                        if (!Args.UseParallaxOffset) keyFrame.PositionOffset = processedPosition;
-                        else keyFrame.ParallaxOffset = processedPosition;
-                    }
-                    else
-                    {
-                        if (!Args.UseParallaxOffset) keyFrame.PositionOffset = Args.SecondFrame.PositionOffset;
-                        else keyFrame.ParallaxOffset = Args.SecondFrame.ParallaxOffset;
-                    }
-                    
-                    float tRotation = ApplyFunction(Args.Easing, Normalize(Args.SecondFrame.RotationOffset / countFrames * s, Args.FirstFrame.RotationOffset, Args.SecondFrame.RotationOffset));
-                    keyFrame.RotationOffset = Args.SecondFrame.RotationOffset * tRotation;
+                    keyFrame.PositionOffset = processedPosition;
 
-                    Vector2 tScale = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Scale / countFrames * s, Args.FirstFrame.Scale, Args.SecondFrame.Scale));
-                    keyFrame.Scale = Args.SecondFrame.Scale * tScale;
-                    if (keyFrame.Scale.IsNan()) keyFrame.Scale = Args.SecondFrame.Scale;
+                    float tRotation = ApplyFunction(Args.Easing, Normalize(Math.Max(Args.SecondFrame.RotationOffset, Args.FirstFrame.RotationOffset) / countFrames * s, Args.FirstFrame.RotationOffset, Args.SecondFrame.RotationOffset));
+                    keyFrame.RotationOffset = Math.Max(Args.SecondFrame.RotationOffset, Args.FirstFrame.RotationOffset) * tRotation;
 
-                    Vector2 tParallax = ApplyFunctionVector2(Args.Easing, Normalize(Args.SecondFrame.Parallax / countFrames * s, Args.FirstFrame.Parallax, Args.SecondFrame.Parallax));
-                    keyFrame.Parallax = Args.SecondFrame.Parallax * tParallax;
-                    if (keyFrame.Parallax.IsNan()) keyFrame.Parallax = Args.SecondFrame.Parallax;
+                    Vector2 tScale = ApplyFunctionVector2(Args.Easing, Normalize(Vector2Extensions.Max(Args.FirstFrame.Scale, Args.SecondFrame.Scale) / countFrames * s, Args.FirstFrame.Scale, Args.SecondFrame.Scale));
+                    keyFrame.Scale = Vector2Extensions.Max(Args.SecondFrame.Scale, Args.FirstFrame.Scale) * tScale - Args.ScaleDifference * i;
 
-                    float tOpacity = ApplyFunction(Args.Easing, Normalize(Args.SecondFrame.Opacity / countFrames * s, Args.FirstFrame.Opacity, Args.SecondFrame.Opacity));
-                    keyFrame.Opacity = Args.SecondFrame.Opacity * tOpacity - Args.OpacityDifference * i;
+                    Vector2 tParallax = ApplyFunctionVector2(Args.Easing, Normalize(Vector2Extensions.Max(Args.FirstFrame.Parallax, Args.SecondFrame.Parallax) / countFrames * s, Args.FirstFrame.Parallax, Args.SecondFrame.Parallax)); 
+                    keyFrame.Parallax = Vector2Extensions.Max(Args.SecondFrame.Parallax, Args.FirstFrame.Parallax) * tParallax;
+
+                    float tOpacity = ApplyFunction(Args.Easing, Normalize(Math.Max(Args.SecondFrame.Opacity, Args.FirstFrame.Opacity) / countFrames * s, Args.FirstFrame.Opacity, Args.SecondFrame.Opacity));
+                    keyFrame.Opacity = Math.Max(Args.SecondFrame.Opacity, Args.FirstFrame.Opacity) * tOpacity - Args.OpacityDifference * i;
                     keyFrames.Add(keyFrame);
                 }
             }  

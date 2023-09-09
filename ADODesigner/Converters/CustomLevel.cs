@@ -1,6 +1,8 @@
 ﻿using ADODesigner.Models;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -32,7 +34,7 @@ namespace ADODesigner.Converters
         /// Decorations
         /// </summary>
         [JsonPropertyName("decorations")]
-        public List<AddDecoration> Decorations { get; set; } = new();
+        public JsonArray Decorations { get; set; } = new();
         /// <summary>
         /// Actions
         /// </summary>
