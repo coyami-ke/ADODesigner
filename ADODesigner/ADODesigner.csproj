@@ -7,6 +7,11 @@
     <UseWPF>false</UseWPF>
     <Company>Coyami-Ke</Company>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
+  </ItemGroup>
 
 </Project>

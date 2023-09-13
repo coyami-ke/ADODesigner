@@ -38,12 +38,12 @@ namespace ADODesigner.Cmd
                 animationArgs = JsonSerializer.Deserialize<BallsAnimationArgs>(File.ReadAllText(@"config\balls_animation.json"), options);
             }
             Console.Write("Do you want to use 2.5D mode? Yes - [Y], No - [N] ");
-            string answer = Console.ReadLine();
+            string answer = Console.ReadLine().ToLower();
             bool use2point5mode;
             Console.Write("How many animations do you want to create?: ");
             int countAnimations = Convert.ToInt32(Console.ReadLine());
             
-            if (answer.ToLower() == "y")
+            if (answer == "y")
             {
                 use2point5mode = true;
             }

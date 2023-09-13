@@ -28,34 +28,16 @@ namespace ADODesigner.Cmd
             {
                 if (command == commands[i].Command)
                 {
-                    CustomLevel level = new();
-                    const int countTiles = 128;
-                    for (int j = 0; j < countTiles; j++)
-                    {
-                        level.AngleData.Add(0);
-                    }
                     (KeyFrame[], Decoration[]) result = commands[i].Run();
 
                     Console.WriteLine("Converting to ADOFAI level and writing to " + PATH_TO_RESULT + "...");
-                    foreach (var s in result.Item1)
-                    {
-                        MoveDecorations value = KeyFrameConverter.Convert(s);
-                        level.Actions.Add(value);
-                    }
-                    foreach (var s in result.Item2)
-                    {
-                        AddDecoration value = DecorationConverter.Convert(s);
-                        level.Decorations.Add(value);
-                    }
-                    JsonSerializerOptions jsonOptions = new();
-                    jsonOptions.IncludeFields = true;
-                    jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                    File.WriteAllText(PATH_TO_RESULT, JsonSerializer.Serialize(level, jsonOptions));
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    CustomLevelParser parser = new();
+                    parser.AddEvents(result.Item1);
+                    parser.AddDecorations(result.Item2);
+                    File.WriteAllText(PATH_TO_RESULT, parser.ToJson());
                     Console.WriteLine("Complete!");
-                    Console.WriteLine("  Number of events: " + level.Actions.Count);
-                    Console.WriteLine("  Number of decorations: " + level.Decorations.Count);
+                    Console.WriteLine("  Number of events: " + parser.ADOFAILevel.Actions.Count);
+                    Console.WriteLine("  Number of decorations: " + parser.ADOFAILevel.Decorations.Count);
                     Console.ReadKey();
                 }
             }

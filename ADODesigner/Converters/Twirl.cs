@@ -12,6 +12,7 @@ namespace ADODesigner.Converters
     {
         [JsonPropertyName("eventType")]
         public string EventType { get; set; } = "Twirl";
+        [JsonPropertyName("floor")]
         public int Floor { get; set; } = 1;
     }
 }

@@ -53,5 +53,15 @@ namespace ADODesigner.Converters
             }
             return result;
         }
+        public static KeyFrame Convert(MoveDecorations value)
+        {
+            KeyFrame result = new();
+            result.Floor = value.Floor;
+            if (value.PositionOffset is null)
+            {
+
+            }
+            return result;
+        }
     }
 }
