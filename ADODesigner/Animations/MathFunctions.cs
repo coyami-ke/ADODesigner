@@ -21,19 +21,18 @@ namespace ADODesigner.Animations
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Normalize(float value, float minValue, float maxValue)
         {
+            float result;
             if (minValue == maxValue)
             {
                 return 1f;
             }
-
-            float min = Math.Min(minValue, maxValue);
-            float max = Math.Max(minValue, maxValue);
-
-            float result = (value - min) / (max - min);
-
-            if (result < 0)
+            else if (minValue > maxValue)
             {
-                result = 1 + Math.Abs(result);
+                result = 1 - ((value - maxValue) / (minValue - maxValue));
+            }
+            else
+            {
+                result = (value - minValue) / (maxValue - minValue);
             }
 
             return result;

@@ -2,6 +2,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -12,7 +13,7 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-#nullable disable
+
 namespace ADODesigner.Converters
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace ADODesigner.Converters
         /// Settings for level
         /// </summary>
         [JsonPropertyName("settings")]
-        public CustomLevelSettings Settings { get; set; } = new();
+        public JsonNode Settings { get; set; } = new JsonObject();
         /// <summary>
         /// Decorations
         /// </summary>
@@ -100,7 +101,7 @@ namespace ADODesigner.Converters
         public string SongFilename { get; set; } = "";
 
         [JsonPropertyName("bpm")]
-        public int Bpm { get; set; } = 300;
+        public float Bpm { get; set; } = 300;
 
         [JsonPropertyName("volume")]
         public int Volume { get; set; } = 100;
@@ -130,7 +131,7 @@ namespace ADODesigner.Converters
         public string SecondaryTrackColor { get; set; } = "ffffff";
 
         [JsonPropertyName("trackColorAnimDuration")]
-        public int TrackColorAnimDuration { get; set; } = 2;
+        public float TrackColorAnimDuration { get; set; } = 2;
 
         [JsonPropertyName("trackColorPulse")]
         public string TrackColorPulse { get; set; } = "None";

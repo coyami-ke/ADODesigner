@@ -1,5 +1,9 @@
-﻿using System;
+﻿using ADODesigner.Animations;
+using ADODesigner.Reflection;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -11,31 +15,79 @@ namespace ADODesigner.Models
     /// <summary>
     /// Base class for holding decoration states. 
     /// </summary>
-    public class KeyFrame
+    public partial class KeyFrame : ObservableObject, ICloneable
     {
-        public string Tag { get; set; } = "";
-        public Vector2 PositionOffset { get; set; } = new(0,0);
-        public Vector2 Scale { get; set; } = new(100, 100);
-        public float RotationOffset { get; set; } = 0;
-        public string Color { get; set; } = "";
-        public float Opacity { get; set; } = 100;
-        public float Depth { get; set; } = -1;
-        public Vector2 Parallax { get; set; } = Vector2.Zero;
-        public string EventTag { get; set; } = String.Empty;
-        public Ease Ease { get; set; } = Ease.Linear;
-        public float AngleOffset { get; set; } = 0;
-        public bool IsSelected { get; set; } = false;
-        public float Duration { get; set; } = 1;
-        public int Floor { get; set; } = 1;
-        public Vector2 ParallaxOffset { get; set; } = new(0, 0);
+        [ObservableProperty]
+        [property: UsageWindowProperties(AddToWindowProperties = false)]
+        private float duration = 1;
+        [ObservableProperty]
+        private string tag = "";
 
-        public bool UsePositionOffset { get; set; } = true;
-        public bool UseRotationOffset { get; set; } = true;
-        public bool UseScale { get; set; } = true;
-        public bool UseColor { get; set; } = true;
-        public bool UseParallax { get; set; } = true;
-        public bool UseParallaxOffset { get; set; } = true;
-        public bool UseOpacity { get; set; } = true;
-        public bool UseDepth { get; set; }
+        [ObservableProperty]
+        private string image = "";
+        [ObservableProperty]
+        private bool useImage = false;
+
+        [ObservableProperty]
+        private bool usePositionOffset = true;
+        [ObservableProperty]
+        private Vector2 positionOffset = new(0,0);
+
+        [ObservableProperty]
+        public bool usePivotOffset = false;
+        [ObservableProperty]
+        private Vector2 pivotOffset = new(0,0);
+
+        [ObservableProperty]
+        public bool useRotationOffset = false;
+        [ObservableProperty]
+        private float rotationOffset = 0;
+
+        [ObservableProperty]
+        public bool useScale = false;
+        [ObservableProperty]
+        private Vector2 scale = new(100, 100);
+
+        [ObservableProperty]
+        public bool useOpacity = false;
+        [ObservableProperty]
+        private float opacity = 100;
+
+        [ObservableProperty]
+        private bool useColor = false;
+        [ObservableProperty]
+        private string color = "";
+
+        [ObservableProperty]
+        public bool useDepth = false;
+        [ObservableProperty]
+        private int depth = -1;
+
+        [ObservableProperty]
+        private bool useParallax = false;
+        [ObservableProperty]
+        private Vector2 parallax = Vector2.Zero;
+
+
+
+        [ObservableProperty]
+        private bool useParallaxOffset = false;
+        [ObservableProperty]
+        private Vector2 parallaxOffset = new(0, 0);
+
+        [ObservableProperty]
+        private Ease ease = Ease.Linear;
+        [ObservableProperty]
+        [property: UsageWindowProperties(AddToWindowProperties = false)]
+        private int floor = 1;
+        [ObservableProperty]
+        private string eventTag = String.Empty;
+        [ObservableProperty]
+        private float angleOffset = 0;
+        
+        public object Clone()
+        {
+            return (KeyFrame)this.MemberwiseClone();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace ADODesigner.Models
     public enum Ease : byte
     {
         Linear,
-        IsSine,
+        InSine,
         OutSine,
         InOutSine,
         InQuad,

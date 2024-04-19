@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>ADODesigner Windows</AssemblyName>
+    <Company>Coyami-Ke</Company>
+    <Authors>Coyami-Ke</Authors>
+    <ApplicationIcon>adodesigner_ico.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\adodesigner_ico.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="adodesigner_ico.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="CalcBinding" Version="2.5.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CoreCLR-NCalc" Version="3.0.144" />
+    <PackageReference Include="Jace" Version="1.0.0" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ADODesigner\ADODesigner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\adodesigner_ico.png" />
+  </ItemGroup>
+
+</Project>

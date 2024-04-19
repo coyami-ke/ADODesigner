@@ -27,9 +27,11 @@ namespace ADODesigner.Converters
             result.Rotation = value.Rotation;
             result.Opacity = value.Opacity;
             result.DecorationImage = value.Image;
+            result.Depth = value.Depth;
             result.Position = new float[2] { value.Position.X, value.Position.Y };
-            result.Scale = new float[2] { value.Scale.X, value.Scale.Y};
+            result.Scale = new float[2] { value.Scale.X, value.Scale.Y };
             result.Tile = new int[2] { (int)value.Tiling.X, (int)value.Tiling.Y };
+            result.Parallax = new float?[2] { value.Parallax.X , value.Parallax.Y };
             result.ParallaxOffset = new float[2] { value.ParallaxOffset.X, value.ParallaxOffset.Y };
             result.PivotOffset = new float[2] { 0, 0 };
             result.ImageSmoothing = "Enabled";

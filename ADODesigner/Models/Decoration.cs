@@ -20,7 +20,7 @@ namespace ADODesigner.Models
         public Vector2 PivotOffset { get; set; } = new Vector2(0, 0);
         public string Color { get; set; } = "FFFFFF";
         public float Opacity { get; set; } = 100;
-        public float Depth { get; set; } = -1;
+        public int Depth { get; set; } = -1;
         public Vector2 Parallax { get; set; } = new Vector2(0, 0);
         public string Tag { get; set; } = String.Empty;
         public bool Locked { get; set; } = false;

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ADODesigner.Animations
@@ -11,11 +12,12 @@ namespace ADODesigner.Animations
     /// Base class for creating procedural animation.
     /// </summary>
     /// <typeparam name="T">Type of arguments</typeparam>
-    public abstract class BaseAnimation <T>
+    public abstract class BaseAnimation<T> : IBaseAnimation
     {
         /// <summary>
         /// Arguments for customizing the animation.
         /// </summary>
+        [JsonPropertyName("arguments")]
         public T Args { get; set; }
         /// <summary>
         /// Basic constructor

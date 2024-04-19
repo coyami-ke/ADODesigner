@@ -13,7 +13,7 @@ namespace ADODesigner.Animations
         public static float ApplyFunction(Ease ease, float t)
         {
             if (ease == Ease.Linear) return t;
-            if (ease == Ease.IsSine) return InSine(t);
+            if (ease == Ease.InSine) return InSine(t);
             if (ease == Ease.OutSine) return OutSine(t);
             if (ease == Ease.InOutSine) return InOutSine(t);
             if (ease == Ease.InQuad) return InQuad(t);

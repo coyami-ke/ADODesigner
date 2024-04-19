@@ -9,47 +9,30 @@ using System.Threading.Tasks;
 
 namespace ADODesigner.Converters
 {
-    public static class ADOFAIEventsManager
+    public class ADOFAIEventsManager
     {
-        private static List<IADOFAIEvent> events = new List<IADOFAIEvent>();
-
-        public static void RegisterEvent(IADOFAIEvent adofaiEvent)
+        private Dictionary<string, IADOFAIEvent> strings = new();
+        private Dictionary<ADOFAIEventsEnum, string> enums = new();
+        public void RegisterEvent(string stringType, ADOFAIEventsEnum enumType, IADOFAIEvent adofaiEvent)
         {
-            events.Add(adofaiEvent);
+            strings.Add(stringType, adofaiEvent);
+            enums.Add(enumType, stringType);
         }
-        public static IADOFAIEvent? GetEvent(string eventType)
+        public T? CreateEvent<T>(ADOFAIEventsEnum value) where T : IADOFAIEvent
         {
-            IADOFAIEvent? adofaiEvent = null;
-
-            for (int i = 0; i < events.Count; i++)
+            if (enums.TryGetValue(value, out string? v) && v is not null)
             {
-                if (events[i].EventType == eventType)
+                if (strings.TryGetValue(v, out IADOFAIEvent? result) && result is not null)
                 {
-                    adofaiEvent = events[i];
+                    T? result2 = (T)result;
+                    if (result2 is not null) return result2;
                 }
             }
-            return adofaiEvent;
+            return default(T);
         }
-        public static T? GetEvent<T>(string eventType) where T : IADOFAIEvent
+        public void DefaultInitialization()
         {
-            for (int i = 0; i < events.Count; i++)
-            {
-                if (events[i].EventType == eventType)
-                {
-                    return (T)events[i];
-                }
-            }
-            return default;
-        }
-        public static IADOFAIEvent?[] GetEvents()
-        {
-            return events.ToArray();
-        }
-        public static JsonObject? ConvertEventToJson<T>(T value) where T : IADOFAIEvent
-        {
-            JsonValue? json = JsonValue.Create(value);
-            if (json is null) return null;
-            return json.AsObject();
+            RegisterEvent("MoveDecorations", ADOFAIEventsEnum.MoveDecorations, new MoveDecorations());
         }
     }
 }
