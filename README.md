@@ -10,3 +10,7 @@ ADODesegner is a small addition to the ADOFI level editor. Allows you to create 
 ![](https://github.com/coyami-ke/ADODesigner/blob/master/save.png)
   
 ***If you used this program to create your levels, please add my nickname (Coyami-Ke) in a special thanks***
+## Hotkeys
+* WASD - move events
+* Q and E - change duration
+  
