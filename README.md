@@ -5,3 +5,5 @@ ADODesegner is a small addition to the ADOFI level editor. Allows you to create 
 * To create a new ADODesigner file: **File > Open > ADOFAI level**
 * Save the file: **File > Save**
 * After this, a file of .adod format will be created in your folder with .adofai. Now you can start working with the level by opening the .adod file: **File > Open > ADODesigner File**
+  
+***If you used this program to create your levels, please add my nickname in a special thanks***
