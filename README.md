@@ -1,6 +1,5 @@
 # ADODesigner
 ADODesegner is a small addition to the ADOFI level editor. Allows you to create animations with a large number of objects and events.
-[](https://github.com/coyami-ke/ADODesigner/blob/master/logo.png)
 ## How to get started
 * Launch **ADODesigner Windows.exe**
 * To create a new ADODesigner file: **File > Open > ADOFAI level**
