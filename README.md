@@ -11,6 +11,6 @@ ADODesegner is a small addition to the ADOFI level editor. Allows you to create 
   
 ***If you used this program to create your levels, please add my nickname (Coyami-Ke) in a special thanks***
 ## Hotkeys
-* WASD - move events
-* Q and E - change duration
+* WASD - Move events
+* Q and E - Increase/decrease duration
   
