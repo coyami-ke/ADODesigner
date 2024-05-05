@@ -33,7 +33,7 @@ namespace ADODesigner.Converters
             result.Tile = new int[2] { (int)value.Tiling.X, (int)value.Tiling.Y };
             result.Parallax = new float?[2] { value.Parallax.X , value.Parallax.Y };
             result.ParallaxOffset = new float[2] { value.ParallaxOffset.X, value.ParallaxOffset.Y };
-            result.PivotOffset = new float[2] { 0, 0 };
+            result.PivotOffset = new float[2] { value.PivotOffset.X, value.PivotOffset.Y };
             result.ImageSmoothing = "Enabled";
 
             return result;
