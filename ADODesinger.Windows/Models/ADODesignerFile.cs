@@ -27,7 +27,8 @@ namespace ADODesinger.Windows.Models
         {
             { "keyFrames", typeof(KeyFrameTimeLine) },
             { "ballsAnimations", typeof(BallsAnimationTimeLine) },
-            { "frameToFrameAnimations", typeof(FrameToFrameTimeLine) }
+            { "frameToFrameAnimations", typeof(FrameToFrameTimeLine) },
+            { "cubeObjects", typeof(CubeObjectTimeLine) },
         };
 
         [ObservableProperty]
