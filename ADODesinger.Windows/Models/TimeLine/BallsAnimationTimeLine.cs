@@ -60,7 +60,6 @@ namespace ADODesinger.Windows.Models.TimeLine
             clone.Floor = this.Floor;
             clone.NumberTimeLine = this.NumberTimeLine;
             clone.Animation = cloneObject;
-            clone.Select();
             return clone;
         }
         private void UpdateKeyFrame()
