@@ -35,6 +35,7 @@ namespace ADODesinger.Windows.Helpers
                 boxDuration.Text = element.Duration.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 boxDuration.LostFocus += (sender, e) =>
                 {
+                    WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                     float result = NCalcHelper.GetFloatFromExperession(boxDuration.Text);
                     boxDuration.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     element.Duration = result;
@@ -68,6 +69,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = str;
                     box.LostFocus += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         prop.SetValue(obj, box.Text);
                     };
                     Border border = CreateBorder(new UIElement[] { block, box,});
@@ -81,6 +83,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = int32.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     box.LostFocus += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         int result = Convert.ToInt32(NCalcHelper.GetFloatFromExperession(box.Text));
                         box.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         prop.SetValue(obj, result);
@@ -97,6 +100,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = flt.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     box.LostFocus += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         float result = NCalcHelper.GetFloatFromExperession(box.Text);
                         box.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         prop.SetValue(obj, result);
@@ -118,6 +122,7 @@ namespace ADODesinger.Windows.Helpers
                     boxY.Margin = new(270, 0, 0 , 0);
                     boxX.LostFocus += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         Vector2 result = new(NCalcHelper.GetFloatFromExperession(boxX.Text), NCalcHelper.GetFloatFromExperession(boxY.Text));
                         boxX.Text = result.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         boxY.Text = result.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -126,6 +131,7 @@ namespace ADODesinger.Windows.Helpers
                     };
                     boxY.LostFocus += (sender, e) => 
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         Vector2 result = new(NCalcHelper.GetFloatFromExperession(boxX.Text), NCalcHelper.GetFloatFromExperession(boxY.Text));
                         boxX.Text = result.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         boxY.Text = result.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -148,10 +154,12 @@ namespace ADODesinger.Windows.Helpers
                     };
                     box.Checked += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         prop.SetValue(obj, box.IsChecked);
                     };
                     box.Unchecked += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         prop.SetValue(obj, box.IsChecked);
                     };
                     Border border = CreateBorder(new UIElement[] { box });
@@ -166,6 +174,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = ease.ToString();
                     box.LostFocus += (sender, e) =>
                     {
+                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
                         object? result;
                         if (Enum.TryParse(typeof(Ease), box.Text, true, out result))
                         {
