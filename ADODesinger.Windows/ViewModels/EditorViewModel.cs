@@ -2,6 +2,7 @@
 using ADODesigner.Animations;
 using ADODesigner.Converters;
 using ADODesigner.Windows.Helpers;
+using ADODesigner.Windows.Models;
 using ADODesigner.Windows.Models.TimeLine;
 using ADODesinger.Windows.Helpers;
 using ADODesinger.Windows.Models;
@@ -73,7 +74,6 @@ namespace ADODesinger.Windows.ViewModels
 
         [ObservableProperty]
         private string messageBoxText = "";
-        public Stack<ObservableCollection<TimeLineElementModel>> UndoStackTimeLine { get; set; } = new();
 
         public CustomLevelParser CustomLevelParser { get; set; } = new();
 
@@ -112,6 +112,10 @@ namespace ADODesinger.Windows.ViewModels
                 File.WriteAllText(e.Value.PathToADODesignerFile, this.ADODesignerFile.ToJson());
                 File.WriteAllText(e.Value.PathToADOFAILevel, this.CustomLevelParser.ToJson());
                 this.ADODesignerFile.PathToADOFAILevel = oldAdofai;
+            });
+            WeakReferenceMessenger.Default.Register<NeedAddToBuffer>(this, (sender, e) =>
+            {
+                
             });
         }
         public void UpdateVisualTimeLine()
@@ -169,6 +173,14 @@ namespace ADODesinger.Windows.ViewModels
                         this.CustomLevelParser.ADOFAILevel.Actions.Remove(a);
                     }
                 }
+                foreach (var a in this.CustomLevelParser.ADOFAILevel.Decorations.ToArray())
+                {
+                    JsonObject? obj = a?.AsObject();
+                    if (RemoverEventTag.ContainsTag("ADODesigner_Event", new string[] { "tag" }, obj))
+                    {
+                        this.CustomLevelParser.ADOFAILevel.Decorations.Remove(a);
+                    }
+                }
                 foreach (var e in this.TimeLineElements)
                 {
                     foreach (var action in e.GetJsonActions())
@@ -185,6 +197,10 @@ namespace ADODesinger.Windows.ViewModels
                     }
                     foreach (var action in e.GetJsonDecorations())
                     {
+                        if (action is not null && action.ContainsKey("tag"))
+                        {
+                            action["tag"] += " ADODesigner_Event";
+                        }
                         this.CustomLevelParser.ADOFAILevel.Decorations.Add(action);
                     }
                 }
@@ -291,6 +307,7 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         public void AddKeyFrame()
         {
+            
             UnselectAllTimeLineElements();
             KeyFrameTimeLine element = new();
             element.Floor = GetCursorFloor();
@@ -301,18 +318,30 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         public void AddBallsAnimation()
         {
+            
             UnselectAllTimeLineElements();
             BallsAnimationTimeLine element = new();
             element.Floor = GetCursorFloor();
             element.NumberTimeLine = GetCursorTimeLineCursor();
             this.TimeLineElements.Add(element);
-            element.Select();  
+            element.Select();
         }
         [RelayCommand]
         public void AddFrameToFrameAnimation()
         {
+            
             UnselectAllTimeLineElements();
             FrameToFrameTimeLine element = new();
+            element.Floor = GetCursorFloor();
+            element.NumberTimeLine = GetCursorTimeLineCursor();
+            this.TimeLineElements.Add(element);
+            element.Select();
+        }
+        [RelayCommand]
+        public void AddCubeObject()
+        {
+            UnselectAllTimeLineElements();
+            CubeObjectTimeLine element = new();
             element.Floor = GetCursorFloor();
             element.NumberTimeLine = GetCursorTimeLineCursor();
             this.TimeLineElements.Add(element);
@@ -328,38 +357,55 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void TimeLineSClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
-                if (e.IsSelected && e.NumberTimeLine < 31) e.NumberTimeLine++;
+                if (e.IsSelected && e.NumberTimeLine < 31)
+                {
+                    e.NumberTimeLine++;
+                }
             }
         }
         [RelayCommand]
         private void TimeLineWClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
-                if (e.IsSelected && e.NumberTimeLine > 0) e.NumberTimeLine--;
+                if (e.IsSelected && e.NumberTimeLine > 0)
+                {
+                    e.NumberTimeLine--;
+                }
             }
         }
         [RelayCommand]
         private void TimeLineAClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
-                if (e.IsSelected && e.Floor > 0) e.Floor--; 
+                if (e.IsSelected && e.Floor > 0)
+                {
+                    e.Floor--;
+                } 
             }
         }
         [RelayCommand]
         private void TimeLineDClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
-                if (e.IsSelected && e.Floor < this.CustomLevelParser.ADOFAILevel.AngleData.Count - 1) e.Floor++;
+                if (e.IsSelected && e.Floor < this.CustomLevelParser.ADOFAILevel.AngleData.Count - 1)
+                {
+                    e.Floor++;
+                }
             }
         }
         [RelayCommand]
         private void TimeLineQClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
                 if (e.IsSelected && e.Duration > 0 && e.IsSupportDuration)
@@ -372,6 +418,7 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void TimeLineEClicked()
         {
+            if (this.GetCountSelectedTLElements() > 0) 
             foreach (var e in TimeLineElements)
             {
                 if (e.IsSelected && e.IsSupportDuration)
@@ -436,6 +483,7 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void CutTimeLineElements()
         {
+            
             List<TimeLineElementModel> copied = new();
             foreach (var e in this.TimeLineElements.ToArray())
             {
@@ -450,6 +498,7 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void PasteTimeLineElements()
         {
+            
             if (this.CopiedTimeLineElements is null) return;
             int minFloor = 0;
             foreach (var e in this.CopiedTimeLineElements)
