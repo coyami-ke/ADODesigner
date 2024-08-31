@@ -18,6 +18,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Windows.Documents;
 using ADODesigner.Models;
 using System.Windows.Media.Effects;
+using ADODesigner.Windows.ViewModels.Messages;
+using WPFColorLib;
+using ADODesigner.Windows.Helpers;
 
 namespace ADODesinger.Windows.Helpers
 {
@@ -35,7 +38,7 @@ namespace ADODesinger.Windows.Helpers
                 boxDuration.Text = element.Duration.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 boxDuration.LostFocus += (sender, e) =>
                 {
-                    WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                    WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                     float result = NCalcHelper.GetFloatFromExperession(boxDuration.Text);
                     boxDuration.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     element.Duration = result;
@@ -69,10 +72,49 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = str;
                     box.LostFocus += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         prop.SetValue(obj, box.Text);
                     };
-                    Border border = CreateBorder(new UIElement[] { block, box,});
+                    Border border;
+                    if (att is not null && att.IsColor)
+                    {
+                        Button button = new()
+                        {
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 35,
+                            Width = 35,
+                            Content = "...",
+                            Margin = new(312.5f, 0, 0, 0),
+                        };
+                        button.Click += (sender, e) =>
+                        {
+                            Color color;
+                            try
+                            {
+                                color = HexColorConverter.HexToColor(str);
+                            }
+                            catch (Exception ex)
+                            {
+                                color = Color.FromArgb(255, 255, 255, 255); 
+                            }
+
+                            Dsafa.WpfColorPicker.ColorPickerDialog dialog = new(color);
+                            var result = dialog.ShowDialog();
+                            if (result.HasValue && result.Value)
+                            {
+                                WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
+                                Color selectedColor = dialog.Color;
+                                box.Text = HexColorConverter.ColorToHex(selectedColor);
+                                str = HexColorConverter.ColorToHex(selectedColor); 
+                            }
+                        };
+                        border = CreateBorder(new UIElement[] { block, box, button, });
+                    }
+                    else
+                    {
+                        border = CreateBorder(new UIElement[] { block, box });
+                    }
                     panel.Children.Add(border);
                 }
                 else if (prop.GetValue(obj) is int int32)
@@ -83,7 +125,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = int32.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     box.LostFocus += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         int result = Convert.ToInt32(NCalcHelper.GetFloatFromExperession(box.Text));
                         box.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         prop.SetValue(obj, result);
@@ -100,7 +142,7 @@ namespace ADODesinger.Windows.Helpers
                     box.Text = flt.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     box.LostFocus += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         float result = NCalcHelper.GetFloatFromExperession(box.Text);
                         box.Text = result.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         prop.SetValue(obj, result);
@@ -122,7 +164,7 @@ namespace ADODesinger.Windows.Helpers
                     boxY.Margin = new(270, 0, 0 , 0);
                     boxX.LostFocus += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         Vector2 result = new(NCalcHelper.GetFloatFromExperession(boxX.Text), NCalcHelper.GetFloatFromExperession(boxY.Text));
                         boxX.Text = result.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         boxY.Text = result.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -131,7 +173,7 @@ namespace ADODesinger.Windows.Helpers
                     };
                     boxY.LostFocus += (sender, e) => 
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         Vector2 result = new(NCalcHelper.GetFloatFromExperession(boxX.Text), NCalcHelper.GetFloatFromExperession(boxY.Text));
                         boxX.Text = result.X.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         boxY.Text = result.Y.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -154,12 +196,12 @@ namespace ADODesinger.Windows.Helpers
                     };
                     box.Checked += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         prop.SetValue(obj, box.IsChecked);
                     };
                     box.Unchecked += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
+                        WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         prop.SetValue(obj, box.IsChecked);
                     };
                     Border border = CreateBorder(new UIElement[] { box });
@@ -170,26 +212,40 @@ namespace ADODesinger.Windows.Helpers
                 {
                     TextBlock block = CreateBaseTextBlock();
                     block.Text = name;
-                    TextBox box = CreateBaseTextBox();
-                    box.Text = ease.ToString();
-                    box.LostFocus += (sender, e) =>
+
+                    ComboBox comboBox = CreateBaseEaseComboBox();
+                    comboBox.SelectedItem = ease;
+
+                    comboBox.SelectionChanged += (sender, e) =>
                     {
-                        WeakReferenceMessenger.Default.Send(new NeedAddToBuffer(null));
-                        object? result;
-                        if (Enum.TryParse(typeof(Ease), box.Text, true, out result))
+                        if (comboBox.SelectedItem is Ease selectedEase)
                         {
-                            Ease conv = (Ease)result;
-                            prop.SetValue(obj, result);
-                            box.Text = result.ToString();
+                            prop.SetValue(obj, selectedEase);
+                            WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
                         }
                     };
-                    Border border = CreateBorder(new UIElement[] { block, box, });
+
+                    Border border = CreateBorder(new UIElement[] { block, comboBox });
                     panel.Children.Add(border);
                 }
             }
             return panel;
         }
-
+        public static ComboBox CreateBaseEaseComboBox()
+        {
+            ComboBox comboBox = new ComboBox()
+            {
+                Margin = new(150, 0, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                FontSize = 16,
+                ItemsSource = Enum.GetValues(typeof(Ease)).Cast<Ease>(),
+                Width = 200,
+                Height = 40,
+                VerticalContentAlignment = VerticalAlignment.Center,
+            };
+            return comboBox;
+        }
         public static TextBox CreateBaseTextBox()
         {
             TextBox box = new()

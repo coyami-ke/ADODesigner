@@ -12,21 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ADODesinger.Windows.Views
+namespace ADODesigner.Windows.Views
 {
     /// <summary>
-    /// Interaction logic for SaveAsProjectView.xaml
+    /// Interaction logic for GuideView.xaml
     /// </summary>
-    public partial class SaveAsProjectView : Window
+    public partial class GuideView : Window
     {
-        public SaveAsProjectView()
+        public GuideView()
         {
             InitializeComponent();
         }
-
         private void BorderCloseWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void BorderMaxWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal) WindowState = WindowState.Maximized;
+            else this.WindowState = WindowState.Normal;
+        }
+
+        private void BorderMinWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
 
         private void BorderMoveWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

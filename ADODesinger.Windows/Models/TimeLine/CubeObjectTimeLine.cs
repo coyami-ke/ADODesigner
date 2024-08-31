@@ -23,7 +23,7 @@ namespace ADODesigner.Windows.Models.TimeLine
             this.IsSupportDuration = false;
             this.SelectedColor = new SolidColorBrush(new Color() { R = 196, G = 153, B = 243, A = 255 });
             this.UnselectedColor = new SolidColorBrush(new Color() { R = 115, G = 96, B = 223, A = 255 });
-            this.Duration = 1;
+            this.Duration = 0;
             this.Floor = 1;
             this.Text = "Cube object";
             this.SaveID = "cubeObjects";

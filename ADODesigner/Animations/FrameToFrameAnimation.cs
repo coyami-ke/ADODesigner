@@ -28,12 +28,19 @@ namespace ADODesigner.Animations
             RepeatEvents? repeatEvent = null;
             for (int i = 0; i < this.CountFrames; i++)
             {
+                string image;
+                if (ImageName.Contains("{n}"))
+                {
+                    image = ImageName.Replace("{n}", (i + 1).ToString());
+                }
+                else image = $"{ImageName}{i + 1}.{FileExtension}";
+
                 KeyFrame frame = new()
                 {
                     UsePositionOffset = false,
                     UseImage = true,
                     AngleOffset = i * CornerAnglePerDeco,
-                    Image = $"{ImageName}{i + 1}.{FileExtension}",
+                    Image = image + $".{FileExtension}",
                     EventTag = EventTag,
                     Tag = Tag,
                     Floor = Floor,

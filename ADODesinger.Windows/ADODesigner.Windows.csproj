@@ -9,10 +9,25 @@
     <Company>Coyami-Ke</Company>
     <Authors>Coyami-Ke</Authors>
     <ApplicationIcon>adodesigner_ico.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\adodesigner_ico.png" />
+    <None Remove="Assets\guide_add_part.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video1.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video2.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video3.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video4.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video5.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video6.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video7.png" />
+    <None Remove="Assets\guide_frame_by_frame_example\video8.png" />
+    <None Remove="Assets\guide_frame_by_frame_properties.png" />
+    <None Remove="Assets\guide_open_adodesigner.png" />
+    <None Remove="Assets\guide_open_adofai.png" />
+    <None Remove="Assets\guide_save_adofai.png" />
+    <None Remove="Assets\guide_select_chart.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +39,7 @@
     <PackageReference Include="CalcBinding" Version="2.5.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CoreCLR-NCalc" Version="3.0.144" />
+    <PackageReference Include="dsafa.WpfColorPicker" Version="1.3.0" />
     <PackageReference Include="Jace" Version="1.0.0" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
@@ -36,7 +52,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="WPFColorLib">
+      <HintPath>bin\Debug\net7.0-windows10.0.17763.0\WPFColorLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\adodesigner_ico.png" />
+    <Resource Include="Assets\guide_add_part.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video1.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video2.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video3.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video4.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video5.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video6.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video7.png" />
+    <Resource Include="Assets\guide_frame_by_frame_example\video8.png" />
+    <Resource Include="Assets\guide_frame_by_frame_properties.png" />
+    <Resource Include="Assets\guide_open_adodesigner.png" />
+    <Resource Include="Assets\guide_open_adofai.png" />
+    <Resource Include="Assets\guide_save_adofai.png" />
+    <Resource Include="Assets\guide_select_chart.png" />
   </ItemGroup>
 
 </Project>

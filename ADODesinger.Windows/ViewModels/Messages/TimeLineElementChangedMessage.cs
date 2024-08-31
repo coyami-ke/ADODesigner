@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADODesinger.Windows.ViewModels.Messages
+namespace ADODesigner.Windows.ViewModels.Messages
 {
-    public class NeedAddToBuffer : ValueChangedMessage<TimeLineElementModel>
+    public class TimeLineElementChangedMessage : ValueChangedMessage<TimeLineElementModel>
     {
-        public NeedAddToBuffer(TimeLineElementModel value) : base(value)
+        public TimeLineElementChangedMessage(TimeLineElementModel value) : base(value)
         {
+
         }
     }
 }

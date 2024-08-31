@@ -13,6 +13,8 @@
                 <ResourceDictionary Source="Styles/ExpanderStyle.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TabControlStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

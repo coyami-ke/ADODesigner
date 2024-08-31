@@ -1,9 +1,13 @@
 ﻿using Accessibility;
 using ADODesigner.Animations;
 using ADODesigner.Converters;
+using ADODesigner.Converters.Events;
 using ADODesigner.Windows.Helpers;
 using ADODesigner.Windows.Models;
 using ADODesigner.Windows.Models.TimeLine;
+using ADODesigner.Windows.ViewModels;
+using ADODesigner.Windows.ViewModels.Messages;
+using ADODesigner.Windows.Views;
 using ADODesinger.Windows.Helpers;
 using ADODesinger.Windows.Models;
 using ADODesinger.Windows.Models.TimeLine;
@@ -18,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,10 +33,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Windows.System;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace ADODesinger.Windows.ViewModels
 {
@@ -47,6 +54,8 @@ namespace ADODesinger.Windows.ViewModels
         [ObservableProperty]
         private ObservableCollection<VisualTimeLineModel> visualTimeLineModels = new();
         [ObservableProperty]
+        private ObservableCollection<BookmarkTimeLine> tabNavigationEvents = new();
+        [ObservableProperty]
         private TimeLineElementModel[]? copiedTimeLineElements;
 
         [ObservableProperty]
@@ -59,7 +68,6 @@ namespace ADODesinger.Windows.ViewModels
         private double timeLineCanvasYCursor;
         [ObservableProperty]
         private bool timeLineUseAutoTimeLine = true;
-
         [ObservableProperty]
         private object? propertiesWindow;
 
@@ -76,6 +84,18 @@ namespace ADODesinger.Windows.ViewModels
         private string messageBoxText = "";
 
         public CustomLevelParser CustomLevelParser { get; set; } = new();
+
+        [ObservableProperty]
+        private EditorNavigationModel? editorNavigation;
+
+        [ObservableProperty]
+        private bool onSaved;
+        [ObservableProperty]
+        private bool isTimeLineChanged;
+
+        public event Action? TimeLineElementsChanged;
+
+        public Canvas? TimeLineCanvas { get; set; }
 
         public EditorViewModel()
         {
@@ -105,6 +125,11 @@ namespace ADODesinger.Windows.ViewModels
             {
                 this.UpdatePropertiesWindow();
             });
+            this.TimeLineElementsChanged += () =>
+            {
+                this.IsTimeLineChanged = true;
+            };
+
             WeakReferenceMessenger.Default.Register<SaveAsProjectMessage>(this, (sender, e) =>
             {
                 string oldAdofai = this.ADODesignerFile.PathToADOFAILevel;
@@ -113,9 +138,9 @@ namespace ADODesinger.Windows.ViewModels
                 File.WriteAllText(e.Value.PathToADOFAILevel, this.CustomLevelParser.ToJson());
                 this.ADODesignerFile.PathToADOFAILevel = oldAdofai;
             });
-            WeakReferenceMessenger.Default.Register<NeedAddToBuffer>(this, (sender, e) =>
+            WeakReferenceMessenger.Default.Register<TimeLineElementChangedMessage>(this, (sender, e) =>
             {
-                
+                this.TimeLineElementsChanged?.Invoke();
             });
         }
         public void UpdateVisualTimeLine()
@@ -134,6 +159,12 @@ namespace ADODesinger.Windows.ViewModels
                 ChartTimeLineModels.Add(model);
             }
 
+            VisualTimeLineModel firstModel = new();
+            firstModel.Margin = new(0);
+            firstModel.Height = 30;
+            firstModel.Width = CustomLevelParser.ADOFAILevel.AngleData.Count * 100 + 1600;
+            firstModel.BorderBrush = Brushes.Transparent;
+            VisualTimeLineModels.Add(firstModel);
             for (int i = 0; i < 32; i++)
             {
                 VisualTimeLineModel model = new();
@@ -152,6 +183,25 @@ namespace ADODesinger.Windows.ViewModels
             HeightTimeLineCanvas = 32 * 40 + 30;
             this.CountActions = this.CustomLevelParser.ADOFAILevel.Actions.Count;
             this.CountDecorations = this.CustomLevelParser.ADOFAILevel.Decorations.Count;
+
+            this.TabNavigationEvents = new();
+            foreach (var a in CustomLevelParser.ADOFAILevel.Actions)
+            {
+                JsonObject? obj = a?.AsObject();
+                if (obj is not null && obj.TryGetPropertyValue("eventType", out JsonNode? node) && node is not null)
+                {
+                    string? type = (string?)node;
+                    if (type is not null && type == "Bookmark")
+                    {
+                        Bookmark? mark = obj.Deserialize<Bookmark>(ADODesignerFile.GetDefaultOptions());
+                        if (mark is not null)
+                        {
+                            this.TabNavigationEvents.Add(new() { Floor = mark.Floor, });
+                        }
+                    }
+                }
+            }
+            this.EditorNavigation = new(this.CustomLevelParser.ADOFAILevel);
         }
 
         [RelayCommand]
@@ -210,6 +260,13 @@ namespace ADODesinger.Windows.ViewModels
             // Update the count of actions
             this.CountActions = this.CustomLevelParser.ADOFAILevel.Actions.Count;
             this.CountDecorations = this.CustomLevelParser.ADOFAILevel.Decorations.Count;
+
+            OnSaved = true;
+            OnSaved = false;
+
+            this.IsTimeLineChanged = false;
+
+            GC.Collect();
         }
         [RelayCommand]
         public void Open()
@@ -304,67 +361,155 @@ namespace ADODesinger.Windows.ViewModels
             }
             else this.PropertiesWindow = null;
         }
-        [RelayCommand]
-        public void AddKeyFrame()
+        public void TimeLineElementInit(TimeLineElementModel element)
         {
-            
-            UnselectAllTimeLineElements();
-            KeyFrameTimeLine element = new();
             element.Floor = GetCursorFloor();
             element.NumberTimeLine = GetCursorTimeLineCursor();
             this.TimeLineElements.Add(element);
             element.Select();
+            this.TimeLineElementsChanged?.Invoke();
+        }
+        [RelayCommand]
+        public void AddKeyFrame()
+        {
+            UnselectAllTimeLineElements();
+            KeyFrameTimeLine element = new();
+            TimeLineElementInit(element);
         }
         [RelayCommand]
         public void AddBallsAnimation()
         {
-            
             UnselectAllTimeLineElements();
             BallsAnimationTimeLine element = new();
-            element.Floor = GetCursorFloor();
-            element.NumberTimeLine = GetCursorTimeLineCursor();
-            this.TimeLineElements.Add(element);
-            element.Select();
+            TimeLineElementInit(element);
         }
         [RelayCommand]
         public void AddFrameToFrameAnimation()
         {
-            
             UnselectAllTimeLineElements();
             FrameToFrameTimeLine element = new();
-            element.Floor = GetCursorFloor();
-            element.NumberTimeLine = GetCursorTimeLineCursor();
-            this.TimeLineElements.Add(element);
-            element.Select();
+            TimeLineElementInit(element);
         }
         [RelayCommand]
         public void AddCubeObject()
         {
             UnselectAllTimeLineElements();
             CubeObjectTimeLine element = new();
-            element.Floor = GetCursorFloor();
-            element.NumberTimeLine = GetCursorTimeLineCursor();
-            this.TimeLineElements.Add(element);
-            element.Select();
+            TimeLineElementInit(element);
         }
         #region TimeLineElements Commands
+        [ObservableProperty]
+        private SelectionRectangleModel selectionBox = new();
         [RelayCommand]
-        public void TimeLineLeftButtonClicked()
+        private void TimeLineMouseDown(object obj)
         {
-            UnselectAllTimeLineElements();
+            MouseButtonEventArgs e = (MouseButtonEventArgs)obj;
+
+            if (e.LeftButton == MouseButtonState.Pressed) this.UnselectAllTimeLineElements();
+            else if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                UnselectAllTimeLineElements();
+
+                SelectionBox.IsMouseDown = true;
+                SelectionBox.MouseDownPosition = e.GetPosition((IInputElement)e.Source);
+
+                SelectionBox.CanvasLeft = SelectionBox.MouseDownPosition.X;
+                SelectionBox.CanvasTop = SelectionBox.MouseDownPosition.Y;
+                SelectionBox.Width = 0;
+                SelectionBox.Height = 0;
+
+                SelectionBox.Visibility = Visibility.Visible;
+            }
         }
 
         [RelayCommand]
-        private void TimeLineSClicked()
+        private void TimeLineMouseMove(object obj)
         {
-            if (this.GetCountSelectedTLElements() > 0) 
-            foreach (var e in TimeLineElements)
+            if (!SelectionBox.IsMouseDown)
+                return;
+
+            MouseEventArgs e = (MouseEventArgs)obj;
+
+            var sender = e.OriginalSource as FrameworkElement;
+
+            Canvas? canvas = this.TimeLineCanvas;
+
+            if (canvas == null)
             {
-                if (e.IsSelected && e.NumberTimeLine < 31)
+                return;
+            }
+
+            Point currentMousePos = e.GetPosition(canvas);
+
+            double width = Math.Abs(currentMousePos.X - SelectionBox.MouseDownPosition.X);
+            double height = Math.Abs(currentMousePos.Y - SelectionBox.MouseDownPosition.Y);
+
+            SelectionBox.Width = width;
+            SelectionBox.Height = height;
+
+            SelectionBox.CanvasLeft = Math.Min(currentMousePos.X, SelectionBox.MouseDownPosition.X);
+            SelectionBox.CanvasTop = Math.Min(currentMousePos.Y, SelectionBox.MouseDownPosition.Y);
+        }
+
+        [RelayCommand]
+        private void TimeLineMouseUp(object obj)
+        {
+            if (!SelectionBox.IsMouseDown) return;
+
+            UnselectAllTimeLineElements();
+
+            MouseEventArgs e = (MouseEventArgs)obj;
+
+            SelectionBox.IsMouseDown = false;
+
+            SelectionBox.Visibility = Visibility.Hidden;
+
+            var sender = e.OriginalSource as FrameworkElement;
+
+            Canvas? canvas = this.TimeLineCanvas;
+            if (canvas is null) return;
+
+            Point mouseUpPos = e.GetPosition(canvas); 
+
+            double startX = SelectionBox.MouseDownPosition.X;
+            double startY = SelectionBox.MouseDownPosition.Y;
+            double endX = mouseUpPos.X;
+            double endY = mouseUpPos.Y;
+
+            if (startX > endX)
+            {
+                double temp = startX;
+                startX = endX;
+                endX = temp;
+            }
+            if (startY > endY)
+            {
+                double temp = startY;
+                startY = endY;
+                endY = temp;
+            }
+
+            double selectionStartFloor = startX / 100.0;
+            double selectionEndFloor = endX / 100.0;
+            double selectionStartTimeline = (startY - 30) / 40.0;
+            double selectionEndTimeline = (endY - 30) / 40.0;
+
+            foreach (var ec in TimeLineElements)
+            {
+                double elementStartFloor = ec.Floor;
+                double elementEndFloor = ec.Floor + ec.Duration;
+                double elementTimeLine = ec.NumberTimeLine;
+                double elementEndTimeLine = ec.NumberTimeLine + 1;
+
+                bool isIntersecting = elementEndFloor > selectionStartFloor && elementStartFloor < selectionEndFloor &&
+                                      elementEndTimeLine > selectionStartTimeline && elementTimeLine < selectionEndTimeline;
+
+                if (isIntersecting)
                 {
-                    e.NumberTimeLine++;
+                    ec.Select();
                 }
             }
+            SelectionBox = new();
         }
         [RelayCommand]
         private void TimeLineWClicked()
@@ -377,6 +522,20 @@ namespace ADODesinger.Windows.ViewModels
                     e.NumberTimeLine--;
                 }
             }
+            this.TimeLineElementsChangedInvoke();
+        }
+        [RelayCommand]
+        private void TimeLineSClicked()
+        {
+            if (this.GetCountSelectedTLElements() > 0)
+            foreach (var e in TimeLineElements)
+            {
+                if (e.IsSelected && e.NumberTimeLine < 32)
+                {
+                    e.NumberTimeLine++;
+                }
+            }
+            this.TimeLineElementsChangedInvoke();
         }
         [RelayCommand]
         private void TimeLineAClicked()
@@ -387,8 +546,9 @@ namespace ADODesinger.Windows.ViewModels
                 if (e.IsSelected && e.Floor > 0)
                 {
                     e.Floor--;
-                } 
+                }
             }
+            this.TimeLineElementsChangedInvoke();
         }
         [RelayCommand]
         private void TimeLineDClicked()
@@ -401,30 +561,41 @@ namespace ADODesinger.Windows.ViewModels
                     e.Floor++;
                 }
             }
+            this.TimeLineElementsChangedInvoke();
         }
         [RelayCommand]
         private void TimeLineQClicked()
         {
-            if (this.GetCountSelectedTLElements() > 0) 
-            foreach (var e in TimeLineElements)
+            if (this.GetCountSelectedTLElements() > 0)
             {
-                if (e.IsSelected && e.Duration > 0 && e.IsSupportDuration)
+                int count = 0;
+                foreach (var e in TimeLineElements)
                 {
-                    e.Duration--;
+                    if (e.IsSelected && e.Duration > 0 && e.IsSupportDuration)
+                    {
+                        e.Duration--;
+                        count++;
+                    }
                 }
+                if (count > 0) this.TimeLineElementsChangedInvoke();
             }
             this.UpdatePropertiesWindow();
         }
         [RelayCommand]
         private void TimeLineEClicked()
         {
-            if (this.GetCountSelectedTLElements() > 0) 
-            foreach (var e in TimeLineElements)
+            if (this.GetCountSelectedTLElements() > 0)
             {
-                if (e.IsSelected && e.IsSupportDuration)
+                int count = 0;
+                foreach (var e in TimeLineElements)
                 {
-                    e.Duration++;
+                    if (e.IsSelected && e.IsSupportDuration)
+                    {
+                        e.Duration++;
+                        count++;
+                    }
                 }
+                if (count > 0) this.TimeLineElementsChangedInvoke();
             }
             this.UpdatePropertiesWindow();
         }
@@ -432,14 +603,18 @@ namespace ADODesinger.Windows.ViewModels
         private void TimeLineDublicate()
         {
             List<TimeLineElementModel> dublicate = new();
-            foreach (var e in TimeLineElements.ToArray())
+            if (this.GetCountSelectedTLElements() > 0)
             {
-                if (e.IsSelected)
+                this.TimeLineElementsChangedInvoke();
+                foreach (var e in TimeLineElements.ToArray())
                 {
-                    TimeLineElementModel model = e.CloneElement();
-                    this.TimeLineElements.Add(model);
-                    dublicate.Add(model);
-                    e.Unselect();
+                    if (e.IsSelected)
+                    {
+                        TimeLineElementModel model = e.CloneElement();
+                        this.TimeLineElements.Add(model);
+                        dublicate.Add(model);
+                        e.Unselect();
+                    }
                 }
             }
             foreach (var e in dublicate)
@@ -450,11 +625,15 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void TimeLineDeleteClicked()
         {
-            foreach (var e in this.TimeLineElements.ToArray())
+            if (this.GetCountSelectedTLElements() > 0)
             {
-                if (e.IsSelected)
+                this.TimeLineElementsChangedInvoke();
+                foreach (var e in this.TimeLineElements.ToArray())
                 {
-                    this.TimeLineElements.Remove(e);
+                    if (e.IsSelected)
+                    {
+                        this.TimeLineElements.Remove(e);
+                    }
                 }
             }
             this.UpdatePropertiesWindow();
@@ -462,6 +641,7 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void TimeLineSelectAll()
         {
+            this.TimeLineElementsChangedInvoke();
             Parallel.ForEach(this.TimeLineElements, (e) =>
             {
                 if (!e.IsSelected) e.Select();
@@ -483,7 +663,6 @@ namespace ADODesinger.Windows.ViewModels
         [RelayCommand]
         private void CutTimeLineElements()
         {
-            
             List<TimeLineElementModel> copied = new();
             foreach (var e in this.TimeLineElements.ToArray())
             {
@@ -493,12 +672,12 @@ namespace ADODesinger.Windows.ViewModels
                     this.TimeLineElements.Remove(e);
                 }
             }
-            this.CopiedTimeLineElements = copied.ToArray(); 
+            this.CopiedTimeLineElements = copied.ToArray();
+            this.TimeLineElementsChangedInvoke();
         }
         [RelayCommand]
         private void PasteTimeLineElements()
         {
-            
             if (this.CopiedTimeLineElements is null) return;
             int minFloor = 0;
             foreach (var e in this.CopiedTimeLineElements)
@@ -513,6 +692,21 @@ namespace ADODesinger.Windows.ViewModels
                 TimeLineElementModel clone = e.CloneElement();
                 this.TimeLineElements.Add(clone);
                 clone.Select();
+            }
+            this.TimeLineElementsChangedInvoke();
+        }
+        [RelayCommand]
+        private void ClosingWindow(CancelEventArgs e)
+        {
+            if (this.IsTimeLineChanged)
+            {
+                var result = CustomMessageBox.Show("Your level is not saved. Do you want to exit without saving?", "Level is not saved", CustomMessageBoxButton.YesNoCancel);
+                if (result == CustomMessageBoxResult.Yes)
+                {
+                    e.Cancel = false;
+                    Environment.Exit(0);
+                }
+                e.Cancel = true;
             }
         }
         public void UnselectAllTimeLineElements()
@@ -550,6 +744,27 @@ namespace ADODesinger.Windows.ViewModels
             if (this.TimeLineUseAutoTimeLine) return (int)(this.TimeLineCanvasYCursor - 30) / 40;
             else return 0;
         }
+        public void TimeLineElementsChangedInvoke()
+        {
+            if (this.GetCountSelectedTLElements() > 0)
+            {
+                this.TimeLineElementsChanged?.Invoke();
+            }
+        }
+
+        [RelayCommand]
+        public void ShowCombineParts()
+        {
+            CombinePartsView view = new();
+            view.ShowDialog();
+        }
+        [RelayCommand]
+        public void ShowGuide()
+        {
+            GuideView view = new();
+            view.Show();
+        }
+        public delegate void TimeLineElementMethod(TimeLineElementModel element);
         #endregion
     }
 }

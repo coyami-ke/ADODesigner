@@ -12,18 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ADODesinger.Windows.Views
+namespace ADODesigner.Windows.Views
 {
     /// <summary>
-    /// Interaction logic for SaveAsProjectView.xaml
+    /// Interaction logic for CombinePartsView.xaml
     /// </summary>
-    public partial class SaveAsProjectView : Window
+    public partial class CombinePartsView : Window
     {
-        public SaveAsProjectView()
+        public CombinePartsView()
         {
             InitializeComponent();
         }
-
         private void BorderCloseWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();

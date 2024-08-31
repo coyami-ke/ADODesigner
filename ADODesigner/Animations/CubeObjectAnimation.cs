@@ -16,89 +16,93 @@ namespace ADODesigner.Animations
         [UsageWindowProperties(AddToWindowProperties = false)]
         public int Floor { get; set; } = 1;
         public string ImageRectangle { get; set; } = "rectangle.png";
+        public string Tag { get; set; } = "ADODesigner_Cube";
         public Vector2 Position { get; set; } = new();
-        public float SettingSides { get; set; } = 3;
         public float Scale { get; set; } = 150;
         public float Parallax { get; set; } = 50;
         public Vector2 ParallaxOffsetSides { get; set; } = new();
         public float Opacity { get; set; } = 100;
         public int Depth { get; set; } = 50;
         public float ParallaxMultiplier { get; set; } = 4;
+        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorLeftSide")]
         public string ColorLeftSide { get; set; } = "ffffffff";
+        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorRightSide")]
         public string ColorRightSide { get; set; } = "ffffffff";
+        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorFrontSide")]
         public string ColorFrontSide { get; set; } = "ffffffff";
+        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorTopSide")]
         public string ColorTopSide { get; set; } = "ffffffff";
-        public string Tag { get; set; } = "ADODesigner_Cube";
+        public bool EnableTopSide { get; set; } = true;
+        public bool EnableFrontSide { get; set; } = true; 
+        public bool EnableLeftSide { get; set; } = true;
+        public bool EnableRightSide { get; set; } = true;
 
         public Decoration[] Animate()
         {
             List<Decoration> list = new();
 
-            Decoration frontSide = new();
-            frontSide.Scale = new(Scale);
-            frontSide.Floor = Floor;
-            frontSide.Position = Position;
-            frontSide.Color = ColorFrontSide;
-            frontSide.Depth = Depth;
-            frontSide.Tag = Tag;
-            frontSide.Parallax = new(Parallax);
-            frontSide.Image = ImageRectangle;
-
-            float tPositionSides = (1 - (Parallax / 100)) * (SettingSides * (Scale / 150)); // 25% = 1.25; 50% = 3; 75% = 12; 90 = 75; 80 = ? // Multiplayer = 5 
-            float tOffset = SIZE_PIXEL * (tPositionSides / 2);
-
-            Vector2 parallaxOffsetSides = SIZE_PIXEL * ParallaxOffsetSides;
-
-            // top side
-            for (int i = 0; i < Scale; i++)
+            if (EnableFrontSide)
             {
-                Decoration topSide = CreateNewDecoration();
-                topSide.Scale = new(Scale - (i / 2), 1);
-                topSide.Position = Position;
-                topSide.Color = ColorTopSide;
-                topSide.Parallax = new(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
-                topSide.ParallaxOffset = new Vector2(0, Scale / 150 - (0.25f * (Scale / 150))) + parallaxOffsetSides * -i;
-                topSide.Depth += 3;
+                Decoration frontSide = new();
+                frontSide.Scale = new(Scale);
+                frontSide.Floor = Floor;
+                frontSide.Position = Position;
+                frontSide.Color = ColorFrontSide;
+                frontSide.Depth = Depth;
+                frontSide.Tag = Tag;
+                frontSide.Parallax = new(Parallax);
+                frontSide.Image = ImageRectangle;
 
-                list.Add(topSide);
+                list.Add(frontSide);
             }
 
-            // right side
-            for (int i = 0; i < Scale; i++)
+            Vector2 parallaxOffsetSides = SIZE_PIXEL * ParallaxOffsetSides * 2;
+
+            for (int s = 0; s < Scale; s++)
             {
-                Decoration rightSide = CreateNewDecoration();
-                rightSide.Scale = new(1, Scale - (i / 2));
-                rightSide.Color = ColorRightSide;
+                int i = s + 1;
+                if (EnableTopSide)
+                {
+                    Decoration topSide = CreateNewDecoration();
+                    topSide.Scale = new(Scale - (i / 2), 1);
+                    topSide.Position = Position;
+                    topSide.Color = ColorTopSide;
+                    topSide.Parallax = new(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
+                    topSide.ParallaxOffset = new Vector2(0, Scale / 150 - (0.25f * (Scale / 150))) + parallaxOffsetSides * -i;
 
-                Vector2 newPosition = new(tPositionSides - i * tOffset, i * tOffset);
+                    list.Add(topSide);
+                }
+                if (EnableRightSide)
+                {
+                    Decoration rightSide = CreateNewDecoration();
+                    rightSide.Scale = new(1, Scale - (i / 2));
+                    rightSide.Color = ColorRightSide;
 
-                rightSide.Position = newPosition + Position;
-                rightSide.Parallax = new(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
+                    float posX = parallaxOffsetSides.X * -i + (Scale / 300 + Scale / 600) - i * SIZE_PIXEL / 2.75f; //
+                    float posY = parallaxOffsetSides.Y * -i + (SIZE_PIXEL * i / 2.625f);
 
-                rightSide.ParallaxOffset = parallaxOffsetSides * -i;
+                    rightSide.ParallaxOffset = new(posX, posY);
+                    rightSide.Parallax = new Vector2(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
 
-                rightSide.Depth += 2;
-                list.Add(rightSide);
+                    rightSide.Depth++;
+                    list.Add(rightSide);
+                }
+                if (EnableLeftSide)
+                {
+                    Decoration leftSide = CreateNewDecoration();
+                    leftSide.Scale = new(1, Scale - (i / 2));
+                    leftSide.Color = ColorLeftSide;
+
+                    float posX = parallaxOffsetSides.X * -i + -(Scale / 300 + Scale / 600) + i * SIZE_PIXEL / 2.75f;
+                    float posY = parallaxOffsetSides.Y * -i + (SIZE_PIXEL * i / 2.625f);
+
+                    leftSide.ParallaxOffset = new(posX, posY);
+                    leftSide.Parallax = new(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
+
+                    leftSide.Depth++;
+                    list.Add(leftSide);
+                }
             }
-            // left side
-            for (int i = 0; i < Scale; i++)
-            {
-                Decoration leftSide = CreateNewDecoration();
-                leftSide.Scale = new(1, Scale - (i / 2));
-                leftSide.Color = ColorLeftSide;
-
-                Vector2 newPosition = new(-(tPositionSides - i * tOffset), i * tOffset);
-
-                leftSide.Position = newPosition + Position;
-                leftSide.Parallax = new(Parallax + SIZE_PIXEL * i * ParallaxMultiplier);
-
-                leftSide.ParallaxOffset = parallaxOffsetSides * -i;
-
-                leftSide.Depth += 2;
-                list.Add(leftSide);
-            }
-
-            list.Add(frontSide);
 
             foreach (var deco in list)
             {
@@ -119,6 +123,7 @@ namespace ADODesigner.Animations
                 Image = ImageRectangle,
                 Tag = Tag,
                 Opacity = Opacity,
+                Position = Position,
             };
             return decoration;
         }

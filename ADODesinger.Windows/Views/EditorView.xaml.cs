@@ -24,6 +24,7 @@ namespace ADODesinger.Windows.Views
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight - 10;
+            ((EditorViewModel)DataContext).TimeLineCanvas = this.TimeLineCanvas;
         }
 
         private void TimeLineCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -47,7 +48,7 @@ namespace ADODesinger.Windows.Views
 
         private void BorderCloseWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Environment.Exit(0);
+            this.Close();
         }
 
         private void BorderMaxWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -65,10 +66,9 @@ namespace ADODesinger.Windows.Views
         {
             this.DragMove();
         }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-
+            Environment.Exit(0);
         }
     }
 }

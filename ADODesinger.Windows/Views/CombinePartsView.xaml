@@ -1,14 +1,13 @@
-﻿<Window x:Class="ADODesinger.Windows.Views.SaveAsProjectView"
+﻿<Window x:Class="ADODesigner.Windows.Views.CombinePartsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADODesinger.Windows.ViewModels"
+        xmlns:local="clr-namespace:ADODesigner.Windows.ViewModels"
         mc:Ignorable="d"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        Title="ADODesigner - Save As" Height="300" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
+        Title="ADODesigner - Combine Parts" Height="600" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
     <Window.DataContext>
-        <local:SaveAsProjectViewModel/>
+        <local:CombinePartsViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,6 +16,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="10"/>
             <RowDefinition/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
@@ -76,22 +77,21 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <TextBlock IsHitTestVisible="True" Text="ADODesigner - Save As" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
-        <TextBox Text="{Binding PathToADOFAILevel}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="350" Margin="160,30,0,0" Grid.ColumnSpan="2"/>
-        <Button Command="{Binding SelectADOFAILevelCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,29,0,0" Grid.Column="1"/>
-        <TextBlock Text="ADOFAI Level" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0" Foreground="#E5FFFFFF"/>
-        <TextBox Text="{Binding PathToADODesignerFile}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="350" Margin="160,0,0,0" Grid.ColumnSpan="2"/>
-        <TextBlock Text="ADODesigner Project" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#E5FFFFFF"/>
-        <Button Command="{Binding SelectADODesignerFileCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Grid.Column="1"/>
-        <Button Content="Save" Command="{Binding EnterCommand}" Height="40" Width="240" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="450,0,0,0" Grid.Row="2" Grid.ColumnSpan="2">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <i:CallMethodAction MethodName="Close"
-                           TargetObject="{Binding RelativeSource={RelativeSource
-                                                  Mode=FindAncestor,
-                                                  AncestorType=Window}}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+        <TextBlock IsHitTestVisible="False" Text="ADODesigner - Combine Parts" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Text="Chart (Gameplay)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" FontSize="15" Foreground="#CCFFFFFF"/>
+            <TextBox Text="{Binding PathToChart}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="482.5" FontSize="15"/>
+            <Button Height="40" Width="40" Content="..." Margin="10" Command="{Binding OpenChartCommand}"/>
+        </StackPanel>
+        <ListBox Grid.Row="3" Grid.Column="0" Background="{x:Null}" ItemsSource="{Binding Parts}" SelectedItem="{Binding SelectedPart}" BorderBrush="#19FFFFFF" Foreground="#CCFFFFFF" BorderThickness="1" FontSize="15" Margin="2.5 0 5 5"/>
+        <Border Grid.Row="3" Grid.Column="1" Margin="2.5 0 5 5" BorderBrush="#19FFFFFF" BorderThickness="1">
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                <Button Content="Add a part..." Height="35" BorderThickness="1" Margin="5 5" FontSize="15" Command="{Binding AddPartCommand}"/>
+                <Button Content="Remove" Height="35" BorderThickness="1" Margin="5 -2.5" FontSize="15" Command="{Binding RemovePartCommand}"/>
+            </StackPanel>
+        </Border>
+        <Line X1="0" X2="700" Y1="5" Y2="5" Grid.Row="2" Grid.ColumnSpan="2" StrokeThickness="1" Stroke="#19FFFFFF"/>
+
+        <Button Content="Combine" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="240" Margin="10" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding CombinePartsCommand}"/>
     </Grid>
 </Window>

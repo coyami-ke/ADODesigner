@@ -92,11 +92,11 @@ namespace ADODesinger.Windows.Views
             Rect rect = new();
             rect.Height = Height;
             rect.Width = Width;
-            dc.DrawRoundedRectangle(selection, new Pen(), rect, 15, 15);
+            dc.DrawRoundedRectangle(selection, new Pen(), rect, 0, 0);
             Rect rect1 = new Rect();
             rect1.Height = Height;
             rect1.Width = 20;    
-            dc.DrawRoundedRectangle(selection, new Pen(), rect1, 15, 15);
+            dc.DrawRoundedRectangle(selection, new Pen(), rect1, 0, 0);
 
             SolidColorBrush lineColor = new SolidColorBrush(new Color() { R = 255, G = 255, B = 255, A = 110,});
 

@@ -56,6 +56,7 @@ namespace ADODesigner.Models
         [ObservableProperty]
         private bool useColor = false;
         [ObservableProperty]
+        [property: UsageWindowProperties(AddToWindowProperties = true, Name = "Color", IsColor = true)]
         private string color = "";
 
         [ObservableProperty]

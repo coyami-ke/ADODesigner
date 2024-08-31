@@ -9,10 +9,15 @@
         xmlns:controls="clr-namespace:ADODesinger.Windows.Views"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
-        Title="{Binding ADODesignerFile.PathToADOFAILevel, StringFormat=ADODesigner - {0}}" Icon="../Assets/adodesigner_ico.png"  MinHeight="600" MinWidth="800" Height="780" Width="1420" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="{Binding ADODesignerFile.PathToADOFAILevel, StringFormat=ADODesigner - {0}}" Icon="../Assets/adodesigner_ico.png"  MinHeight="600" MinWidth="800" Height="780" Width="1420" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF18191C" Closed="Window_Closed">
     <Window.DataContext>
         <local:EditorViewModel/>
     </Window.DataContext>
+    <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="Closing">
+            <Behaviors:InvokeCommandAction Command="{Binding ClosingWindowCommand}" PassEventArgsToCommand="True"/>
+        </Behaviors:EventTrigger>
+    </Behaviors:Interaction.Triggers>
     <Window.InputBindings>
         <KeyBinding Command="{Binding SaveCommand}" Key="S" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding SaveAsCommand}" Key="S" Modifiers="Ctrl+Shift"/>
@@ -26,12 +31,6 @@
         <KeyBinding Command="{Binding CutTimeLineElementsCommand}" Key="X" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding PasteTimeLineElementsCommand}" Key="V" Modifiers="Ctrl"/>
     </Window.InputBindings>
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF18191D"/>
-            <GradientStop Color="#FF1B171A" Offset="1"/>
-        </LinearGradientBrush>
-    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -41,13 +40,13 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
-        <Border x:Name="BorderMoveWindow" MouseLeftButtonDown="BorderMoveWindow_MouseLeftButtonDown" Background="Transparent" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2"/>
+        <Border x:Name="BorderMoveWindow" MouseLeftButtonDown="BorderMoveWindow_MouseLeftButtonDown" Background="Transparent" Grid.ColumnSpan="3" Grid.Row="0"/>
         <Menu IsMainMenu="True" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="15 0">
-            <MenuItem Header="File" Background="#FF151619" Click="MenuItem_Click">
+            <MenuItem Header="File" Background="#FF18191D">
                 <MenuItem Header="Open">
                     <MenuItem Header="ADODesigner File..." InputGestureText="Ctrl+O" Command="{Binding OpenCommand}"/>
                     <MenuItem Header="ADOFAI Level..." InputGestureText="Ctrl+Shift+O" Command="{Binding OpenAdofaiFileCommand}"/>
@@ -56,13 +55,18 @@
                 <MenuItem Header="Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S"/>
                 <MenuItem Header="Save As..." Command="{Binding SaveAsCommand}" InputGestureText="Ctrl+Shift+S"/>
             </MenuItem>
-            <MenuItem Header="Edit" Background="#FF151619">
+            <MenuItem Header="Edit" Background="#FF18191D">
                 <MenuItem Header="Cut" Command="{Binding CutTimeLineElementsCommand}" InputGestureText="Ctrl+X"/>
                 <MenuItem Header="Paste" Command="{Binding PasteTimeLineElementsCommand}" InputGestureText="Ctrl+V"/>
                 <MenuItem Header="Copy" Command="{Binding CopyTimeLineElementsCommand}" InputGestureText="Ctrl+C"/>
                 <MenuItem Header="Dublicate" Command="{Binding TimeLineDublicateCommand}" InputGestureText="Ctrl+D"/>
                 <MenuItem Header="Delete" Command="{Binding TimeLineDeleteClickedCommand}" InputGestureText="Del"/>
-                <Separator Background="#3FFFFFFF" Foreground="#3FFFFFFF"/>
+            </MenuItem>
+            <MenuItem Header="Tools" Background="#FF18191D">
+                <MenuItem Header="Combine Parts..." Command="{Binding ShowCombinePartsCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Help" Background="#FF18191D">
+                <MenuItem Header="Guide..." Command="{Binding ShowGuideCommand}"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -153,21 +157,28 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <Border Grid.Row="1" Grid.ColumnSpan="3" Background="#FF1D1E25">
+        <Border Grid.Row="1" Grid.ColumnSpan="3" Background="#FF1C1D21">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{Binding ADODesignerFile.PathToADOFAILevel}" FontSize="20" Foreground="#7FFFFFFF"/>
+                <TextBlock Margin="0 0 0 0" VerticalAlignment="Center" FontSize="20" Foreground="#7FFFFFFF">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsTimeLineChanged}" Value="True">
+                                    <Setter Property="Text" Value="*"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=IsTimeLineChanged}" Value="False">
+                                    <Setter Property="Text" Value=""/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountActions, StringFormat=Actions: {0}}" FontSize="20" Foreground="#7FFFFFFF"/>
                 <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountDecorations, StringFormat=Decorations: {0}}" FontSize="20" Foreground="#7FFFFFFF"/>
             </StackPanel>
         </Border>
         <Border Grid.Column="3" Grid.RowSpan="2"  Grid.Row="2" Margin="5 5 5 5" CornerRadius="10 10 0 0">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FF281920" Offset="1"/>
-                    <GradientStop Color="#FF30323A"/>
-                </LinearGradientBrush>
-            </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0*"/>
@@ -177,58 +188,37 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="10 10 0 0" Grid.ColumnSpan="2" Background="#FF1D1E25">
-                    <Border.Effect>
-                        <DropShadowEffect Direction="270" Opacity="0.1" BlurRadius="10"/>
-                    </Border.Effect>
+                <Border CornerRadius="10 10 0 0" Grid.ColumnSpan="2" Background="#FF1C1D21">
                     <Grid>
                         <TextBlock Text="Properties" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
                     </Grid>
                 </Border>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="2">
-                    <Label Content="{Binding PropertiesWindow}">
-                        <Label.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF18191D"/>
-                                <GradientStop Color="#FF291920" Offset="0.5"/>
-                                <GradientStop Color="#FF352C1F" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Label.Background>
-                    </Label>
+                    <Label Content="{Binding PropertiesWindow}" Background="#FF18191D"/>
                 </ScrollViewer>
             </Grid>
         </Border>
-        <Border Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="5 5 5 5" CornerRadius="10 10 0 0">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF18191D"/>
-                    <GradientStop Color="#FF291920" Offset="0.5"/>
-                    <GradientStop Color="#FF352C1F" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border Focusable="True" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="5 5 5 5" CornerRadius="10 10 0 0" Background="#FF18191D">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="10 10 0 0" Background="#FF1D1E25">
-                    <Border.Effect>
-                        <DropShadowEffect Direction="270" Opacity="0.1" BlurRadius="10"/>
-                    </Border.Effect>
+                <Border CornerRadius="10 10 0 0" Background="#FF1C1D21">
                     <Grid>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Time Line" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
                             <Menu VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="20 0">
-                                <MenuItem Header="Select" Background="#FF1D1E25">
+                                <MenuItem Header="Select" Background="#FF1D1E21">
                                     <MenuItem Header="Select All" InputGestureText="Ctrl+A" Command="{Binding TimeLineSelectAllCommand}"/>
                                 </MenuItem>
-                                <MenuItem Header="Add" Background="#FF1D1E25">
+                                <MenuItem Header="Add" Background="#FF1D1E21">
                                     <MenuItem Header="Key Frame (Decoration)" Command="{Binding AddKeyFrameCommand}" InputGestureText="F3"/>
                                     <MenuItem Header="Balls Animation" Command="{Binding AddBallsAnimationCommand}" InputGestureText="F5"/>
                                     <MenuItem Header="Frame-By-Frame Animation (Images)" Command="{Binding AddFrameToFrameAnimationCommand}" InputGestureText="F6"/>
                                     <MenuItem Header="Cube Object" Command="{Binding AddCubeObjectCommand}" InputGestureText="F7"/>
                                 </MenuItem>
-                                <MenuItem Header="Import" Background="#FF1D1E25">
+                                <MenuItem Header="Import" Background="#FF1D1E21">
                                     <MenuItem Header="Import From ADOFAI Level" Command="{Binding ImportFromAdofaiCommand}"/>
                                 </MenuItem>
                             </Menu>
@@ -249,8 +239,28 @@
                         <KeyBinding Command="{Binding TimeLineSelectAllCommand}" Key="A" Modifiers="Ctrl"/>
                     </ScrollViewer.InputBindings>
                     <Canvas x:Name="TimeLineCanvas" Height="{Binding HeightTimeLineCanvas}" Width="{Binding WidthTimeLineCanvas}" MouseMove="TimeLineCanvas_MouseMove">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger EventName="MouseDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding TimeLineMouseDownCommand}" PassEventArgsToCommand="True"/>
+                            </Behaviors:EventTrigger>
+                            <Behaviors:EventTrigger EventName="MouseUp">
+                                <Behaviors:InvokeCommandAction Command="{Binding TimeLineMouseUpCommand}" PassEventArgsToCommand="True"/>
+                            </Behaviors:EventTrigger>
+                            <Behaviors:EventTrigger EventName="MouseMove">
+                                <Behaviors:InvokeCommandAction Command="{Binding TimeLineMouseMoveCommand}" PassEventArgsToCommand="True"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
                         <Line Panel.ZIndex="2" IsHitTestVisible="False" StrokeThickness="1" X1="{Binding TimeLineCanvasXCursor}" X2="{Binding TimeLineCanvasXCursor}" Y1="0" Y2="{Binding HeightTimeLineCanvas}" Stroke="#BFFF5555"/>
                         <Line Panel.ZIndex="2" IsHitTestVisible="False" StrokeThickness="1" X1="0" X2="{Binding WidthTimeLineCanvas}" Y1="{Binding TimeLineCanvasYCursor}" Y2="{Binding TimeLineCanvasYCursor}" Stroke="#BF409AFF"/>
+                        <ItemsControl ItemsSource="{Binding TabNavigationEvents}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Canvas>
+                                        <Border Width="100" Height="1080" Canvas.Top="30" Canvas.Left="{c:Binding Path=Floor*100}" Background="#3FD4B988"/>
+                                    </Canvas>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <ItemsControl ItemsSource="{Binding ChartTimeLineModels}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -264,11 +274,6 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <ItemsControl ItemsSource="{Binding VisualTimeLineModels}">
-                            <Behaviors:Interaction.Triggers>
-                                <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
-                                    <Behaviors:InvokeCommandAction Command="{Binding TimeLineLeftButtonClickedCommand}"/>
-                                </Behaviors:EventTrigger>
-                            </Behaviors:Interaction.Triggers>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Canvas>
@@ -281,7 +286,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Canvas>
-                                        <controls:TimeLineElementUI Ease="{Binding Ease}" Opacity="0.95" HorizontalAlignment="Left" VerticalAlignment="Top" IsSelected="{Binding IsSelected}" Height="35" Width="{c:Binding Path=Duration*100}" SelectedBrush="{Binding SelectedColor}" UnselectedBrush="{Binding UnselectedColor}" Text="{Binding Text}" Canvas.Left="{c:Binding Path=Floor*100}" Canvas.Top="{c:Binding Path=NumberTimeLine*40+32.5}">
+                                        <controls:TimeLineElementUI Ease="{Binding Ease}" HorizontalAlignment="Left" VerticalAlignment="Top" IsSelected="{Binding IsSelected}" Height="35" Width="{c:Binding Path=Duration*100}" SelectedBrush="{Binding SelectedColor}" UnselectedBrush="{Binding UnselectedColor}" Text="{Binding Text}" Canvas.Left="{c:Binding Path=Floor*100}" Canvas.Top="{c:Binding Path=NumberTimeLine*40+32.5}">
                                             <controls:TimeLineElementUI.InputBindings>
                                                 <MouseBinding Command="{Binding LeftButtonClickedCommand}" Gesture="LeftClick"/>
                                                 <MouseBinding Command="{Binding SelectCommand}" Gesture="Shift+LeftClick"/>
@@ -291,10 +296,32 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <Rectangle StrokeThickness="1" Visibility="{Binding SelectionBox.Visibility}" Fill="#1981CEFF" Canvas.Left="{Binding SelectionBox.CanvasLeft}" Canvas.Top="{Binding SelectionBox.CanvasTop}" Height="{Binding SelectionBox.Height}" Width="{Binding SelectionBox.Width}" Stroke="#3381CEFF"/>
                     </Canvas>
                 </ScrollViewer>
             </Grid>
         </Border>
-        <GridSplitter Background="Transparent" Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="10" Margin="0 -5"/>
+        <Border Margin="0 0 -200 0" CornerRadius="5" BorderThickness="2.5" Height="40" Width="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="2" Background="#FF1C1D21" BorderBrush="#FF1C1D21">
+            <TextBlock Text="Saved!" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#E5FFFFFF"/>
+            <Border.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=OnSaved}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Duration="0:0:1" AutoReverse="True" Storyboard.TargetProperty="Margin" From="0 0 -200 0" To="0 0 0 0">
+                                            <ThicknessAnimation.EasingFunction>
+                                                <BackEase EasingMode="EaseOut"/>
+                                            </ThicknessAnimation.EasingFunction>
+                                        </ThicknessAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
     </Grid>
 </Window>

@@ -47,8 +47,9 @@ namespace ADODesigner.ImageProcessing
                     r /= weightSum;
                     g /= weightSum;
                     b /= weightSum;
+                    a /= weightSum;
 
-                    RgbColor color = new() { R = (byte)r, G = (byte)g, B = (byte)b, A = 0 };
+                    RgbColor color = new() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a };
 
                     blurredImage.SetPixel(x, y, color);
                 }
