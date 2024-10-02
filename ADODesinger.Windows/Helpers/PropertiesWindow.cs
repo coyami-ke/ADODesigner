@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Runtime.CompilerServices;
-using NCalc;
 using System.Numerics;
 using System.Xml.Linq;
 using ADODesinger.Windows.ViewModels.Messages;

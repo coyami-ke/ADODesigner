@@ -1,7 +1,6 @@
 ﻿using ADODesigner.Converters;
 using ADODesigner.Models;
 using ADODesinger.Windows.ViewModels.Messages;
-using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
