@@ -30,6 +30,7 @@
         <KeyBinding Command="{Binding CopyTimeLineElementsCommand}" Key="C" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding CutTimeLineElementsCommand}" Key="X" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding PasteTimeLineElementsCommand}" Key="V" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding ChangeLanguageCommand}" Key="F8" Modifiers="Ctrl"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -42,31 +43,33 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="410"/>
         </Grid.ColumnDefinitions>
         <Border x:Name="BorderMoveWindow" MouseLeftButtonDown="BorderMoveWindow_MouseLeftButtonDown" Background="Transparent" Grid.ColumnSpan="3" Grid.Row="0"/>
         <Menu IsMainMenu="True" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="15 0">
-            <MenuItem Header="File" Background="#FF18191D">
-                <MenuItem Header="Open">
-                    <MenuItem Header="ADODesigner File..." InputGestureText="Ctrl+O" Command="{Binding OpenCommand}"/>
-                    <MenuItem Header="ADOFAI Level..." InputGestureText="Ctrl+Shift+O" Command="{Binding OpenAdofaiFileCommand}"/>
+            <MenuItem Header="{Binding Localization.File.File}" Background="#FF18191D">
+                <MenuItem Header="{Binding Localization.File.Open}">
+                    <MenuItem Header="{Binding Localization.File.ADODesignerFile}" InputGestureText="Ctrl+O" Command="{Binding OpenCommand}"/>
+                    <MenuItem Header="{Binding Localization.File.ADOFAILevel}" InputGestureText="Ctrl+Shift+O" Command="{Binding OpenAdofaiFileCommand}"/>
                 </MenuItem>
                 <Separator Background="#3FFFFFFF" Foreground="#3FFFFFFF"/>
-                <MenuItem Header="Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Save As..." Command="{Binding SaveAsCommand}" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="{Binding Localization.File.Save}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="{Binding Localization.File.SaveAs}" Command="{Binding SaveAsCommand}" InputGestureText="Ctrl+Shift+S"/>
             </MenuItem>
-            <MenuItem Header="Edit" Background="#FF18191D">
-                <MenuItem Header="Cut" Command="{Binding CutTimeLineElementsCommand}" InputGestureText="Ctrl+X"/>
-                <MenuItem Header="Paste" Command="{Binding PasteTimeLineElementsCommand}" InputGestureText="Ctrl+V"/>
-                <MenuItem Header="Copy" Command="{Binding CopyTimeLineElementsCommand}" InputGestureText="Ctrl+C"/>
-                <MenuItem Header="Dublicate" Command="{Binding TimeLineDublicateCommand}" InputGestureText="Ctrl+D"/>
-                <MenuItem Header="Delete" Command="{Binding TimeLineDeleteClickedCommand}" InputGestureText="Del"/>
+            <MenuItem Header="{Binding Localization.Editor.Edit}" Background="#FF18191D">
+                <MenuItem Header="{Binding Localization.Editor.Cut}" Command="{Binding CutTimeLineElementsCommand}" InputGestureText="Ctrl+X"/>
+                <MenuItem Header="{Binding Localization.Editor.Paste}" Command="{Binding PasteTimeLineElementsCommand}" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="{Binding Localization.Editor.Copy}" Command="{Binding CopyTimeLineElementsCommand}" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="{Binding Localization.Editor.Dublicate}" Command="{Binding TimeLineDublicateCommand}" InputGestureText="Ctrl+D"/>
+                <MenuItem Header="{Binding Localization.Editor.Delete}" Command="{Binding TimeLineDeleteClickedCommand}" InputGestureText="Del"/>
+                <Separator Background="#3FFFFFFF" Foreground="#3FFFFFFF"/>
+                <MenuItem Header="{Binding Localization.Editor.ChangeLanguage}" Command="{Binding ChangeLanguageCommand}" InputGestureText="Ctrl+F8"/>
             </MenuItem>
-            <MenuItem Header="Tools" Background="#FF18191D">
-                <MenuItem Header="Combine Parts..." Command="{Binding ShowCombinePartsCommand}"/>
+            <MenuItem Header="{Binding Localization.Editor.Tools}" Background="#FF18191D">
+                <MenuItem Header="{Binding Localization.Editor.CombinePartsTool}" Command="{Binding ShowCombinePartsCommand}"/>
             </MenuItem>
-            <MenuItem Header="Help" Background="#FF18191D">
-                <MenuItem Header="Guide..." Command="{Binding ShowGuideCommand}"/>
+            <MenuItem Header="{Binding Localization.Editor.Help}" Background="#FF18191D">
+                <MenuItem Header="{Binding Localization.Editor.Guide}" Command="{Binding ShowGuideCommand}"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -174,8 +177,10 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountActions, StringFormat=Actions: {0}}" FontSize="20" Foreground="#7FFFFFFF"/>
-                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountDecorations, StringFormat=Decorations: {0}}" FontSize="20" Foreground="#7FFFFFFF"/>
+                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding Localization.Editor.Actions}" FontSize="20" Foreground="#7FFFFFFF"/>
+                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountActions}" FontSize="20" Foreground="#7FFFFFFF"/>
+                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding Localization.Editor.Decorations}" FontSize="20" Foreground="#7FFFFFFF"/>
+                <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding CountDecorations}" FontSize="20" Foreground="#7FFFFFFF"/>
             </StackPanel>
         </Border>
         <Border Grid.Column="3" Grid.RowSpan="2"  Grid.Row="2" Margin="5 5 5 5" CornerRadius="10 10 0 0">
@@ -190,7 +195,7 @@
                 </Grid.RowDefinitions>
                 <Border CornerRadius="10 10 0 0" Grid.ColumnSpan="2" Background="#FF1C1D21">
                     <Grid>
-                        <TextBlock Text="Properties" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
+                        <TextBlock Text="{Binding Localization.Editor.Properties}" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
                     </Grid>
                 </Border>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="2">
@@ -207,22 +212,22 @@
                 <Border CornerRadius="10 10 0 0" Background="#FF1C1D21">
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Time Line" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
+                            <TextBlock Text="{Binding Localization.Editor.TimeLine}" FontSize="15" Margin="10 0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#BFFFFFFF"/>
                             <Menu VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="20 0">
-                                <MenuItem Header="Select" Background="#FF1D1E21">
-                                    <MenuItem Header="Select All" InputGestureText="Ctrl+A" Command="{Binding TimeLineSelectAllCommand}"/>
+                                <MenuItem Header="{Binding Localization.Editor.Select}" Background="#FF1D1E21">
+                                    <MenuItem Header="{Binding Localization.Editor.SelectAll}" InputGestureText="Ctrl+A" Command="{Binding TimeLineSelectAllCommand}"/>
                                 </MenuItem>
-                                <MenuItem Header="Add" Background="#FF1D1E21">
+                                <MenuItem Header="{Binding Localization.Editor.Add}" Background="#FF1D1E21">
                                     <MenuItem Header="Key Frame (Decoration)" Command="{Binding AddKeyFrameCommand}" InputGestureText="F3"/>
                                     <MenuItem Header="Balls Animation" Command="{Binding AddBallsAnimationCommand}" InputGestureText="F5"/>
                                     <MenuItem Header="Frame-By-Frame Animation (Images)" Command="{Binding AddFrameToFrameAnimationCommand}" InputGestureText="F6"/>
                                     <MenuItem Header="Cube Object" Command="{Binding AddCubeObjectCommand}" InputGestureText="F7"/>
                                 </MenuItem>
-                                <MenuItem Header="Import" Background="#FF1D1E21">
-                                    <MenuItem Header="Import From ADOFAI Level" Command="{Binding ImportFromAdofaiCommand}"/>
+                                <MenuItem Header="{Binding Localization.Editor.Import}" Background="#FF1D1E21">
+                                    <MenuItem Header="{Binding Localization.Import.ImportFromAdofaiLevel}" Command="{Binding ImportFromAdofaiCommand}"/>
                                 </MenuItem>
                             </Menu>
-                            <CheckBox Opacity="0.85" Content="AutoSet Time Line" IsChecked="{Binding TimeLineUseAutoTimeLine}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            <CheckBox Opacity="0.85" Content="{Binding Localization.Editor.AutoSetTimeLine}" IsChecked="{Binding TimeLineUseAutoTimeLine}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -286,10 +291,10 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Canvas>
-                                        <controls:TimeLineElementUI Ease="{Binding Ease}" HorizontalAlignment="Left" VerticalAlignment="Top" IsSelected="{Binding IsSelected}" Height="35" Width="{c:Binding Path=Duration*100}" SelectedBrush="{Binding SelectedColor}" UnselectedBrush="{Binding UnselectedColor}" Text="{Binding Text}" Canvas.Left="{c:Binding Path=Floor*100}" Canvas.Top="{c:Binding Path=NumberTimeLine*40+32.5}">
+                                        <controls:TimeLineElementUI Ease="{Binding Ease}" HorizontalAlignment="Left" VerticalAlignment="Top" IsSelected="{Binding IsSelected}" Height="35" Width="{c:Binding Path=Duration*100}" SelectedBrush="{Binding SelectedColor}" UnselectedBrush="{Binding UnselectedColor}" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{c:Binding Path=Floor*100}" Canvas.Top="{c:Binding Path=NumberTimeLine*40+32.5}">
                                             <controls:TimeLineElementUI.InputBindings>
-                                                <MouseBinding Command="{Binding LeftButtonClickedCommand}" Gesture="LeftClick"/>
-                                                <MouseBinding Command="{Binding SelectCommand}" Gesture="Shift+LeftClick"/>
+                                                <MouseBinding Command="{Binding SelectWithoutShiftCommand}" Gesture="LeftClick"/>
+                                                <MouseBinding Command="{Binding SelectWithShiftCommand}" Gesture="Shift+LeftClick"/>
                                             </controls:TimeLineElementUI.InputBindings>
                                         </controls:TimeLineElementUI>
                                     </Canvas>
@@ -302,7 +307,7 @@
             </Grid>
         </Border>
         <Border Margin="0 0 -200 0" CornerRadius="5" BorderThickness="2.5" Height="40" Width="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="4" Grid.Column="2" Background="#FF1C1D21" BorderBrush="#FF1C1D21">
-            <TextBlock Text="Saved!" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#E5FFFFFF"/>
+            <TextBlock Text="{Binding Localization.File.SavedMessage}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#E5FFFFFF"/>
             <Border.Style>
                 <Style>
                     <Style.Triggers>

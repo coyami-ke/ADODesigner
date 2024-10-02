@@ -1,5 +1,6 @@
 ﻿using ADODesigner.Converters;
 using ADODesigner.Models;
+using ADODesigner.Windows.Models.Localization;
 using ADODesinger.Windows.Models;
 using ADODesinger.Windows.Models.TimeLine;
 using ADODesinger.Windows.ViewModels.Messages;
@@ -19,6 +20,8 @@ namespace ADODesinger.Windows.ViewModels
 {
     public partial class ImportFromAdofaiViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ADODesignerLocalization localization = App.Localization;
         [ObservableProperty]
         private bool removeEventsFromAdofai;
         [ObservableProperty]

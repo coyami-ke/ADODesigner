@@ -4,6 +4,7 @@ using ADODesigner.Converters;
 using ADODesigner.Converters.Events;
 using ADODesigner.Windows.Helpers;
 using ADODesigner.Windows.Models;
+using ADODesigner.Windows.Models.Localization;
 using ADODesigner.Windows.Models.TimeLine;
 using ADODesigner.Windows.ViewModels;
 using ADODesigner.Windows.ViewModels.Messages;
@@ -45,8 +46,9 @@ namespace ADODesinger.Windows.ViewModels
     public partial class EditorViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ADODesignerMainSettings settings = new();
-
+        private EditorSettings settings = new();
+        [ObservableProperty]
+        private ADODesignerLocalization localization = new();
         [ObservableProperty]
         private ObservableCollection<TimeLineElementModel> timeLineElements = new();
         [ObservableProperty]
@@ -57,6 +59,13 @@ namespace ADODesinger.Windows.ViewModels
         private ObservableCollection<BookmarkTimeLine> tabNavigationEvents = new();
         [ObservableProperty]
         private TimeLineElementModel[]? copiedTimeLineElements;
+
+        [ObservableProperty]
+        private float timeLine_lengthPerDuration = 100;
+        [ObservableProperty]
+        private float timeLine_ContentOffsetY = 30;
+        [ObservableProperty]
+        private float timeLine_HeightElement = 40;
 
         [ObservableProperty]
         private float widthTimeLineCanvas;
@@ -128,6 +137,11 @@ namespace ADODesinger.Windows.ViewModels
             this.TimeLineElementsChanged += () =>
             {
                 this.IsTimeLineChanged = true;
+                foreach (var element in this.TimeLineElements.ToArray())
+                {
+                    element.Text = element.GetText();
+                    element.Ease = element.GetEase();
+                }
             };
 
             WeakReferenceMessenger.Default.Register<SaveAsProjectMessage>(this, (sender, e) =>
@@ -142,7 +156,15 @@ namespace ADODesinger.Windows.ViewModels
             {
                 this.TimeLineElementsChanged?.Invoke();
             });
+
+#if DEBUG
+            this.Settings = new();
+            this.Localization = new();
+#else
+            LoadSettings();
+#endif
         }
+
         public void UpdateVisualTimeLine()
         {
             ChartTimeLineModels.Clear();
@@ -150,19 +172,19 @@ namespace ADODesinger.Windows.ViewModels
             for (int i = 0; i < CustomLevelParser.ADOFAILevel.AngleData.Count; i++)
             {
                 ChartTimeLineModel model = new();
-                model.MarginLine = new(i * 100, 0, 0, 0);
+                model.MarginLine = new(i * this.TimeLine_lengthPerDuration, 0, 0, 0);
                 model.Number = i;
-                model.MarginText = new(i * 100 + 5, 0, 0, 0);
+                model.MarginText = new(i * this.TimeLine_lengthPerDuration + 5, 0, 0, 0);
                 if (CustomLevelParser.ADOFAILevel.AngleData[i] != 999) model.TextAngle = CustomLevelParser.ADOFAILevel.AngleData[i].ToString() + "f";
                 else model.TextAngle = "M";
-                model.MarginTextAngle = new(i * 100 + 50, 0, 0, 0);
+                model.MarginTextAngle = new(i * this.TimeLine_lengthPerDuration + 50, 0, 0, 0);
                 ChartTimeLineModels.Add(model);
             }
 
             VisualTimeLineModel firstModel = new();
             firstModel.Margin = new(0);
             firstModel.Height = 30;
-            firstModel.Width = CustomLevelParser.ADOFAILevel.AngleData.Count * 100 + 1600;
+            firstModel.Width = CustomLevelParser.ADOFAILevel.AngleData.Count * this.TimeLine_lengthPerDuration + 1600;
             firstModel.BorderBrush = Brushes.Transparent;
             VisualTimeLineModels.Add(firstModel);
             for (int i = 0; i < 32; i++)
@@ -179,8 +201,8 @@ namespace ADODesinger.Windows.ViewModels
 
                 VisualTimeLineModels.Add(model);
             }
-            WidthTimeLineCanvas = CustomLevelParser.ADOFAILevel.AngleData.Count * 100 + 1600;
-            HeightTimeLineCanvas = 32 * 40 + 30;
+            WidthTimeLineCanvas = CustomLevelParser.ADOFAILevel.AngleData.Count * this.TimeLine_lengthPerDuration + 1600;
+            HeightTimeLineCanvas = 32 * 40 + this.TimeLine_ContentOffsetY;
             this.CountActions = this.CustomLevelParser.ADOFAILevel.Actions.Count;
             this.CountDecorations = this.CustomLevelParser.ADOFAILevel.Decorations.Count;
 
@@ -202,6 +224,84 @@ namespace ADODesinger.Windows.ViewModels
                 }
             }
             this.EditorNavigation = new(this.CustomLevelParser.ADOFAILevel);
+
+            foreach (var element in this.TimeLineElements.ToArray())
+            {
+                element.Text = element.GetText();
+            }
+        }
+        public void LoadSettings()
+        {
+            string settingsPath = EditorSettings.PATH_TO_SETTINGS;
+            string? directory = Path.GetDirectoryName(settingsPath);
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (!File.Exists(settingsPath))
+            {
+                using (FileStream fs = File.Create(settingsPath)) 
+                {
+                    fs.Flush(); 
+                }
+                this.Settings = new EditorSettings(); 
+            }
+            else
+            {
+                string content = File.ReadAllText(settingsPath);
+                EditorSettings? settings = EditorSettings.Parse(content);
+                this.Settings = settings ?? new EditorSettings();
+            }
+
+            LoadLanguage();
+        }
+        public void LoadLanguage()
+        {
+            switch (this.Settings.Language)
+            {
+                case SupportedLanguages.English:
+                    this.Localization = new();
+                    break;
+                case SupportedLanguages.Korean:
+                    if (!File.Exists(ProgramDirectoriesConst.LOCALIZATION + "kr.json"))
+                    {
+                        this.Localization = new();
+                        File.Create(ProgramDirectoriesConst.LOCALIZATION + "kr.json").Dispose();
+                        File.WriteAllText(ProgramDirectoriesConst.LOCALIZATION + "kr.json", this.Localization.ToJson());
+                    }
+                    var lang = ADODesignerLocalization.Parse(File.ReadAllText(ProgramDirectoriesConst.LOCALIZATION + "kr.json"));
+                    if (lang is null) this.Localization = new();
+                    else this.Localization = lang;
+
+                    App.Localization = this.Localization;
+                    break;
+            }
+        }
+        [RelayCommand]
+        public void ChangeLanguage()
+        {
+            if (this.IsTimeLineChanged)
+            {
+                var result = CustomMessageBox.Show(this.Localization.Messages.LevelIsNotSavedText, this.Localization.Messages.LevelIsNotSaved, CustomMessageBoxButton.YesNoCancel);
+                if (result == CustomMessageBoxResult.Yes)
+                {
+                    if (this.Settings.Language == SupportedLanguages.English) this.Settings.Language = SupportedLanguages.Korean;
+                    else if (this.Settings.Language == SupportedLanguages.Korean) this.Settings.Language = SupportedLanguages.English;
+                    this.Settings.SaveToFile();
+                    Process.GetCurrentProcess().Start();
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                if (this.Settings.Language == SupportedLanguages.English) this.Settings.Language = SupportedLanguages.Korean;
+                else if (this.Settings.Language == SupportedLanguages.Korean) this.Settings.Language = SupportedLanguages.English;
+                this.Settings.SaveToFile();
+                Process.Start("ADODesigner Windows.exe");
+                Environment.Exit(0);
+            }
         }
 
         [RelayCommand]
@@ -700,14 +800,16 @@ namespace ADODesinger.Windows.ViewModels
         {
             if (this.IsTimeLineChanged)
             {
-                var result = CustomMessageBox.Show("Your level is not saved. Do you want to exit without saving?", "Level is not saved", CustomMessageBoxButton.YesNoCancel);
+                var result = CustomMessageBox.Show(this.Localization.Messages.LevelIsNotSavedText, this.Localization.Messages.LevelIsNotSaved, CustomMessageBoxButton.YesNoCancel);
                 if (result == CustomMessageBoxResult.Yes)
                 {
                     e.Cancel = false;
+                    this.Settings.SaveToFile();
                     Environment.Exit(0);
                 }
                 e.Cancel = true;
             }
+            else this.Settings.SaveToFile();
         }
         public void UnselectAllTimeLineElements()
         {
@@ -716,6 +818,11 @@ namespace ADODesinger.Windows.ViewModels
                  if (e.IsSelected) e.UnselectWithoutUpdateProperties();
             }
             this.UpdatePropertiesWindow();
+            foreach (var element in this.TimeLineElements.ToArray())
+            {
+                element.Text = element.GetText();
+                element.Ease = element.GetEase();
+            }
         }
         public bool IsTLElementsSameType<T>() where T : TimeLineElementModel
         {
@@ -729,10 +836,10 @@ namespace ADODesinger.Windows.ViewModels
         public int GetCountSelectedTLElements()
         {
             int count = 0;
-            Parallel.ForEach(this.TimeLineElements, (e) =>
+            foreach (var e in this.TimeLineElements.ToArray())
             {
                 if (e.IsSelected) count++;
-            });
+            }
             return count;
         }
         public int GetCursorFloor()

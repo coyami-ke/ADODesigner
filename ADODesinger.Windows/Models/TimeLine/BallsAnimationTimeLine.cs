@@ -64,24 +64,19 @@ namespace ADODesinger.Windows.Models.TimeLine
         }
         private void UpdateKeyFrame()
         {
-            this.Text = this.Animation.Tag + " (" + this.Animation.Ease + ") ";
-            if (this.Animation.AngleOffset != 0)
-            {
-                this.Text += "(" + this.Animation.AngleOffset + "f)";
-            }
             this.Ease = this.Animation.Ease;
-        }
-        protected override void OnSelected()
-        {
-            UpdateKeyFrame();
-        }
-        protected override void OnUnselected()
-        {
-            UpdateKeyFrame();
         }
         public override object? GetEditableObject()
         {
             return this.Animation;
+        }
+        public override string GetText()
+        {
+            return $"{this.Animation.Tag} ({this.Animation.AngleOffset.ToString()}) {this.Animation.Ease}";
+        }
+        public override Ease GetEase()
+        {
+            return this.Animation.Ease;
         }
     }
 }

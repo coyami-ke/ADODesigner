@@ -1,4 +1,5 @@
-﻿using ADODesinger.Windows.ViewModels.Messages;
+﻿using ADODesigner.Windows.Models.Localization;
+using ADODesinger.Windows.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -15,6 +16,8 @@ namespace ADODesinger.Windows.ViewModels
 {
     public partial class SaveAsProjectViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ADODesignerLocalization localization = App.Localization;
         [ObservableProperty]
         private string pathToADODesignerFile = "";
         [ObservableProperty]

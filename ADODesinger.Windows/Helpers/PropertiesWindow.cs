@@ -21,6 +21,8 @@ using System.Windows.Media.Effects;
 using ADODesigner.Windows.ViewModels.Messages;
 using WPFColorLib;
 using ADODesigner.Windows.Helpers;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
 
 namespace ADODesinger.Windows.Helpers
 {
@@ -33,7 +35,7 @@ namespace ADODesinger.Windows.Helpers
             if (element.IsSupportDuration)
             {
                 TextBlock blockDuration = CreateBaseTextBlock();
-                blockDuration.Text = "Duration";
+                blockDuration.Text = App.Localization.TimeLineElements.GetLocalization("Duration");
                 TextBox boxDuration = CreateBaseTextBox();
                 boxDuration.Text = element.Duration.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 boxDuration.LostFocus += (sender, e) =>
@@ -61,6 +63,11 @@ namespace ADODesinger.Windows.Helpers
                 {
                     if (att.AddToWindowProperties == false) continue;
                     if (!string.IsNullOrEmpty(att.Name)) name = att.Name;
+                    string? nameLocalization = App.Localization.TimeLineElements.GetLocalization(att.LocalizationProperty);
+                    if (nameLocalization is not null)
+                    {
+                        name = nameLocalization;
+                    }
                 }
                 else name = prop.Name;
 
@@ -99,14 +106,40 @@ namespace ADODesinger.Windows.Helpers
                                 color = Color.FromArgb(255, 255, 255, 255); 
                             }
 
-                            Dsafa.WpfColorPicker.ColorPickerDialog dialog = new(color);
+                            WPFColorLib.SelectColorDlg dialog = new(color);
                             var result = dialog.ShowDialog();
                             if (result.HasValue && result.Value)
                             {
                                 WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
-                                Color selectedColor = dialog.Color;
+                                Color selectedColor = dialog.SelectedColor;
                                 box.Text = HexColorConverter.ColorToHex(selectedColor);
-                                str = HexColorConverter.ColorToHex(selectedColor); 
+                                str = HexColorConverter.ColorToHex(selectedColor);
+                            }
+                        };
+                        border = CreateBorder(new UIElement[] { block, box, button, });
+                    }
+                    else if (att is not null && att.IsImage)
+                    {
+                        Button button = new()
+                        {
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Height = 35,
+                            Width = 35,
+                            Content = "...",
+                            Margin = new(312.5f, 0, 0, 0),
+                        };
+                        button.Click += (sender, e) =>
+                        {
+                            CommonOpenFileDialog dialog = new("Select Image");
+                            dialog.Filters.Add(new("PNG", ".png"));
+                            dialog.Filters.Add(new("JPG", ".jpg"));
+                            dialog.Filters.Add(new("JPEG", ".jpeg"));
+                            var result = dialog.ShowDialog();
+                            if (result == CommonFileDialogResult.Ok)
+                            {
+                                WeakReferenceMessenger.Default.Send(new TimeLineElementChangedMessage(element));
+                                box.Text = Path.GetFileName(dialog.FileName);
                             }
                         };
                         border = CreateBorder(new UIElement[] { block, box, button, });

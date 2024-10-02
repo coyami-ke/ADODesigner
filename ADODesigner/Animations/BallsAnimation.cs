@@ -12,34 +12,45 @@ namespace ADODesigner.Animations
 {
     public partial class BallsAnimation : ObservableObject
     {
+        [UsageWindowProperties(LocalizationProperty = "Tag")]
         public string Tag { get; set; } = "";
+        [UsageWindowProperties(LocalizationProperty = "Count")]
         public int Count { get; set; }
-
+        [UsageWindowProperties(Name = "")]
         public bool UsePosition { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "Position")]
         public Vector2 PositionOffset { get; set; }
-        [UsageWindowProperties(Name = "Addable Position")]
+        [UsageWindowProperties(LocalizationProperty = "AddablePosition")]
         public Vector2 PositionOffsetPerDeco { get; set; } = new(-1, 0);
-
+        [UsageWindowProperties(Name = "")]
         public bool UsePivotOffset { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "PivotOffset")]
         public Vector2 PivotOffset { get; set; }
-
+        [UsageWindowProperties(Name = "")]
         public bool UseRotation { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "Rotation")]
         public float Rotation { get; set; }
-
+        [UsageWindowProperties(Name = "")]
         public bool UseScale { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "Scale")]
         public Vector2 Scale { get; set; } = new(555);
+        [UsageWindowProperties(LocalizationProperty = "ScaleDifference")]
         public Vector2 ScaleDifference { get; set; } = new(0);
-
+        [UsageWindowProperties(Name = "")]
         public bool UseOpacity { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "Opacity")]
         public float Opacity { get; set; } = 100;
+        [UsageWindowProperties(LocalizationProperty = "OpacityDifference")]
         public float OpacityDifference { get; set; } = 0;
-
+        [UsageWindowProperties(LocalizationProperty = "Ease")]
         public Ease Ease { get; set; } = Ease.Linear;
         [UsageWindowProperties(AddToWindowProperties = false)]
         public float Duration { get; set; } = 1;
-        [UsageWindowProperties(Name = "Addable Angle")]
+        [UsageWindowProperties(Name = "AddableAngle")]
         public float CornerAnglePerDeco { get; set; } = 90;
+        [UsageWindowProperties(LocalizationProperty = "AngleOffset")]
         public float AngleOffset { get; set; } = 0;
+        [UsageWindowProperties(LocalizationProperty = "EventTag")]
         public string EventTag { get; set; } = "";
         [UsageWindowProperties(AddToWindowProperties = false)]
         public int Floor { get; set; } = 1;

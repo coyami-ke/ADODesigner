@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ADODesinger.Windows.ViewModels"
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        Title="ADODesigner - Import" Height="500" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619">
+        Title="{Binding Localization.Import.Import , StringFormat=ADODesigner - {0}}" Height="500" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619">
     <Window.DataContext>
         <local:ImportFromAdofaiViewModel/>
     </Window.DataContext>
@@ -16,7 +16,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Border x:Name="BorderMoveWindow" MouseLeftButtonDown="BorderMoveWindow_MouseLeftButtonDown"  Background="Transparent" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2"/>
-        <TextBlock Text="ADODesigner - Import" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#CCFFFFFF" Margin="10" FontSize="15"/>
+        <TextBlock Text="{Binding Localization.Import.Import , StringFormat=ADODesigner - {0}}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#CCFFFFFF" Margin="10" FontSize="15"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,0,0">
             <StackPanel.Resources>
                 <Storyboard x:Key="AnimationButtonEnter">
@@ -74,12 +74,12 @@
         </StackPanel>
         <Border Grid.Row="1" Background="#02FFFFFF">
             <Grid>
-                <TextBlock Text="First Floor" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#E5FFFFFF" Margin="20" FontSize="15"/>
+                <TextBlock Text="{Binding Localization.Import.FirstFloor}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#E5FFFFFF" Margin="20" FontSize="15"/>
                 <TextBox Text="{Binding FirstFloor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Margin="120 15" Width="300"/>
-                <TextBlock Text="Second Floor" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#E5FFFFFF" Margin="20,68,0,0" FontSize="15"/>
+                <TextBlock Text="{Binding Localization.Import.SecondFloor}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#E5FFFFFF" Margin="20,68,0,0" FontSize="15"/>
                 <TextBox Text="{Binding SecondFloor}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Margin="120,60,0,0" Width="300"/>
-                <CheckBox IsChecked="{Binding ImportMoveDecoration}" Content="Import ''Move Decoration''" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,140,0,0" Foreground="#E5FFFFFF"/>
-                <Button Content="Import" Height="40" Width="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Command="{Binding ImportCommand}">
+                <CheckBox IsChecked="{Binding ImportMoveDecoration}" Content="{Binding Localization.Import.ImportMoveDecorations}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,140,0,0" Foreground="#E5FFFFFF"/>
+                <Button Content="{Binding Localization.Import.Import}" Height="40" Width="200" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Command="{Binding ImportCommand}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:CallMethodAction MethodName="Close"
@@ -89,7 +89,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <CheckBox IsChecked="{Binding RemoveEventsFromAdofai}" Content="Delete Detected Events" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,105,0,0" Foreground="#E5FFFFFF"/>
+                <CheckBox IsChecked="{Binding RemoveEventsFromAdofai}" Content="{Binding Localization.Import.RemoveDetectedEvents}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,105,0,0" Foreground="#E5FFFFFF"/>
             </Grid>
         </Border>
     </Grid>

@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADODesigner.Windows.Views"
+        xmlns:local="clr-namespace:ADODesigner.Windows.ViewModels"
         mc:Ignorable="d"
         Title="ADODesigner Guide" Height="500" Width="1200" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF18191C" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:GuideViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Top"/>
@@ -106,99 +109,40 @@
         <TextBlock IsHitTestVisible="False" Text="ADODesigner Guide" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" FontSize="15" Foreground="#CCFFFFFF"/>
         <Border Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" Margin="2.5" Background="#02FFFFFF">
             <TabControl TabStripPlacement="Left">
-                <TabItem IsSelected="True" Header="Start" Width="200" Height="50">
+                <TabItem IsSelected="True" Header="{Binding Localization.Guide.Start}" Width="200" Height="50">
                     <Grid Background="#05FFFFFF">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="How to get started"/>
+                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Localization.Guide.Start_HowToGetStarted}"/>
                         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
                             <Grid>
-                                <TextBlock Margin="20 0" FontSize="15" Grid.Row="1" Text="To get started, open ADOFAI level using the File > Open ADOFAI level menu or by pressing" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <StackPanel Margin="625 -5 0 0" Orientation="Horizontal" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Border Width="60" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="Control" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                    <TextBlock Text="+" Margin="0 5"/>
-                                    <Border Width="60" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="Shift" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                    <TextBlock Text="+" Margin="0 5"/>
-                                    <Border Width="30" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="O" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
+                                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" Margin="20 0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Localization.Guide.Start_OpenAdofai}"/>
                                 <Image Source="../Assets/guide_open_adofai.png" Grid.Row="1" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 30"/>
-                                <TextBlock Margin="20 170" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Save ADOFAI level using the File > Save or by pressing"/>
-                                <StackPanel Margin="385 165 0 0" Orientation="Horizontal" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Border Width="60" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="Control" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                    <TextBlock Text="+" Margin="0 5"/>
-                                    <Border Width="30" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="S" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
+                                <TextBlock Margin="20 170" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Localization.Guide.Start_Save}"/>
+                                
                                 <Line X1="15" X2="775" Y1="165" Y2="165" StrokeThickness="1" Stroke="#19FFFFFF"/>
                                 <Image Source="../Assets/guide_save_adofai.png" Grid.Row="1" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 200 0 0"/>
                                 <Line X1="15" X2="775" Y1="330" Y2="330" StrokeThickness="1" Stroke="#19FFFFFF"/>
-                                <TextBlock Margin="20 335 0 0" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="So you can open ADODesigner File using the File > Open ADODesigner File or by pressing"/>
-                                <StackPanel Margin="625 330 0 0" Orientation="Horizontal" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Border Width="60" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="Control" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                    <TextBlock Text="+" Margin="0 5"/>
-                                    <Border Width="30" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="O" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
+                                <TextBlock Margin="20 335 0 0" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Localization.Guide.Start_OpenAdod}"/>
                                 <Image Source="../Assets/guide_open_adodesigner.png" Grid.Row="1" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 365 0 0"/>
                             </Grid>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem IsSelected="False" Header="Frame-By-Frame animation" Width="200" Height="50">
+                <TabItem IsSelected="False" Header="{Binding Localization.Guide.FrameByFrame}" Width="200" Height="50">
                     <Grid Background="#05FFFFFF">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Frame-By-Frame Animation"/>
+                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Localization.Guide.FrameByFrame}"/>
                         <ScrollViewer Grid.Row="1">
                             <Grid>
-                                <TextBlock TextWrapping="Wrap" Margin="20 0" FontSize="15" Grid.Row="1" Text="Frame animation is a constant change of image of the decoration. To use it, add it to the timeline using the menu Add > Frame-by-Frame Animation or use the hotkey" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <StackPanel Margin="215 20 0 0" Orientation="Horizontal" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Border Width="30" CornerRadius="5" Background="#05FFFFFF">
-                                        <Grid>
-                                            <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
-                                            <TextBlock Text="F6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
+                                <TextBlock TextWrapping="Wrap" Margin="20 0" FontSize="15" Grid.Row="1" Text="{Binding Localization.Guide.FrameByFrame_Description}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <Line X1="15" X2="775" Y1="50" Y2="50" StrokeThickness="1" Stroke="#19FFFFFF"/>
-                                <TextBlock TextWrapping="Wrap" Margin="20 55" FontSize="20" Grid.Row="1" Text="Example:" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Margin="20 55" FontSize="20" Grid.Row="1" Text="{Binding Localization.Guide.FrameByFrame_Example}" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <Border Height="250" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 85 0 0" Background="#05FFFFFF">
                                     <Image Source="../Assets/guide_frame_by_frame_example/video1.png">
                                         <Image.Triggers>
@@ -256,34 +200,96 @@
                                 </Border>
                                 <Image Source="../Assets/guide_frame_by_frame_properties.png" Height="250" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290 85 0 0"/>
                                 <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="560 95 0 0">
-                                    <Run Text="* Where"/>
+                                    <Run Text="{Binding Localization.Guide.FrameByFrame_n1}"/>
                                     <Run Text=" {n}" FontStyle="Italic"/>
-                                    <Run Text="is the frame number (i.e. video1, video2, ...)                   "/>
-                                    <Run Text="* With each frame the angle offset is shifted according to a formula similar to:"/>
+                                    <Run Text="{Binding Localization.Guide.FrameByFrame_n2}"/>
+                                    <Run Text="{Binding Localization.Guide.FrameByFrame_Formula}"/>
                                     <Run FontStyle="Italic" Text="Addable angle * n + Angle Offset"/>
                                 </TextBlock>
                             </Grid>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem IsSelected="False" Header="Combine Parts" Width="200" Height="50">
+                <TabItem IsSelected="False" Header="{Binding Localization.Guide.CombineParts}" Width="200" Height="50">
                     <Grid Background="#05FFFFFF">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="Tool - Combine Parts"/>
+                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding Localization.Guide.CombineParts_Tool}"/>
                         <ScrollViewer Grid.Row="1">
                             <Grid>
-                                <TextBlock Margin="20 0" Text="The tool was created to make collaboration easier. You can open this tool using the menu: Tools > Combine Parts."/>
+                                <TextBlock Margin="20 0" Text="{Binding Localization.Guide.CombineParts_Description}"/>
                                 <Line X1="15" X2="775" Y1="30" Y2="30" StrokeThickness="1" Stroke="#19FFFFFF"/>
-                                <TextBlock Margin="20 35" FontSize="20" Text="How to use" FontWeight="Bold"/>
-                                <TextBlock Margin="20 65" Text="  1) Select a chart using the button [...]"/>
+                                <TextBlock Margin="20 35" FontSize="20" Text="{Binding Localization.Guide.CombineParts_HowToUse}" FontWeight="Bold"/>
+                                <TextBlock Margin="20 65" Text="{Binding Localization.Guide.CombineParts_Action1}"/>
                                 <Image Source="../Assets/guide_select_chart.png" Width="600" Margin="30 95"/>
-                                <TextBlock Margin="20 185" Text="  2) Add parts with effects:"/>
+                                <TextBlock Margin="20 185" Text="{Binding Localization.Guide.CombineParts_Action2}"/>
                                 <Image Source="../Assets/guide_add_part.png" Width="250" Margin="30 215 0 0"/>
-                                <TextBlock Margin="20 345 0 0" Text="  3) So you can combine it using [Combine]"/>
-                                <TextBlock Margin="20 370 0 0" Text="*Warning! Only effect events are added to the original chart. Angle and gameplay data are not added." Foreground="#B2FF7C7C"/>
+                                <TextBlock Margin="20 345 0 0" Text="{Binding Localization.Guide.CombineParts_Combine}"/>
+                                <TextBlock Margin="20 370 0 0" Text="{Binding Localization.Guide.CombineParts_Warning}" Foreground="#B2FF7C7C"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem IsSelected="False" Header="{Binding Localization.Guide.TimeLineHotKeys}" Width="200" Height="50">
+                    <Grid Background="#05FFFFFF">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="10,0,0,0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding Localization.Guide.TimeLineHotKeys}"/>
+                        <ScrollViewer Grid.Row="1">
+                            <Grid>
+                                <Border Margin="10" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="W" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 15" Text="{Binding Localization.Guide.TimeLineHotKeys_W}"/>
+                                <Border Margin="10 50" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="S" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 55" Text="{Binding Localization.Guide.TimeLineHotKeys_S}"/>
+                                <Border Margin="10 90" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 95" Text="{Binding Localization.Guide.TimeLineHotKeys_A}"/>
+                                <Border Margin="10 130" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="D" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 135" Text="{Binding Localization.Guide.TimeLineHotKeys_D}"/>
+                                <Border Margin="10 170" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="Q" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 175" Text="{Binding Localization.Guide.TimeLineHotKeys_Q}"/>
+                                <Border Margin="10 210" Height="30" Width="30" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="E" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="50 215" Text="{Binding Localization.Guide.TimeLineHotKeys_E}"/>
+                                <Border Margin="10 250" Height="30" Width="160" CornerRadius="5" Background="#05FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Border Height="3" VerticalAlignment="Bottom" CornerRadius="0 0 5 5" Background="#05FFFFFF"/>
+                                        <TextBlock Text="Middle Button Mouse" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Margin="180 255" Text="{Binding Localization.Guide.TimeLineHotKeys_MBM}"/>
                             </Grid>
                         </ScrollViewer>
                     </Grid>

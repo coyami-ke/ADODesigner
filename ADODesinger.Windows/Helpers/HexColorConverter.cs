@@ -12,7 +12,7 @@ namespace ADODesigner.Windows.Helpers
 {
     public static class HexColorConverter
     {
-        private static readonly Regex RegexHexRGB = new Regex(@"^#?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$", RegexOptions.Compiled);
+        private static readonly Regex RegexHexRGB = new(@"^#?([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$", RegexOptions.Compiled);
 
         public static Color HexToColor(string hex)
         {

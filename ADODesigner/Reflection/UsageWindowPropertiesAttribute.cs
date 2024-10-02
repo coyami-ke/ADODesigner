@@ -14,5 +14,7 @@ namespace ADODesigner.Reflection
         public string Category { get; set; } = "";
         public bool CanDisableProperties { get; set; } = false;
         public bool IsColor { get; set; } = false;
+        public bool IsImage { get; set; } = false;
+        public string? LocalizationProperty { get; set; } = null;
     }
 }

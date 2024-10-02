@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ADODesinger.Windows.ViewModels"
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        Title="ADODesigner - Save As" Height="300" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
+        Title="{Binding Localization.File.SaveAs, StringFormat=ADODesigner - {0}}" Height="300" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
     <Window.DataContext>
         <local:SaveAsProjectViewModel/>
     </Window.DataContext>
@@ -76,14 +76,14 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <TextBlock IsHitTestVisible="True" Text="ADODesigner - Save As" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
-        <TextBox Text="{Binding PathToADOFAILevel}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="350" Margin="160,30,0,0" Grid.ColumnSpan="2"/>
-        <Button Command="{Binding SelectADOFAILevelCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,29,0,0" Grid.Column="1"/>
-        <TextBlock Text="ADOFAI Level" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0" Foreground="#E5FFFFFF"/>
-        <TextBox Text="{Binding PathToADODesignerFile}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="350" Margin="160,0,0,0" Grid.ColumnSpan="2"/>
-        <TextBlock Text="ADODesigner Project" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#E5FFFFFF"/>
-        <Button Command="{Binding SelectADODesignerFileCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Grid.Column="1"/>
-        <Button Content="Save" Command="{Binding EnterCommand}" Height="40" Width="240" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="450,0,0,0" Grid.Row="2" Grid.ColumnSpan="2">
+        <TextBlock IsHitTestVisible="False" Text="{Binding Localization.File.SaveAs, StringFormat=ADODesigner - {0}}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
+        <TextBox Text="{Binding PathToADOFAILevel}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="350" Margin="205,30,0,0" Grid.ColumnSpan="2"/>
+        <Button Command="{Binding SelectADOFAILevelCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,30,0,0" Grid.Column="1"/>
+        <TextBlock Text="{Binding Localization.File.SaveAsAdofai}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0" Foreground="#E5FFFFFF"/>
+        <TextBox Text="{Binding PathToADODesignerFile}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="350" Margin="205,0,0,0" Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding Localization.File.SaveAsAdod}" FontSize="15" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#E5FFFFFF"/>
+        <Button Command="{Binding SelectADODesignerFileCommand}" Content="..." Height="40" Width="40" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="80,0,0,0" Grid.Column="1"/>
+        <Button Content="{Binding Localization.File.Save}" Command="{Binding EnterCommand}" Height="40" Width="240" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="450,0,0,0" Grid.Row="2" Grid.ColumnSpan="2">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:CallMethodAction MethodName="Close"

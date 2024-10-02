@@ -61,7 +61,6 @@ namespace ADODesinger.Windows.Models
         public void Select()
         {
             IsSelected = true;
-            OnSelected();
             WeakReferenceMessenger.Default.Send(new NeedChangePropertiesWindow(this));
         }
         [RelayCommand]
@@ -69,7 +68,6 @@ namespace ADODesinger.Windows.Models
         public void Unselect()
         {
             IsSelected = false;
-            OnUnselected();
             WeakReferenceMessenger.Default.Send(new NeedChangePropertiesWindow(this));
         }
         [RelayCommand]
@@ -77,44 +75,26 @@ namespace ADODesinger.Windows.Models
         public void UnselectWithoutUpdateProperties()
         {
             IsSelected = false;
-            OnUnselected();
         }
 
         [RelayCommand]
         [property: JsonIgnore]
-        public void SelectCtrl()
+        public void SelectWithShift()
         {
-            IsSelected = true;
-            OnSelected();
+            this.Select();
         }
-
         [RelayCommand]
         [property: JsonIgnore]
-        private void OnLeftButtonClicked()
+        public void SelectWithoutShift()
         {
             WeakReferenceMessenger.Default.Send(new NeedUnselectElementsMessage(this));
-            Select();
-        }
-        [RelayCommand]
-        [property: JsonIgnore]
-        private void OnMouseDown(object args)
-        {
-            MouseEventArgs e = (MouseEventArgs)args;
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                WeakReferenceMessenger.Default.Send(new NeedUnselectElementsMessage(this));
-                Select();
-            }
-            else if (e.MiddleButton == MouseButtonState.Pressed)
-            {
-                Select();
-            }
+            this.Select();
         }
         public virtual object? GetEditableObject()
         {
             return null;
         }
-        protected virtual void OnSelected() { }
-        protected virtual void OnUnselected() { }
+        public virtual string GetText() { return ""; }
+        public virtual Ease GetEase() { return Ease.Linear; }
     }
 }

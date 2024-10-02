@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADODesigner.Windows.ViewModels"
         mc:Ignorable="d"
-        Title="ADODesigner - Combine Parts" Height="600" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
+        Title="{Binding Localization.CombineParts.CombineParts, StringFormat=ADODesigner - {0}}" Height="600" Width="700" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF151619" ResizeMode="NoResize">
     <Window.DataContext>
         <local:CombinePartsViewModel/>
     </Window.DataContext>
@@ -77,21 +77,21 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <TextBlock IsHitTestVisible="False" Text="ADODesigner - Combine Parts" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
+        <TextBlock IsHitTestVisible="False" Text="{Binding Localization.CombineParts.CombineParts, StringFormat=ADODesigner - {0}}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock Text="Chart (Gameplay)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" FontSize="15" Foreground="#CCFFFFFF"/>
+            <TextBlock Text="{Binding Localization.CombineParts.Chart}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" FontSize="15" Foreground="#CCFFFFFF"/>
             <TextBox Text="{Binding PathToChart}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="482.5" FontSize="15"/>
             <Button Height="40" Width="40" Content="..." Margin="10" Command="{Binding OpenChartCommand}"/>
         </StackPanel>
         <ListBox Grid.Row="3" Grid.Column="0" Background="{x:Null}" ItemsSource="{Binding Parts}" SelectedItem="{Binding SelectedPart}" BorderBrush="#19FFFFFF" Foreground="#CCFFFFFF" BorderThickness="1" FontSize="15" Margin="2.5 0 5 5"/>
         <Border Grid.Row="3" Grid.Column="1" Margin="2.5 0 5 5" BorderBrush="#19FFFFFF" BorderThickness="1">
             <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
-                <Button Content="Add a part..." Height="35" BorderThickness="1" Margin="5 5" FontSize="15" Command="{Binding AddPartCommand}"/>
-                <Button Content="Remove" Height="35" BorderThickness="1" Margin="5 -2.5" FontSize="15" Command="{Binding RemovePartCommand}"/>
+                <Button Content="{Binding Localization.CombineParts.AddPart}" Height="35" BorderThickness="1" Margin="5 5" FontSize="15" Command="{Binding AddPartCommand}"/>
+                <Button Content="{Binding Localization.CombineParts.Remove}" Height="35" BorderThickness="1" Margin="5 -2.5" FontSize="15" Command="{Binding RemovePartCommand}"/>
             </StackPanel>
         </Border>
         <Line X1="0" X2="700" Y1="5" Y2="5" Grid.Row="2" Grid.ColumnSpan="2" StrokeThickness="1" Stroke="#19FFFFFF"/>
 
-        <Button Content="Combine" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="240" Margin="10" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding CombinePartsCommand}"/>
+        <Button Content="{Binding Localization.CombineParts.Combine}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="240" Margin="10" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding CombinePartsCommand}"/>
     </Grid>
 </Window>

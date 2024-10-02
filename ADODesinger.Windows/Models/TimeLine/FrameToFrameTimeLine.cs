@@ -21,13 +21,12 @@ namespace ADODesigner.Windows.Models.TimeLine
         {
             this.SelectedColor = new SolidColorBrush(new Color() { R = 206, G = 222, B = 189, A = 255 });
             this.UnselectedColor = new SolidColorBrush(new Color() { R = 148, G = 169, B = 122, A = 255 });
-            this.Duration = 1;
+            this.Duration = 0;
             this.Floor = 1;
             this.Text = "Frame To Frame Animation";
             this.SaveID = "frameToFrameAnimations";
             this.Select();
             this.IsSupportDuration = false;
-            this.Duration = 1;
         }
 
         public override JsonObject[] GetJsonActions()
@@ -68,17 +67,13 @@ namespace ADODesigner.Windows.Models.TimeLine
         {
             this.Text = this.Animation.Tag;
         }
-        protected override void OnSelected()
-        {
-            UpdateKeyFrame();
-        }
-        protected override void OnUnselected()
-        {
-            UpdateKeyFrame();
-        }
         public override object? GetEditableObject()
         {
             return this.Animation;
+        }
+        public override string GetText()
+        {
+            return this.Animation.Tag;
         }
     }
 }

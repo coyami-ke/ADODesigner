@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ADODesigner.Windows.Views"
+        xmlns:local="clr-namespace:ADODesigner.Windows.ViewModels"
         mc:Ignorable="d"
-        Title="ADODesigner" WindowStartupLocation="CenterScreen" Height="300" Width="500" Background="#FF1A1B1E" WindowStyle="None" ResizeMode="NoResize">
+        Title="ADODesigner" WindowStartupLocation="CenterScreen" Height="200" Width="500" Background="#FF131517" WindowStyle="None" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:CustomMessageBoxViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -17,10 +20,10 @@
         <TextBlock x:Name="MessageBoxTitle" x:FieldModifier="public" IsHitTestVisible="False" FontSize="15" Text="MessageBox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#CCFFFFFF"/>
         <TextBlock x:Name="MessageBoxContent" x:FieldModifier="public" FontSize="15" Text="MessageBoxContent" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Grid.Row="1" Foreground="#CCFFFFFF"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" CanHorizontallyScroll="True">
-            <Button x:Name="CancelButton" x:FieldModifier="public" Visibility="Collapsed" Content="Cancel" Height="35" Width="115" Margin="5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
-            <Button x:Name="NoButton" x:FieldModifier="public" Visibility="Collapsed" Content="No" Height="35" Width="115" Margin="5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
-            <Button x:Name="YesButton" x:FieldModifier="public" Visibility="Collapsed" Content="Yes" Height="35" Width="115" Margin="5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
-            <Button x:Name="OKButton" x:FieldModifier="public" Visibility="Collapsed" Content="OK" Height="35" Width="115" Margin="5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
+            <Button x:Name="CancelButton" x:FieldModifier="public" Visibility="Collapsed" Content="{Binding Localization.Messages.Cancel}" Height="35" Width="115" Margin="2.5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
+            <Button x:Name="NoButton" x:FieldModifier="public" Visibility="Collapsed" Content="{Binding Localization.Messages.No}" Height="35" Width="115" Margin="2.5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
+            <Button x:Name="YesButton" x:FieldModifier="public" Visibility="Collapsed" Content="{Binding Localization.Messages.Yes}" Height="35" Width="115" Margin="2.5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
+            <Button x:Name="OKButton" x:FieldModifier="public" Visibility="Collapsed" Content="{Binding Localization.Messages.Ok}" Height="35" Width="115" Margin="2.5 0" Foreground="#E5FFFFFF" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>

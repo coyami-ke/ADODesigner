@@ -63,14 +63,6 @@ namespace ADODesigner.Windows.Models.TimeLine
         {
             this.Text = this.Animation.Tag;
         }
-        protected override void OnSelected()
-        {
-            UpdateKeyFrame();
-        }
-        protected override void OnUnselected()
-        {
-            UpdateKeyFrame();
-        }
         public override object? GetEditableObject()
         {
             return this.Animation;

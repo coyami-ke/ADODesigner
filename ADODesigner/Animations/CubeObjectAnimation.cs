@@ -15,27 +15,45 @@ namespace ADODesigner.Animations
         public const float SIZE_PIXEL = ADOFAIConst.SIZE_PIXEL_IN_TILES;
         [UsageWindowProperties(AddToWindowProperties = false)]
         public int Floor { get; set; } = 1;
+        [UsageWindowProperties(LocalizationProperty = "Image", IsImage = true)]
         public string ImageRectangle { get; set; } = "rectangle.png";
+        [UsageWindowProperties(LocalizationProperty = "Tag")]
         public string Tag { get; set; } = "ADODesigner_Cube";
+        [UsageWindowProperties(LocalizationProperty = "Position")]
         public Vector2 Position { get; set; } = new();
+        [UsageWindowProperties(LocalizationProperty = "Scale")]
         public float Scale { get; set; } = 150;
+        [UsageWindowProperties(LocalizationProperty = "Parallax")]
         public float Parallax { get; set; } = 50;
+        [UsageWindowProperties(LocalizationProperty = "OffsetSides")]
         public Vector2 ParallaxOffsetSides { get; set; } = new();
+        [UsageWindowProperties(LocalizationProperty = "Opacity")]
         public float Opacity { get; set; } = 100;
+        [UsageWindowProperties(LocalizationProperty = "Depth")]
         public int Depth { get; set; } = 50;
+        [UsageWindowProperties(LocalizationProperty = "ParallaxMultiplier")]
         public float ParallaxMultiplier { get; set; } = 4;
-        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorLeftSide")]
-        public string ColorLeftSide { get; set; } = "ffffffff";
-        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorRightSide")]
-        public string ColorRightSide { get; set; } = "ffffffff";
-        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorFrontSide")]
-        public string ColorFrontSide { get; set; } = "ffffffff";
-        [UsageWindowProperties(AddToWindowProperties = true, IsColor = true, Name = "ColorTopSide")]
-        public string ColorTopSide { get; set; } = "ffffffff";
-        public bool EnableTopSide { get; set; } = true;
-        public bool EnableFrontSide { get; set; } = true; 
+
+        [UsageWindowProperties(Name = "")]
         public bool EnableLeftSide { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "ColorLeftSide")]
+        public string ColorLeftSide { get; set; } = "ffffffff";
+
+        [UsageWindowProperties(Name = "")]
         public bool EnableRightSide { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "ColorRightSide")]
+        public string ColorRightSide { get; set; } = "ffffffff";
+
+        [UsageWindowProperties(Name = "")]
+        public bool EnableFrontSide { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "ColorFrontSide")]
+        public string ColorFrontSide { get; set; } = "ffffffff";
+
+
+        [UsageWindowProperties(Name = "")]
+        public bool EnableTopSide { get; set; } = true;
+        [UsageWindowProperties(LocalizationProperty = "ColorTopSide")]
+        public string ColorTopSide { get; set; } = "ffffffff";
 
         public Decoration[] Animate()
         {

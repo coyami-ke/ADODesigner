@@ -47,7 +47,7 @@ namespace ADODesinger.Windows.Views
         {
             get { return (Brush)GetValue(SelectedBrushProperty); }
             set
-            { 
+            {
                 SetValue(SelectedBrushProperty, value);
             }
         }
@@ -55,8 +55,8 @@ namespace ADODesinger.Windows.Views
         public Brush UnselectedBrush
         {
             get { return (Brush)GetValue(UnselectedBrushProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(UnselectedBrushProperty, value);
             }
         }
@@ -64,8 +64,8 @@ namespace ADODesinger.Windows.Views
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(TextProperty, value);
             }
         }
@@ -73,8 +73,8 @@ namespace ADODesinger.Windows.Views
         public bool IsSelected
         {
             get { return (bool)GetValue(IsSelectedProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(IsSelectedProperty, value);
             }
         }
@@ -84,8 +84,11 @@ namespace ADODesinger.Windows.Views
             get { return (Ease)GetValue(EaseProperty); }
             set { SetValue(EaseProperty, value); }
         }
+
         protected override void OnRender(System.Windows.Media.DrawingContext dc)
         {
+            this.Dispatcher.Invoke(() => this.UpdateLayout());
+
             Brush selection = UnselectedBrush;
             if (IsSelected) selection = SelectedBrush;
 
@@ -95,10 +98,10 @@ namespace ADODesinger.Windows.Views
             dc.DrawRoundedRectangle(selection, new Pen(), rect, 0, 0);
             Rect rect1 = new Rect();
             rect1.Height = Height;
-            rect1.Width = 20;    
+            rect1.Width = 20;
             dc.DrawRoundedRectangle(selection, new Pen(), rect1, 0, 0);
 
-            SolidColorBrush lineColor = new SolidColorBrush(new Color() { R = 255, G = 255, B = 255, A = 110,});
+            SolidColorBrush lineColor = new SolidColorBrush(new Color() { R = 255, G = 255, B = 255, A = 110, });
 
             Point lastPoint = new(0, this.Height);
             for (int i = 0; i < 100; i++)
@@ -113,7 +116,21 @@ namespace ADODesinger.Windows.Views
 
                 lastPoint = new Point(x, y);
             }
-            dc.DrawText(new(Text, System.Globalization.CultureInfo.CurrentCulture, 0, new(""), 15, new SolidColorBrush(new Color() { R = 255, G = 255, B = 255, A = 220})), new Point(10, 10));
+
+            if (!string.IsNullOrEmpty(Text))
+            {
+                FormattedText formattedText = new FormattedText(
+                    Text,
+                    System.Globalization.CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    new Typeface("Segoe UI"),
+                    15,
+                    Brushes.White,
+                    VisualTreeHelper.GetDpi(this).PixelsPerDip
+                );
+
+                dc.DrawText(formattedText, new Point(10, 10));
+            }
         }
     }
 }

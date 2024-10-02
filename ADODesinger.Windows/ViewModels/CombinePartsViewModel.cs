@@ -1,6 +1,7 @@
 ﻿using ADODesigner.Converters;
 using ADODesigner.Converters.Events;
 using ADODesigner.Windows.Models;
+using ADODesigner.Windows.Models.Localization;
 using ADODesigner.Windows.Views;
 using ADODesinger.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +21,8 @@ namespace ADODesigner.Windows.ViewModels
 {
     public partial class CombinePartsViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ADODesignerLocalization localization = App.Localization;
         [ObservableProperty]
         private string pathToChart = "";
         [ObservableProperty]
